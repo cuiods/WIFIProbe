@@ -1,0 +1,14 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+
+logging:
+  file: ./Receiver.logs
+---
+spring:
+  profiles: dev
+---
+spring:
+  profiles: prod
