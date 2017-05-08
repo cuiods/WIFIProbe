@@ -1,17 +1,14 @@
 package com.codingfairy.analysis;
 
-import com.codingfairy.web.json.ProbeJson;
-
 import java.io.InputStream;
 import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 
 /**
  * Created by darxan on 2017/5/8.
  */
-public interface AnalysisService extends Remote{
+public interface AnalysisService extends Remote {
     /**
      * 启动一个线程，使用probeJsons中的数据上传至HDFS数据
      * @param probeJson
@@ -29,4 +26,5 @@ public interface AnalysisService extends Remote{
      * @param dataType
      */
     Serializable getRealTimeAnalysis(Serializable dataType) throws RemoteException;
+
 }
