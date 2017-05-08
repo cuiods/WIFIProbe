@@ -1,5 +1,7 @@
 package com.codingfairy.analysis;
 
+import com.codingfairy.web.json.ProbeJson;
+
 import java.io.InputStream;
 import java.io.Serializable;
 import java.rmi.Remote;
