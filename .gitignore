@@ -1,5 +1,6 @@
 target/
 *.class
+*.logs
 
 ### STS ###
 .classpath

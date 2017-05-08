@@ -43,7 +43,7 @@ public class ConcurrentDataList {
      * Get instance of the class
      * @return instance of ConcurrentDataList
      */
-    public ConcurrentDataList instance() {
+    public static ConcurrentDataList instance() {
         return ClassHolder.INSTANCE;
     }
 
