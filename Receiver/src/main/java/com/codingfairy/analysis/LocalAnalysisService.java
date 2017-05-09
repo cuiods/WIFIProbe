@@ -6,6 +6,14 @@ import com.codingfairy.web.json.ProbeJson;
  * Created by darxan on 2017/5/9.
  */
 public interface LocalAnalysisService {
+
+
+    /**
+     * @see LocalAnalysisService#uploadFiles(ProbeJson)
+     * @param probJson
+     * @return
+     */
+    Object uploadFiles(String probJson);
     /**
      * 将数据提交到远端服务器
      * @param probeJson 字符串对象
