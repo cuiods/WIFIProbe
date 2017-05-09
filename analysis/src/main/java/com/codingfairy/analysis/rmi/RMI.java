@@ -1,6 +1,6 @@
 package com.codingfairy.analysis.rmi;
 
-import com.codingfairy.analysis.AnalysisService;
+import com.codingfairy.analysis.ServerAnalysisService;
 import com.codingfairy.analysis.impl.DefaultAnalysisService;
 
 import java.rmi.Naming;
@@ -14,7 +14,7 @@ public class RMI {
     public void start() {
         try {
             LocateRegistry.createRegistry(1099);
-            Naming.bind("rmi://0.0.0.0:1099/"+ AnalysisService.class.getSimpleName(),
+            Naming.bind("rmi://115.159.214.227:1099/"+ ServerAnalysisService.class.getSimpleName(),
                     new DefaultAnalysisService());
         }catch (Exception e) {
             e.printStackTrace();

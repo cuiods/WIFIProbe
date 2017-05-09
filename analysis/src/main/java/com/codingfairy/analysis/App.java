@@ -1,4 +1,4 @@
-package com.codingfairy;
+package com.codingfairy.analysis;
 
 import com.codingfairy.analysis.rmi.RMI;
 

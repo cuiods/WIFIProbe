@@ -1,11 +1,12 @@
 package com.codingfairy.web.json;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * probe data json
  */
-public class ProbeJson {
+public class ProbeJson implements Serializable{
 
     private String id;
     private String mmac;
@@ -97,5 +98,21 @@ public class ProbeJson {
 
     public void setData(List<PhoneJson> data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "ProbeJson{" +
+                "id='" + id + '\'' +
+                ", mmac='" + mmac + '\'' +
+                ", rate='" + rate + '\'' +
+                ", wssid='" + wssid + '\'' +
+                ", wmac='" + wmac + '\'' +
+                ", time='" + time + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lon='" + lon + '\'' +
+                ", addr='" + addr + '\'' +
+                ", data=" + data.size() +
+                '}';
     }
 }
