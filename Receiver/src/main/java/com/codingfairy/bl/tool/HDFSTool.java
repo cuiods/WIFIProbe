@@ -1,13 +1,12 @@
-package com.codingfairy.analysis.tool;
+package com.codingfairy.bl.tool;
 
-import com.codingfairy.analysis.config.NodeConfig;
+import com.codingfairy.bl.config.NodeConfig;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.util.Progressable;
 
 import java.io.*;
 import java.net.URI;
@@ -15,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by darxan on 2017/5/8.
+ * @author darxyan
+ * @version 2017-05-09 20:20:31
  */
 public class HDFSTool {
 
@@ -27,11 +27,7 @@ public class HDFSTool {
         Configuration conf = new Configuration();
 
         FileSystem fs = FileSystem.get(URI.create(dst), conf);
-        OutputStream out = fs.create(new Path(dst), new Progressable() {
-            public void progress() {
-                System.out.print(". ");
-            }
-        });
+        OutputStream out = fs.create(new Path(dst), () -> System.out.print(". "));
         IOUtils.copyBytes(in, out, BUFFER_SIZE, true);
     }
 

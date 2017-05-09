@@ -1,4 +1,4 @@
-package com.codingfairy.analysis.tool;
+package com.codingfairy.bl.tool;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -16,13 +16,13 @@ public class HttpRequestUtil {
      * @return URL 所代表远程资源的响应结果
      */
     public static String getString(String url) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         BufferedReader in = null;
         try {
             in = new BufferedReader(new InputStreamReader(getStream(url)));
             String line;
             while ((line = in.readLine()) != null) {
-                result += line;
+                result.append(line);
             }
         } catch (Exception e) {
             System.out.println("发送GET请求出现异常！" + e);
@@ -38,7 +38,7 @@ public class HttpRequestUtil {
                 e2.printStackTrace();
             }
         }
-        return result;
+        return result.toString();
     }
 
 

@@ -1,4 +1,4 @@
-package com.codingfairy.bl;
+package com.codingfairy.bl.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

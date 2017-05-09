@@ -2,6 +2,8 @@ package com.codingfairy.bl.cache;
 
 import com.codingfairy.web.json.ProbeJson;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -36,7 +38,7 @@ public class ConcurrentDataList {
     private ConcurrentDataList() {
         jsonList = new LinkedList<>();
         readWriteLock = new ReentrantReadWriteLock(false);
-        executorService = Executors.newFixedThreadPool(5);
+        executorService = Executors.newCachedThreadPool();
     }
 
     /**
@@ -48,7 +50,12 @@ public class ConcurrentDataList {
     }
 
     public List<ProbeJson> getAll() {
-        return jsonList;
+        List<ProbeJson> probeJsons = new ArrayList<>(this.jsonList.size());
+        readWriteLock.writeLock().lock();
+        Collections.copy(probeJsons,jsonList);
+        jsonList.clear();
+        readWriteLock.writeLock().unlock();
+        return probeJsons;
     }
 
     public ProbeJson getLatest() {

@@ -12,3 +12,11 @@ spring:
 ---
 spring:
   profiles: prod
+---
+node:
+  hdfs: hdfs://118.89.169.238:9000
+  hadoop: http://118.89.169.238:9000
+  redis: 118.89.169.238
+  redisPort: 6379
+  auth: cuihaoyuanyangyang
+  probeJson: CHAN_PROBJSON

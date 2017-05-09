@@ -1,16 +1,20 @@
-package com.codingfairy.analysis.impl;
+package com.codingfairy.bl.serviceImpl;
 
-import com.codingfairy.analysis.LocalAnalysisService;
-import com.codingfairy.analysis.config.NodeConfig;
+import com.codingfairy.bl.service.LocalAnalysisService;
+import com.codingfairy.bl.config.NodeConfig;
 import com.codingfairy.web.json.ProbeJson;
 import com.google.gson.Gson;
-import redis.clients.jedis.Client;
+import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
+import java.util.List;
+
 /**
- * Created by darxan on 2017/5/9.
+ * @author darxyan
+ * @version 2017-05-09 19:29:20
  */
+@Service
 public class AnalysisServiceImpl implements LocalAnalysisService {
 
     private Gson gson ;
@@ -38,6 +42,18 @@ public class AnalysisServiceImpl implements LocalAnalysisService {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    /**
+     * 将列表数据提交到服务器
+     * <em>提交完成后需要清空列表</em>
+     *
+     * @param probeJsons list of {@link ProbeJson}
+     * @return ?
+     */
+    @Override
+    public Object uploadFiles(List<ProbeJson> probeJsons) {
         return null;
     }
 
