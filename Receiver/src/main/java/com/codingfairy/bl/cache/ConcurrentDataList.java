@@ -65,6 +65,10 @@ public class ConcurrentDataList {
         return probeJson;
     }
 
+    public int getSize() {
+        return jsonList.size();
+    }
+
     public void addProbeJson(ProbeJson probeJson) {
         executorService.execute(() -> {
             readWriteLock.writeLock().lock();

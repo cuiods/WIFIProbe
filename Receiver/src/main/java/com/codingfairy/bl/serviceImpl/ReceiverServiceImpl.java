@@ -1,5 +1,6 @@
 package com.codingfairy.bl.serviceImpl;
 
+import com.codingfairy.bl.config.ReceiverConfig;
 import com.codingfairy.bl.service.LocalAnalysisService;
 import com.codingfairy.bl.cache.ConcurrentDataList;
 import com.codingfairy.bl.service.ReceiverService;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -21,6 +23,9 @@ import java.util.List;
  */
 @Service
 public class ReceiverServiceImpl implements ReceiverService {
+
+    @Resource
+    private ReceiverConfig receiverConfig;
 
     private ConcurrentDataList concurrentDataList = ConcurrentDataList.instance();
 
@@ -41,11 +46,20 @@ public class ReceiverServiceImpl implements ReceiverService {
     @Scheduled(cron = "0 0/20 7-23 * * ?")
     public void commit() {
         new Thread( () -> {
+            int sleep = (int) (Math.random()*600000);
+            try {
+                Thread.sleep(sleep);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             List<ProbeJson> probeJsons = concurrentDataList.getAll();
             InputStream inputStream =
                     new ByteArrayInputStream(GsonTool.convertObjectToJson(probeJsons).getBytes());
             try {
-                HDFSTool.uploadFiles(inputStream,"/");
+                Calendar c = Calendar.getInstance();
+                HDFSTool.uploadFiles(inputStream, String.valueOf(c.get(Calendar.YEAR)) + "-"
+                        + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DATE) + "/"
+                        + c.get(Calendar.MILLISECOND) + "-" + receiverConfig.getName()+".json");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -59,6 +73,15 @@ public class ReceiverServiceImpl implements ReceiverService {
      */
     @Override
     public RealTimeJson statLatest() {
-        return null;
+        RealTimeJson realTimeJson = new RealTimeJson();
+        ProbeJson latestProbe = concurrentDataList.getLatest();
+        realTimeJson.setOsName(System.getProperty("os.name"));
+        realTimeJson.setOsArch(System.getProperty("os.arch"));
+        realTimeJson.setOsVersion(System.getProperty("os.version"));
+        realTimeJson.setBufferSize(concurrentDataList.getSize());
+        realTimeJson.setServerName(receiverConfig.getName());
+        realTimeJson.setConnectNum(latestProbe.getData().size());
+        realTimeJson.setLatestCommit(latestProbe.getTime());
+        return realTimeJson;
     }
 }
