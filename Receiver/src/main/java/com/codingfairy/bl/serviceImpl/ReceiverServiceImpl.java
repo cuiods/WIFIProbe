@@ -3,12 +3,17 @@ package com.codingfairy.bl.serviceImpl;
 import com.codingfairy.bl.service.LocalAnalysisService;
 import com.codingfairy.bl.cache.ConcurrentDataList;
 import com.codingfairy.bl.service.ReceiverService;
+import com.codingfairy.bl.tool.GsonTool;
+import com.codingfairy.bl.tool.HDFSTool;
 import com.codingfairy.web.json.ProbeJson;
 import com.codingfairy.web.json.RealTimeJson;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -16,9 +21,6 @@ import java.util.List;
  */
 @Service
 public class ReceiverServiceImpl implements ReceiverService {
-
-    @Resource
-    private LocalAnalysisService analysisService;
 
     private ConcurrentDataList concurrentDataList = ConcurrentDataList.instance();
 
@@ -38,8 +40,16 @@ public class ReceiverServiceImpl implements ReceiverService {
     @Override
     @Scheduled(cron = "0 0/20 7-23 * * ?")
     public void commit() {
-        List<ProbeJson> probeJsons = concurrentDataList.getAll();
-        analysisService.uploadFiles(probeJsons);
+        new Thread( () -> {
+            List<ProbeJson> probeJsons = concurrentDataList.getAll();
+            InputStream inputStream =
+                    new ByteArrayInputStream(GsonTool.convertObjectToJson(probeJsons).getBytes());
+            try {
+                HDFSTool.uploadFiles(inputStream,"/");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     /**

@@ -37,8 +37,7 @@ public class HDFSTool {
         String dst = NodeConfig.HDFS_PATH+fileName;
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(URI.create(dst), conf);
-        FSDataInputStream hdfsInStream = fs.open(new Path(dst));
-        return hdfsInStream;
+        return fs.open(new Path(dst));
     }
 
 
@@ -60,9 +59,8 @@ public class HDFSTool {
         FileSystem fs = FileSystem.get(URI.create(dst), conf);
         FileStatus fileList[] = fs.listStatus(new Path(dst));
         List<String> subFiles = new ArrayList<String>(fileList.length);
-        int size = fileList.length;
-        for(int i = 0; i < size; i++){
-            subFiles.add(fileList[i].getPath().getName());
+        for (FileStatus aFileList : fileList) {
+            subFiles.add(aFileList.getPath().getName());
         }
         fs.close();
         return subFiles;
