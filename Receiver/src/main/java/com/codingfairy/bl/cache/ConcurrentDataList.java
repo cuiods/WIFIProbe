@@ -59,8 +59,11 @@ public class ConcurrentDataList {
     }
 
     public ProbeJson getLatest() {
+        ProbeJson probeJson = null;
         readWriteLock.readLock().lock();
-        ProbeJson probeJson = jsonList.get(0);
+        if (jsonList.size()>0) {
+            probeJson = jsonList.get(0);
+        }
         readWriteLock.readLock().unlock();
         return probeJson;
     }

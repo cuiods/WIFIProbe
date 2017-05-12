@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.codingfairy</groupId>
   <artifactId>receiver</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>WIFIProbe Receiver</name>
   <url>http://maven.apache.org</url>
@@ -61,12 +61,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <version>4.2.1.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>

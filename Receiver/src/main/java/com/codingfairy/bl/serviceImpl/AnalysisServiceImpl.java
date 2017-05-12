@@ -14,7 +14,6 @@ import java.util.List;
  * @author darxyan
  * @version 2017-05-09 19:29:20
  */
-@Service
 public class AnalysisServiceImpl implements LocalAnalysisService {
 
     private Gson gson ;

@@ -46,22 +46,24 @@ public class ReceiverServiceImpl implements ReceiverService {
     @Scheduled(cron = "0 0/20 7-23 * * ?")
     public void commit() {
         new Thread( () -> {
-            int sleep = (int) (Math.random()*600000);
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            List<ProbeJson> probeJsons = concurrentDataList.getAll();
-            InputStream inputStream =
-                    new ByteArrayInputStream(GsonTool.convertObjectToJson(probeJsons).getBytes());
-            try {
-                Calendar c = Calendar.getInstance();
-                HDFSTool.uploadFiles(inputStream, String.valueOf(c.get(Calendar.YEAR)) + "-"
-                        + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DATE) + "/"
-                        + c.get(Calendar.MILLISECOND) + "-" + receiverConfig.getName()+".json");
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (concurrentDataList.getSize()>0) {
+                int sleep = (int) (Math.random()*60000);
+                try {
+                    Thread.sleep(sleep);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                List<ProbeJson> probeJsons = concurrentDataList.getAll();
+                InputStream inputStream =
+                        new ByteArrayInputStream(GsonTool.convertObjectToJson(probeJsons).getBytes());
+                try {
+                    Calendar c = Calendar.getInstance();
+                    HDFSTool.uploadFiles(inputStream, String.valueOf(c.get(Calendar.YEAR)) + "-"
+                            + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DATE) + "/"
+                            + c.get(Calendar.MILLISECOND) + "-" + receiverConfig.getName()+".json");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }
@@ -80,8 +82,10 @@ public class ReceiverServiceImpl implements ReceiverService {
         realTimeJson.setOsVersion(System.getProperty("os.version"));
         realTimeJson.setBufferSize(concurrentDataList.getSize());
         realTimeJson.setServerName(receiverConfig.getName());
-        realTimeJson.setConnectNum(latestProbe.getData().size());
-        realTimeJson.setLatestCommit(latestProbe.getTime());
+        if (latestProbe!=null) {
+            realTimeJson.setConnectNum(latestProbe.getData().size());
+            realTimeJson.setLatestCommit(latestProbe.getTime());
+        }
         return realTimeJson;
     }
 }
