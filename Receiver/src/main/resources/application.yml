@@ -14,4 +14,4 @@ spring:
   profiles: prod
 ---
 receiver:
-  name: server1
+  name: server2

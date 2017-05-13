@@ -1,12 +1,8 @@
 package com.codingfairy.bl.serviceImpl;
 
 import com.codingfairy.bl.service.LocalAnalysisService;
-import com.codingfairy.bl.config.NodeConfig;
 import com.codingfairy.web.json.ProbeJson;
 import com.google.gson.Gson;
-import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPubSub;
 
 import java.util.List;
 
@@ -17,11 +13,8 @@ import java.util.List;
 public class AnalysisServiceImpl implements LocalAnalysisService {
 
     private Gson gson ;
-    private Jedis jedis;
     public AnalysisServiceImpl() {
         gson = new Gson();
-        jedis = new Jedis(NodeConfig.REDIS_SERVER, NodeConfig.REDIS_PORT);
-        jedis.auth(NodeConfig.REDIS_AUTH);
     }
 
     public Object uploadFiles(String probJson) {
