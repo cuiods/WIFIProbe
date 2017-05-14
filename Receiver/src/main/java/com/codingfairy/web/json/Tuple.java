@@ -1,0 +1,12 @@
+package com.codingfairy.web.json;
+
+import lombok.Data;
+
+/**
+ * Created by darxan on 2017/5/14.
+ */
+@Data
+public class Tuple<T,V> {
+    private T x;
+    private V y;
+}
