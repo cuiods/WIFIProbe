@@ -1,0 +1,32 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://118.89.166.159:3306/probe?useUnicode=true&characterEncoding=UTF-8
+    username: cdy
+    password: cdy
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+endpoints:
+  enabled: false
+logging:
+  file: ./Server.log
+---
+spring:
+  profiles: dev
+  jpa:
+    show-sql: true
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://118.89.166.159:3306/probe?useUnicode=true&characterEncoding=UTF-8
+endpoints:
+  enabled: true
