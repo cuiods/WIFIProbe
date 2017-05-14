@@ -7,6 +7,6 @@ import lombok.Data;
  */
 @Data
 public class Tuple<T,V> {
-    private T x;
-    private V y;
+    private T x;//int
+    private V y;//
 }

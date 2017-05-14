@@ -1,5 +1,6 @@
 package com.codingfairy.web.json.analysis;
 
+import com.codingfairy.web.json.analysis.element.CustomerFlowElement;
 import lombok.Data;
 
 /**
@@ -12,6 +13,6 @@ import lombok.Data;
  * 总总表表示某个时间段的客流量
  */
 @Data
-public class CustomerFlow extends ChartData<Long, Long>{
+public class CustomerFlow extends ProbStatisticData<CustomerFlowElement> {
 
 }
