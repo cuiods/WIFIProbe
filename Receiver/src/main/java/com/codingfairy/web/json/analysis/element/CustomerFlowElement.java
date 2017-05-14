@@ -30,21 +30,4 @@ public class CustomerFlowElement  {
     private double deepVisit;//深访率：进⼊店铺深度访问的顾客及占⽐(占总体客流)
     private double inStoreRate;//进入店铺或区域的客流占全部客流的比例及趋势
 
-    private int getTotalInWifi() {
-        return inNoOutWifi+inAndOutWifi;
-    }
-
-    private int getTotalOutWifi() {
-        return outNoInWifi+inAndOutWifi;
-    }
-
-    private int getTotalInStore() {
-        return inNoOutStore+inAndOutStore;
-    }
-
-    private int getTotalOutStore() {
-        return outNoInStore+inAndOutStore;
-    }
-
-
 }

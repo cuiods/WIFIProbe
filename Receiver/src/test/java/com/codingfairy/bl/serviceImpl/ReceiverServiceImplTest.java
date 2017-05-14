@@ -4,6 +4,7 @@ import com.codingfairy.BaseTest;
 import com.codingfairy.bl.cache.ConcurrentDataList;
 import com.codingfairy.bl.service.ReceiverService;
 import com.codingfairy.web.json.ProbeJson;
+import com.codingfairy.web.json.analysis.element.InStoreHoursElement;
 import org.junit.Test;
 
 import javax.annotation.Resource;

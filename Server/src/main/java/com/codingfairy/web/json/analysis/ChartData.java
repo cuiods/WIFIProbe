@@ -1,10 +1,14 @@
 package com.codingfairy.web.json.analysis;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
  * Created by darxan on 2017/5/14.
+ * chart data
  */
+@Data
 public class ChartData<V> {
     /*** sum in yData*/
     protected V sum ;

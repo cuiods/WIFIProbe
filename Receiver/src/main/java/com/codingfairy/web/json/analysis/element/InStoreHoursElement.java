@@ -3,6 +3,7 @@ package com.codingfairy.web.json.analysis.element;
 import com.codingfairy.web.json.Tuple;
 import com.codingfairy.web.json.analysis.ChartData;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Created by darxan on 2017/5/14.
@@ -13,6 +14,7 @@ import lombok.Data;
  *
  * 统计该小时内离去的客户的驻店时长
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class InStoreHoursElement extends ChartData<Tuple<Long, Integer>>{
     protected String wifiProb;
