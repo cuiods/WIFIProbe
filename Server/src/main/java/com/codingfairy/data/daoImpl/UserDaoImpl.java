@@ -3,6 +3,7 @@ package com.codingfairy.data.daoImpl;
 import com.codingfairy.data.dao.UserDao;
 import com.codingfairy.data.entity.UserEntity;
 import com.codingfairy.data.repo.UserRepository;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

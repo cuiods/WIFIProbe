@@ -10,5 +10,10 @@
         <!--<property name="packagesToScan" >entity</property>-->
         <property name="hbm2ddl.auto">update</property>
         <mapping class="com.codingfairy.data.entity.UserEntity"/>
+        <mapping class="com.codingfairy.data.entity.ActivenessEntity"/>
+        <mapping class="com.codingfairy.data.entity.FlowEntity"/>
+        <mapping class="com.codingfairy.data.entity.NewOldEntity"/>
+        <mapping class="com.codingfairy.data.entity.StoreHoursEntity"/>
+        <mapping class="com.codingfairy.data.entity.VisitCircleEntity"/>
     </session-factory>
 </hibernate-configuration>
