@@ -16,6 +16,7 @@ public interface ActivenessDao {
      * @param threshold {@link QueryThreshold} of query
      *                                        sum value of threshold hours
      * @param statRange range <em>THRESHOLD</em> number of statistic(NOT hour number)
+     * @param probeId id of probe device
      * @return list of {@link ActivenessEntity} with size equals to statRange
      */
     List<ActivenessEntity> getActivenessStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
