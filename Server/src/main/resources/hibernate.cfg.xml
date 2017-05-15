@@ -15,5 +15,6 @@
         <mapping class="com.codingfairy.data.entity.NewOldEntity"/>
         <mapping class="com.codingfairy.data.entity.StoreHoursEntity"/>
         <mapping class="com.codingfairy.data.entity.VisitCircleEntity"/>
+        <mapping class="com.codingfairy.data.entity.ProbeEntity"/>
     </session-factory>
 </hibernate-configuration>
