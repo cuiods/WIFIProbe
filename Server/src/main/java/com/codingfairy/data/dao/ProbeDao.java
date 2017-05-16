@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
  */
 public interface ProbeDao {
 
-    Page<ProbeEntity> findAll(int offset, int size);
+    Page<ProbeEntity> findAll(int page, int size);
 
     ProbeEntity findById(int id);
 }

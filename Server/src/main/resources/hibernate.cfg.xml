@@ -7,7 +7,7 @@
         <property name="connection.url">jdbc:mysql://118.89.166.159:3306/probe</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="current_session_context_class">thread</property>
-        <!--<property name="packagesToScan" >entity</property>-->
+        <!--<propehourname="packagesToScan" >entity</property>-->
         <property name="hbm2ddl.auto">update</property>
         <mapping class="com.codingfairy.data.entity.UserEntity"/>
         <mapping class="com.codingfairy.data.entity.ActivenessEntity"/>

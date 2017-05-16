@@ -20,7 +20,7 @@ public class ActivenessVo {
     private Integer numOfLowActive;
     private Integer numOfSleepActive;
     public ActivenessVo(ActivenessEntity entity) {
-        BeanUtils.copyProperties(entity,this,"hour");
+        BeanUtils.copyProperties(entity,this,"name");
         hour = entity.getHour().toString();
     }
 }

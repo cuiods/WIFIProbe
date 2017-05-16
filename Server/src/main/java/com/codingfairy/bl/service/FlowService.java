@@ -2,10 +2,10 @@ package com.codingfairy.bl.service;
 
 import com.codingfairy.bl.vo.FlowVo;
 import com.codingfairy.data.entity.FlowEntity;
+import com.codingfairy.exception.ParamException;
 import com.codingfairy.utils.enums.QueryThreshold;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by cuihao on 2017-05-16.
@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface FlowService {
 
-    List<Map> getFStat(int startHour, QueryThreshold threshold, int startRange, String probeId);
+    List<FlowVo> getFStat(int startHour, QueryThreshold threshold, int startRange, String probeId) throws ParamException;
 
     FlowVo findByHourAndProbe(int hour, String probeId);
 

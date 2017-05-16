@@ -5,11 +5,17 @@ import java.math.BigDecimal;
 
 /**
  * Created by cuihao on 2017-05-16.
- * Map object attribute array to class instance
+ * Map object
  */
 public class ObjectMapper {
 
-    public static Object map(Class clazz, Object objectArray) {
+    /**
+     * Map object attr array to object
+     * @param clazz {@code Class<T>}
+     * @param objectArray attr array
+     * @return instance of clazz
+     */
+    public static Object arrayToObject(Class clazz, Object objectArray) {
         Object[] objects;
         try {
             objects = (Object[]) objectArray;

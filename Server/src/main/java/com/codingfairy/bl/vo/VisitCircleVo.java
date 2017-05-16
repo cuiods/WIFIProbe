@@ -26,7 +26,7 @@ public class VisitCircleVo {
     private Integer data8;
     private Integer data9;
     public VisitCircleVo(VisitCircleEntity entity) {
-        BeanUtils.copyProperties(entity,this,"hour");
+        BeanUtils.copyProperties(entity,this,"name");
         hour = entity.getHour().toString();
     }
 }

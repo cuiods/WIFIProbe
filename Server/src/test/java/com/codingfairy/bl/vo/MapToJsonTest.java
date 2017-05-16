@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * test map to json
+ * test arrayToObject to json
  */
 public class MapToJsonTest {
 

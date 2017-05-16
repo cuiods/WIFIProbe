@@ -5,6 +5,7 @@ import com.codingfairy.data.dao.ActivenessDao;
 import com.codingfairy.data.entity.ActivenessEntity;
 import com.codingfairy.data.repo.ActivenessRepository;
 import com.codingfairy.utils.data.ObjectMapper;
+import com.codingfairy.utils.data.ThresholdUtil;
 import com.codingfairy.utils.enums.QueryThreshold;
 import org.springframework.stereotype.Repository;
 
@@ -41,15 +42,6 @@ public class ActivenessDaoImpl implements ActivenessDao {
      */
     @Override
     public List<ActivenessVo> getActivenessStat(int startHour, QueryThreshold threshold, int statRange, String probeId) {
-        StringBuilder thresholdStr = new StringBuilder();
-        switch (threshold) {
-            case HOUR: thresholdStr.append(" %H");
-            case DAY: thresholdStr.insert(0,"-%d");
-            case MONTH: thresholdStr.insert(0,"-%m");
-            case YEAR: thresholdStr.insert(0,"%Y");break;
-            case WEEK: thresholdStr.append("%Y-%u"); break;
-            default: thresholdStr.append("%Y-%m-%d");break;
-        }
         String isProbeSelected = probeId==null || probeId.isEmpty()? "": "AND wifiProb = :probeId ";
         String sqlQuery = "SELECT id,wifiProb,DATE_FORMAT(hour,:dateFormat),sum(numOfHighActive)," +
                 "sum(numOfMedianActive),sum(numOfLowActive),sum(numOfSleepActive) " +
@@ -58,14 +50,14 @@ public class ActivenessDaoImpl implements ActivenessDao {
                 " GROUP BY id,wifiProb,DATE_FORMAT(hour,:dateFormat) " +
                 "LIMIT 0,:statRange";
         Query query = entityManager.createNativeQuery(sqlQuery);
-        query.setParameter("dateFormat",thresholdStr.toString());
+        query.setParameter("dateFormat", ThresholdUtil.convertToString(threshold));
         query.setParameter("startHour",startHour);
         if (!isProbeSelected.isEmpty()) query.setParameter("probeId",probeId);
         query.setParameter("statRange",statRange>=1? statRange: 10);
         List resultList = query.getResultList();
         List<ActivenessVo> activenessVos = new LinkedList<>();
         for (Object object: resultList) {
-            activenessVos.add((ActivenessVo) ObjectMapper.map(ActivenessVo.class,object));
+            activenessVos.add((ActivenessVo) ObjectMapper.arrayToObject(ActivenessVo.class,object));
         }
         return activenessVos;
     }

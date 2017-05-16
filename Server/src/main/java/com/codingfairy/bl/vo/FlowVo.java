@@ -27,7 +27,7 @@ public class FlowVo {
     private Double deepVisit;
     private Double inStoreRate;
     public FlowVo(FlowEntity entity) {
-        BeanUtils.copyProperties(entity,this,"hour");
+        BeanUtils.copyProperties(entity,this,"name");
         hour = entity.getHour().toString();
     }
 }

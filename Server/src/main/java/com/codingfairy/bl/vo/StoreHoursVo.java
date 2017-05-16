@@ -26,7 +26,7 @@ public class StoreHoursVo {
     private Integer data8;
     private Integer data9;
     public StoreHoursVo(StoreHoursEntity entity) {
-        BeanUtils.copyProperties(entity,this,"hour");
+        BeanUtils.copyProperties(entity,this,"name");
         hour = entity.getHour().toString();
     }
 }

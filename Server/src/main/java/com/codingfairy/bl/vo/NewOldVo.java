@@ -18,7 +18,7 @@ public class NewOldVo {
     private Integer newCustomer;
     private Integer oldCustomer;
     public NewOldVo(NewOldEntity entity) {
-        BeanUtils.copyProperties(entity,this,"hour");
+        BeanUtils.copyProperties(entity,this,"name");
         hour = entity.getHour().toString();
     }
 }

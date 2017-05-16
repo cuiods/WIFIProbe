@@ -2,6 +2,7 @@ package com.codingfairy.bl.service;
 
 import com.codingfairy.bl.vo.VisitCircleVo;
 import com.codingfairy.data.entity.VisitCircleEntity;
+import com.codingfairy.exception.ParamException;
 import com.codingfairy.utils.enums.QueryThreshold;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Map;
  */
 public interface VisitCircleService {
 
-    List<Map> getVisitCircleStat(int startHour, QueryThreshold threshold, int startRange, String probeId);
+    List<VisitCircleVo> getVisitCircleStat(int startHour, QueryThreshold threshold, int startRange, String probeId) throws ParamException;
 
     VisitCircleVo findByHourAndProbe(int hour, String probeId);
 
