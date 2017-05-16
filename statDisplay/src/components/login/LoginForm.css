@@ -1,0 +1,20 @@
+.login-form {
+  width: 400px;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.title {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5%;
+}
+.login-inline-form {
+  height: 100%;
+}
+.login-form-forget {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}

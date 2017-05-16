@@ -12,7 +12,6 @@
     "react/prop-types": [0],
     "arrow-body-style": [0],
     "react/prefer-stateless-function": [0],
-    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
     "semi": [0],
     "global-require": [0],
     "no-shadow": [0],

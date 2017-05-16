@@ -1,7 +1,7 @@
-import dva from 'dva';
-import 'flexboxgrid/css/flexboxgrid.css';
 import './index.html';
 import './index.less';
+import dva from 'dva';
+import 'flexboxgrid/css/flexboxgrid.css';
 // import { browserHistory } from 'dva/router';
 
 // 1. Initialize
