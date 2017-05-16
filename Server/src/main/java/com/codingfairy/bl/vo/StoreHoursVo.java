@@ -2,6 +2,7 @@ package com.codingfairy.bl.vo;
 
 import com.codingfairy.data.entity.StoreHoursEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -9,10 +10,11 @@ import org.springframework.beans.BeanUtils;
  * store hours vo
  */
 @Data
+@NoArgsConstructor
 public class StoreHoursVo {
     private int id;
     private String wifiProb;
-    private int hour;
+    private String hour;
     private Integer data0;
     private Integer data1;
     private Integer data2;
@@ -24,6 +26,7 @@ public class StoreHoursVo {
     private Integer data8;
     private Integer data9;
     public StoreHoursVo(StoreHoursEntity entity) {
-        BeanUtils.copyProperties(entity,this);
+        BeanUtils.copyProperties(entity,this,"hour");
+        hour = entity.getHour().toString();
     }
 }

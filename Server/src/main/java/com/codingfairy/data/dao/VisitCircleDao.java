@@ -1,5 +1,6 @@
 package com.codingfairy.data.dao;
 
+import com.codingfairy.bl.vo.VisitCircleVo;
 import com.codingfairy.data.entity.VisitCircleEntity;
 import com.codingfairy.utils.enums.QueryThreshold;
 
@@ -17,9 +18,9 @@ public interface VisitCircleDao {
      *                                        sum value of threshold hours
      * @param statRange range <em>THRESHOLD</em> number of statistic(NOT hour number)
      * @param probeId id of probe device
-     * @return list of {@link VisitCircleEntity} with size equals to statRange
+     * @return list of {@link VisitCircleVo} with size equals to statRange
      */
-    List<VisitCircleEntity> getVisitCircleStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
+    List<VisitCircleVo> getVisitCircleStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
 
     /**
      * find stat results by hour and probe id

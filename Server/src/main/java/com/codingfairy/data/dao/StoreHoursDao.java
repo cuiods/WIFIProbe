@@ -1,5 +1,6 @@
 package com.codingfairy.data.dao;
 
+import com.codingfairy.bl.vo.StoreHoursVo;
 import com.codingfairy.data.entity.StoreHoursEntity;
 import com.codingfairy.utils.enums.QueryThreshold;
 
@@ -17,9 +18,9 @@ public interface StoreHoursDao {
      *                                        sum value of threshold hours
      * @param statRange range <em>THRESHOLD</em> number of statistic(NOT hour number)
      * @param probeId id of probe device
-     * @return list of {@link StoreHoursEntity} with size equals to statRange
+     * @return list of {@link StoreHoursVo} with size equals to statRange
      */
-    List<StoreHoursEntity> getStoreHoursStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
+    List<StoreHoursVo> getStoreHoursStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
 
     /**
      * find stat results by hour and probe id

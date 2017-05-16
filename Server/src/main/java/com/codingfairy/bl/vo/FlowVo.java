@@ -2,6 +2,7 @@ package com.codingfairy.bl.vo;
 
 import com.codingfairy.data.entity.FlowEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -9,10 +10,11 @@ import org.springframework.beans.BeanUtils;
  * Flow stat vo
  */
 @Data
+@NoArgsConstructor
 public class FlowVo {
     private int id;
     private String wifiProb;
-    private int hour;
+    private String hour;
     private Integer inNoOutWifi;
     private Integer inNoOutStore;
     private Integer outNoInWifi;
@@ -25,6 +27,7 @@ public class FlowVo {
     private Double deepVisit;
     private Double inStoreRate;
     public FlowVo(FlowEntity entity) {
-        BeanUtils.copyProperties(entity,this);
+        BeanUtils.copyProperties(entity,this,"hour");
+        hour = entity.getHour().toString();
     }
 }

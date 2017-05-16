@@ -2,6 +2,7 @@ package com.codingfairy.bl.vo;
 
 import com.codingfairy.data.entity.ActivenessEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -9,15 +10,17 @@ import org.springframework.beans.BeanUtils;
  * activeness vo
  */
 @Data
+@NoArgsConstructor
 public class ActivenessVo {
     private int id;
     private String wifiProb;
-    private int hour;
+    private String hour;
     private Integer numOfHighActive;
     private Integer numOfMedianActive;
     private Integer numOfLowActive;
     private Integer numOfSleepActive;
     public ActivenessVo(ActivenessEntity entity) {
-        BeanUtils.copyProperties(entity,this);
+        BeanUtils.copyProperties(entity,this,"hour");
+        hour = entity.getHour().toString();
     }
 }

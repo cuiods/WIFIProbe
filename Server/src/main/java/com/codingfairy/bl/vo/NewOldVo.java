@@ -2,6 +2,7 @@ package com.codingfairy.bl.vo;
 
 import com.codingfairy.data.entity.NewOldEntity;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 /**
@@ -9,13 +10,15 @@ import org.springframework.beans.BeanUtils;
  * new old customer vo
  */
 @Data
+@NoArgsConstructor
 public class NewOldVo {
     private int id;
     private String wifiProb;
-    private int hour;
+    private String hour;
     private Integer newCustomer;
     private Integer oldCustomer;
     public NewOldVo(NewOldEntity entity) {
-        BeanUtils.copyProperties(entity,this);
+        BeanUtils.copyProperties(entity,this,"hour");
+        hour = entity.getHour().toString();
     }
 }

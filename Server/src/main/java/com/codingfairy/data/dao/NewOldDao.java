@@ -1,5 +1,6 @@
 package com.codingfairy.data.dao;
 
+import com.codingfairy.bl.vo.NewOldVo;
 import com.codingfairy.data.entity.NewOldEntity;
 import com.codingfairy.utils.enums.QueryThreshold;
 
@@ -17,9 +18,9 @@ public interface NewOldDao {
      *                                        sum value of threshold hours
      * @param statRange range <em>THRESHOLD</em> number of statistic(NOT hour number)
      * @param probeId id of probe device
-     * @return list of {@link NewOldEntity} with size equals to statRange
+     * @return list of {@link NewOldVo} with size equals to statRange
      */
-    List<NewOldEntity> getNewOldStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
+    List<NewOldVo> getNewOldStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
 
     /**
      * find stat results by hour and probe id

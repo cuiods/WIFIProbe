@@ -1,6 +1,7 @@
 package com.codingfairy.data.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Created by cuihao on 2017-05-15.
@@ -11,7 +12,7 @@ import javax.persistence.*;
 public class FlowEntity {
     private int id;
     private String wifiProb;
-    private int hour;
+    private Timestamp hour;
     private Integer inNoOutWifi;
     private Integer inNoOutStore;
     private Integer outNoInWifi;
@@ -47,11 +48,11 @@ public class FlowEntity {
 
     @Basic
     @Column(name = "hour")
-    public int getHour() {
+    public Timestamp getHour() {
         return hour;
     }
 
-    public void setHour(int hour) {
+    public void setHour(Timestamp hour) {
         this.hour = hour;
     }
 
@@ -195,7 +196,7 @@ public class FlowEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (wifiProb != null ? wifiProb.hashCode() : 0);
-        result = 31 * result + hour;
+        result = 31 * result + (hour != null ? hour.hashCode() : 0);
         result = 31 * result + (inNoOutWifi != null ? inNoOutWifi.hashCode() : 0);
         result = 31 * result + (inNoOutStore != null ? inNoOutStore.hashCode() : 0);
         result = 31 * result + (outNoInWifi != null ? outNoInWifi.hashCode() : 0);

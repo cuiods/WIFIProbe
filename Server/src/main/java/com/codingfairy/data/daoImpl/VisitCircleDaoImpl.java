@@ -1,5 +1,6 @@
 package com.codingfairy.data.daoImpl;
 
+import com.codingfairy.bl.vo.VisitCircleVo;
 import com.codingfairy.data.dao.VisitCircleDao;
 import com.codingfairy.data.entity.VisitCircleEntity;
 import com.codingfairy.utils.enums.QueryThreshold;
@@ -21,10 +22,10 @@ public class VisitCircleDaoImpl implements VisitCircleDao {
      *                  sum value of threshold hours
      * @param statRange range <em>THRESHOLD</em> number of statistic(NOT hour number)
      * @param probeId   id of probe device
-     * @return list of {@link VisitCircleEntity} with size equals to statRange
+     * @return list of {@link VisitCircleVo} with size equals to statRange
      */
     @Override
-    public List<VisitCircleEntity> getVisitCircleStat(int startHour, QueryThreshold threshold, int statRange, String probeId) {
+    public List<VisitCircleVo> getVisitCircleStat(int startHour, QueryThreshold threshold, int statRange, String probeId) {
         return null;
     }
 

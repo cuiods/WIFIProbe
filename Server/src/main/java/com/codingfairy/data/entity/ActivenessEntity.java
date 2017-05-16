@@ -1,6 +1,7 @@
 package com.codingfairy.data.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Created by cuihao on 2017-05-15.
@@ -11,7 +12,7 @@ import javax.persistence.*;
 public class ActivenessEntity {
     private int id;
     private String wifiProb;
-    private int hour;
+    private Timestamp hour;
     private Integer numOfHighActive;
     private Integer numOfMedianActive;
     private Integer numOfLowActive;
@@ -40,11 +41,11 @@ public class ActivenessEntity {
 
     @Basic
     @Column(name = "hour")
-    public int getHour() {
+    public Timestamp getHour() {
         return hour;
     }
 
-    public void setHour(int hour) {
+    public void setHour(Timestamp hour) {
         this.hour = hour;
     }
 
@@ -114,7 +115,7 @@ public class ActivenessEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (wifiProb != null ? wifiProb.hashCode() : 0);
-        result = 31 * result + hour;
+        result = 31 * result + (hour != null ? hour.hashCode() : 0);
         result = 31 * result + (numOfHighActive != null ? numOfHighActive.hashCode() : 0);
         result = 31 * result + (numOfMedianActive != null ? numOfMedianActive.hashCode() : 0);
         result = 31 * result + (numOfLowActive != null ? numOfLowActive.hashCode() : 0);

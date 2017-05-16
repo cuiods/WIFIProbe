@@ -1,5 +1,6 @@
 package com.codingfairy.data.dao;
 
+import com.codingfairy.bl.vo.FlowVo;
 import com.codingfairy.data.entity.FlowEntity;
 import com.codingfairy.utils.enums.QueryThreshold;
 
@@ -17,9 +18,9 @@ public interface FlowDao {
      *                                        sum value of threshold hours
      * @param statRange range <em>THRESHOLD</em> number of statistic(NOT hour number)
      * @param probeId id of probe device
-     * @return list of {@link FlowEntity} with size equals to statRange
+     * @return list of {@link FlowVo} with size equals to statRange
      */
-    List<FlowEntity> getFlowStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
+    List<FlowVo> getFlowStat(int startHour, QueryThreshold threshold, int statRange, String probeId);
 
     /**
      * find stat results by hour and probe id

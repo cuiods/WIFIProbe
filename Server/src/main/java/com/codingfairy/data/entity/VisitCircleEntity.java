@@ -1,6 +1,7 @@
 package com.codingfairy.data.entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * Created by cuihao on 2017-05-15.
@@ -11,7 +12,7 @@ import javax.persistence.*;
 public class VisitCircleEntity {
     private int id;
     private String wifiProb;
-    private int hour;
+    private Timestamp hour;
     private Integer data0;
     private Integer data1;
     private Integer data2;
@@ -46,11 +47,11 @@ public class VisitCircleEntity {
 
     @Basic
     @Column(name = "hour")
-    public int getHour() {
+    public Timestamp getHour() {
         return hour;
     }
 
-    public void setHour(int hour) {
+    public void setHour(Timestamp hour) {
         this.hour = hour;
     }
 
@@ -182,7 +183,7 @@ public class VisitCircleEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + (wifiProb != null ? wifiProb.hashCode() : 0);
-        result = 31 * result + hour;
+        result = 31 * result + (hour != null ? hour.hashCode() : 0);
         result = 31 * result + (data0 != null ? data0.hashCode() : 0);
         result = 31 * result + (data1 != null ? data1.hashCode() : 0);
         result = 31 * result + (data2 != null ? data2.hashCode() : 0);
