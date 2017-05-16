@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "babel-runtime": "^6.9.2",
+    "basic-authorization-header": "^0.2.7",
     "dva": "^1.2.1",
     "react": "^15.4.0",
+    "react-cookie": "^1.0.4",
     "react-dom": "^15.4.0"
   },
   "devDependencies": {
