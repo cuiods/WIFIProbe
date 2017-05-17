@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "Helvetica Neue For Number";
+  src: local("Helvetica Neue");
+  unicode-range: U+30-39;
+}
+.text-overflow {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.header {
+  box-shadow: 4px 4px 40px 0 rgba(0, 0, 0, 0.05);
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 47px;
+  background-color: #fff;
+}
+.header :global .ant-menu-horizontal {
+  border: none;
+  display: inline-block;
+}
+.header :global .ant-menu-horizontal > .ant-menu-submenu {
+  float: right;
+}
+.header .rightWarpper {
+  display: flex;
+  padding-right: 16px;
+}
+.header .button {
+  width: 47px;
+  height: 47px;
+  line-height: 47px;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.header .button:hover {
+  color: #108ee9;
+  background-color: rgba(16, 142, 233, 0.15);
+}
+.popovermenu {
+  width: 280px;
+  margin-left: 6px;
+}
+.popovermenu :global .ant-popover-inner-content {
+  padding: 0;
+}
+.popovermenu :global .ant-popover-inner-content .ant-menu-inline .ant-menu-item,
+.popovermenu :global .ant-popover-inner-content .ant-menu-vertical .ant-menu-item {
+  border-right: 0;
+  height: 48px;
+  line-height: 48px;
+}
+.popovermenu :global .ant-popover-inner-content .ant-menu-inline .ant-menu-item-selected,
+.popovermenu :global .ant-popover-inner-content .ant-menu-inline .ant-menu-selected {
+  border-right: 0;
+}

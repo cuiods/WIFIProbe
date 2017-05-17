@@ -1,7 +1,8 @@
 package com.codingfairy.vo;
 
 import lombok.Data;
-import org.apache.hadoop.io.ObjectWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 
 import java.io.DataInput;
@@ -31,11 +32,67 @@ public class PhoneJson implements Writable{
 
     private long time;
 
+
     public void write(DataOutput out) throws IOException {
-       new ObjectWritable(this).write(out);
+       writeChars(out,mac);
+       writeChars(out,rssi);
+       writeChars(out,range);
+       writeChars(out,ts);
+       writeChars(out,tmc);
+       writeChars(out,tc);
+       writeChars(out,ds);
+       writeChars(out,essid0);
+       writeChars(out,essid1);
+       writeChars(out,essid2);
+       writeChars(out,essid3);
+       writeChars(out,essid4);
+       writeChars(out,essid5);
+       writeChars(out,essid6);
+       writeLong(out, time);
+    }
+
+    private Text text = new Text();
+    private LongWritable longWritable = new LongWritable();
+    
+    private void writeChars(DataOutput out, String value) throws IOException {
+        if (value!=null) {
+            text.set(value);
+        }else {
+            text.set("");
+        }
+        text.write(out);
+    }
+
+    private void writeLong(DataOutput out, long value) throws IOException {
+        longWritable.set(value);
+        longWritable.write(out);
+    }
+    
+    private String readChars(DataInput in) throws IOException{
+        text.readFields(in);
+        return text.toString();
+    }
+
+    private long readLong(DataInput in) throws IOException{
+        longWritable.readFields(in);
+        return longWritable.get();
     }
 
     public void readFields(DataInput in) throws IOException {
-        new ObjectWritable(this).readFields(in);
+        mac =   readChars(in);
+        rssi = readChars(in);
+        range = readChars(in);
+        ts = readChars(in);
+        tmc = readChars(in);
+        tc = readChars(in);
+        ds = readChars(in);
+        essid0 = readChars(in);
+        essid1 = readChars(in);
+        essid2 = readChars(in);
+        essid3 = readChars(in);
+        essid4 = readChars(in);
+        essid5 = readChars(in);
+        essid6 = readChars(in);
+        time = readLong(in);
     }
 }
