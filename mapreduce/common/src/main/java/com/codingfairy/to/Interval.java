@@ -25,10 +25,12 @@ public class Interval implements Writable{
     }
 
     public void write(DataOutput out) throws IOException {
-        new ObjectWritable(this).write(out);
+        lower.write(out);
+        upper.write(out);
     }
 
     public void readFields(DataInput in) throws IOException {
-        new ObjectWritable(this).readFields(in);
+        lower.readFields(in);
+        upper.readFields(in);
     }
 }
