@@ -6,6 +6,7 @@ import com.codingfairy.data.dao.UserDao;
 import com.codingfairy.data.entity.UserEntity;
 import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
@@ -13,6 +14,7 @@ import javax.annotation.Resource;
  * Created by cuihao on 2017-05-16.
  * user service impl
  */
+@Service
 public class UserServiceImpl implements UserService {
 
     @Resource

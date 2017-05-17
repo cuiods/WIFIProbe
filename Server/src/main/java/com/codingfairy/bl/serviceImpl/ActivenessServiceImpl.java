@@ -6,9 +6,14 @@ import com.codingfairy.data.dao.ActivenessDao;
 import com.codingfairy.data.entity.ActivenessEntity;
 import com.codingfairy.exception.ParamException;
 import com.codingfairy.utils.constant.ServerCode;
+import com.codingfairy.utils.data.ObjectMapper;
 import com.codingfairy.utils.enums.QueryThreshold;
+import com.codingfairy.web.json.Tuple;
+import com.codingfairy.web.json.analysis.element.CustomerActivenessElement;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +21,7 @@ import java.util.Map;
  * Created by cuihao on 2017-05-16.
  * activeness service impl
  */
+@Service
 public class ActivenessServiceImpl implements ActivenessService {
 
     @Resource
@@ -29,8 +35,9 @@ public class ActivenessServiceImpl implements ActivenessService {
     }
 
     @Override
-    public ActivenessVo findByHourAndProbe(int hour, String probeId) {
-        return new ActivenessVo(activenessDao.findByHourAndProbe(hour, probeId));
+    public List<Tuple<String, Number>> findByHourAndProbe(int hour, String probeId) {
+        ActivenessEntity activenessEntity = activenessDao.findByHourAndProbe(hour, probeId);
+        return ObjectMapper.convertToChartData(activenessEntity);
     }
 
     @Override
@@ -39,7 +46,15 @@ public class ActivenessServiceImpl implements ActivenessService {
     }
 
     @Override
-    public ActivenessVo save(ActivenessEntity activenessEntity) {
-        return new ActivenessVo(activenessDao.save(activenessEntity));
+    public ActivenessVo save(CustomerActivenessElement activenessElement) {
+        ActivenessEntity entity = new ActivenessEntity();
+        entity.setWifiProb(activenessElement.getWifiProb());
+        entity.setHour(new Timestamp(activenessElement.getHour()*3600*1000));
+        entity.setNumOfHighActive(activenessElement.getNumOfHighActive());
+        entity.setNumOfMedianActive(activenessElement.getNumOfMedianActive());
+        entity.setNumOfLowActive(activenessElement.getNumOfLowActive());
+        entity.setNumOfSleepActive(activenessElement.getNumOfSleepActive());
+        return new ActivenessVo(activenessDao.save(entity));
     }
+
 }

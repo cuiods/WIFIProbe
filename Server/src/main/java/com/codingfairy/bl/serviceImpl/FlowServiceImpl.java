@@ -6,9 +6,14 @@ import com.codingfairy.data.dao.FlowDao;
 import com.codingfairy.data.entity.FlowEntity;
 import com.codingfairy.exception.ParamException;
 import com.codingfairy.utils.constant.ServerCode;
+import com.codingfairy.utils.data.ObjectMapper;
 import com.codingfairy.utils.enums.QueryThreshold;
+import com.codingfairy.web.json.Tuple;
+import com.codingfairy.web.json.analysis.element.CustomerFlowElement;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +21,7 @@ import java.util.Map;
  * Created by cuihao on 2017-05-16.
  * flow service impl
  */
+@Service
 public class FlowServiceImpl implements FlowService {
 
     @Resource
@@ -28,8 +34,8 @@ public class FlowServiceImpl implements FlowService {
     }
 
     @Override
-    public FlowVo findByHourAndProbe(int hour, String probeId) {
-        return new FlowVo(flowDao.findByHourAndProbe(hour, probeId));
+    public List<Tuple<String, Number>> findByHourAndProbe(int hour, String probeId) {
+        return ObjectMapper.convertToChartData(flowDao.findByHourAndProbe(hour, probeId));
     }
 
     @Override
@@ -38,7 +44,22 @@ public class FlowServiceImpl implements FlowService {
     }
 
     @Override
-    public FlowVo save(FlowEntity flowEntity) {
+    public FlowVo save(CustomerFlowElement flowElement) {
+        FlowEntity flowEntity = new FlowEntity();
+        flowEntity.setWifiProb(flowElement.getWifiProb());
+        flowEntity.setHour(new Timestamp(flowElement.getHour()*3600*1000));
+        flowEntity.setInNoOutWifi(flowElement.getInNoOutWifi());
+        flowEntity.setInNoOutStore(flowElement.getInNoOutStore());
+        flowEntity.setOutNoInWifi(flowElement.getOutNoInWifi());
+        flowEntity.setOutNoInStore(flowElement.getOutNoInStore());
+        flowEntity.setInAndOutWifi(flowElement.getInAndOutWifi());
+        flowEntity.setIntAndOutStore(flowElement.getInAndOutStore());
+        flowEntity.setStayInWifi(flowElement.getStayInWifi());
+        flowEntity.setStayInStore(flowElement.getStayInStore());
+        flowEntity.setJumpRate(flowElement.getJumpRate());
+        flowEntity.setInStoreRate(flowElement.getInStoreRate());
+        flowEntity.setDeepVisit(flowElement.getDeepVisit());
         return new FlowVo(flowDao.save(flowEntity));
     }
+
 }

@@ -6,9 +6,14 @@ import com.codingfairy.data.dao.NewOldDao;
 import com.codingfairy.data.entity.NewOldEntity;
 import com.codingfairy.exception.ParamException;
 import com.codingfairy.utils.constant.ServerCode;
+import com.codingfairy.utils.data.ObjectMapper;
 import com.codingfairy.utils.enums.QueryThreshold;
+import com.codingfairy.web.json.Tuple;
+import com.codingfairy.web.json.analysis.element.NewOldCustomElement;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +21,7 @@ import java.util.Map;
  * Created by cuihao on 2017-05-16.
  * new old service impl
  */
+@Service
 public class NewOldServiceImpl implements NewOldService {
 
     @Resource
@@ -28,8 +34,8 @@ public class NewOldServiceImpl implements NewOldService {
     }
 
     @Override
-    public NewOldVo findByHourAndProbe(int hour, String probeId) {
-        return new NewOldVo(newOldDao.findByHourAndProbe(hour, probeId));
+    public List<Tuple<String, Number>> findByHourAndProbe(int hour, String probeId) {
+        return ObjectMapper.convertToChartData(newOldDao.findByHourAndProbe(hour, probeId));
     }
 
     @Override
@@ -38,7 +44,12 @@ public class NewOldServiceImpl implements NewOldService {
     }
 
     @Override
-    public NewOldVo save(NewOldEntity newOldEntity) {
-        return new NewOldVo(newOldDao.save(newOldEntity));
+    public NewOldVo save(NewOldCustomElement newOldCustomElement) {
+        NewOldEntity entity = new NewOldEntity();
+        entity.setWifiProb(newOldCustomElement.getWifiProb());
+        entity.setHour(new Timestamp(newOldCustomElement.getHour()*3600*1000));
+        entity.setNewCustomer(newOldCustomElement.getNewCustomer());
+        entity.setOldCustomer(newOldCustomElement.getOldCustomer());
+        return new NewOldVo(newOldDao.save(entity));
     }
 }

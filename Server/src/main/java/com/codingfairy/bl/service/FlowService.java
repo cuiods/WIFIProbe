@@ -1,9 +1,10 @@
 package com.codingfairy.bl.service;
 
 import com.codingfairy.bl.vo.FlowVo;
-import com.codingfairy.data.entity.FlowEntity;
 import com.codingfairy.exception.ParamException;
 import com.codingfairy.utils.enums.QueryThreshold;
+import com.codingfairy.web.json.Tuple;
+import com.codingfairy.web.json.analysis.element.CustomerFlowElement;
 
 import java.util.List;
 
@@ -15,9 +16,9 @@ public interface FlowService {
 
     List<FlowVo> getFStat(int startHour, QueryThreshold threshold, int startRange, String probeId) throws ParamException;
 
-    FlowVo findByHourAndProbe(int hour, String probeId);
+    List<Tuple<String,Number>> findByHourAndProbe(int hour, String probeId);
 
     FlowVo findById(int id);
 
-    FlowVo save(FlowEntity flowEntity);
+    FlowVo save(CustomerFlowElement flowElement);
 }

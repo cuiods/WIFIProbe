@@ -1,7 +1,11 @@
 package com.codingfairy.utils.data;
 
+import com.codingfairy.web.json.Tuple;
+
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by cuihao on 2017-05-16.
@@ -44,6 +48,28 @@ public class ObjectMapper {
             e.printStackTrace();
         }
         return object;
+    }
+
+    public static List<Tuple<String,Number>> convertToChartData(Object object) {
+        Class clazz = object.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        List<Tuple<String, Number>> result = new LinkedList<>();
+        for (Field field: fields) {
+            if (Number.class.isAssignableFrom(field.getType())) {
+                Tuple<String,Number> tuple = new Tuple<>();
+                tuple.setX(field.getName());
+                try {
+                    field.setAccessible(true);
+                    tuple.setY((Number) field.get(object));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } finally {
+                    field.setAccessible(false);
+                }
+                result.add(tuple);
+            }
+        }
+        return result;
     }
 
 }
