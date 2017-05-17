@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Helvetica Neue For Number";
+  src: local("Helvetica Neue");
+  unicode-range: U+30-39;
+}
+.text-overflow {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.bread {
+  height: 64px;
+  line-height: 64px;
+  padding: 0 24px;
+  margin-bottom: -24px;
+}

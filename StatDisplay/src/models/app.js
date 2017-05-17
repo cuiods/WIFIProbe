@@ -22,7 +22,7 @@ export default {
     siderFold: localStorage.getItem('probeSiderFold') === 'true',
     darkTheme: localStorage.getItem('probeDarkTheme') !== 'false',
     isNavbar: document.body.clientWidth < 769,
-    navOpenKeys: JSON.parse(localStorage.getItem(`${prefix}navOpenKeys`)) || [],
+    navOpenKeys: JSON.parse(localStorage.getItem('navOpenKeys')) || [],
 
     loading: false,
   },
@@ -146,6 +146,13 @@ export default {
 
     hideNavbar(state){
       return {...state, isNavbar:false};
+    },
+
+    handleNavOpenKeys (state, action) {
+      return {
+        ...state,
+        ...action.payload
+      }
     },
 
     logoutSuccess(state){

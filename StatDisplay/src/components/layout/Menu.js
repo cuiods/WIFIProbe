@@ -1,9 +1,9 @@
 /**
  * Created by yyy on 2017/5/17.
  */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { PropTypes } from 'react';
 import { Menu, Icon} from 'antd';
+import { Link } from 'dva/router'
 import { arrayToTree, queryArray } from '../../utils';
 import pathToRegexp from 'path-to-regexp';
 
