@@ -9,7 +9,8 @@ public enum ServerCode {
     SUCCESS(1000,"ok"),
     USER_NOT_FOUND(1001,"Cannot find user, make sure you have registered."),
     ERROR_PASSWORD(1002,"Error password, please check again."),
-    PARAM_FORMAT(1003,"Unsupported param format.");
+    PARAM_FORMAT(1003,"Unsupported param format."),
+    ACCESS_DENIED(1004,"NO authority to do this operation.");
 
     private int code;
     private String msg;
