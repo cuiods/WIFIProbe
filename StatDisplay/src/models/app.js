@@ -92,7 +92,7 @@ export default {
         yield put({type: 'hideNavbar'});
       }
     },
-    *switchMenuPopver ({payload}, {put}) {
+    *switchMenuPopover ({payload}, {put}) {
       yield put({
         type: 'handleSwitchMenuPopover'
       })

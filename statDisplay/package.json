@@ -19,6 +19,7 @@
     "react-cookie": "^1.0.4",
     "react-countup": "latest",
     "react-dom": "^15.1.0",
+    "react-helmet": "^5.0.3",
     "recharts": "^0.21.2",
     "watchjs": "0.0.0"
   },
