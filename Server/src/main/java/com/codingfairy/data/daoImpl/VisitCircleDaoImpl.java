@@ -42,11 +42,11 @@ public class VisitCircleDaoImpl implements VisitCircleDao {
     @Override
     public List<VisitCircleVo> getVisitCircleStat(int startHour, QueryThreshold threshold, int statRange, String probeId) {
         String isProbeSelected = probeId==null || probeId.isEmpty()? "": "AND wifiProb = :probeId ";
-        String sqlQuery = "SELECT id,wifiProb,DATE_FORMAT(hour,:dateFormat), " +
+        String sqlQuery = "SELECT wifiProb,DATE_FORMAT(hour,:dateFormat), " +
                 "sum(data0),sum(data1),sum(data2),sum(data3),sum(data4),sum(data5),sum(data6),sum(data7),sum(data8),sum(data9) " +
                 "FROM store_hours " +
-                "WHERE TO_SECONDS(hour) >= (:startHour*3600) " + isProbeSelected+
-                " GROUP BY id,wifiProb,DATE_FORMAT(hour,:dateFormat) " +
+                "WHERE UNIX_TIMESTAMP(hour) >= (:startHour*3600) " + isProbeSelected+
+                " GROUP BY wifiProb,DATE_FORMAT(hour,:dateFormat) " +
                 "LIMIT 0,:statRange";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("dateFormat", ThresholdUtil.convertToString(threshold));
@@ -70,7 +70,7 @@ public class VisitCircleDaoImpl implements VisitCircleDao {
      */
     @Override
     public VisitCircleEntity findByHourAndProbe(int hour, String probeId) {
-        Timestamp timestamp = new Timestamp(hour*3600*1000);
+        Timestamp timestamp = new Timestamp(((long) hour)*3600*1000);
         return visitingCircleRepository.findByHourAndWifiProb(timestamp,probeId);
     }
 

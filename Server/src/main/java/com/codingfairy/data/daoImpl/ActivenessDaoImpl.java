@@ -43,11 +43,11 @@ public class ActivenessDaoImpl implements ActivenessDao {
     @Override
     public List<ActivenessVo> getActivenessStat(int startHour, QueryThreshold threshold, int statRange, String probeId) {
         String isProbeSelected = probeId==null || probeId.isEmpty()? "": "AND wifiProb = :probeId ";
-        String sqlQuery = "SELECT id,wifiProb,DATE_FORMAT(hour,:dateFormat),sum(numOfHighActive)," +
+        String sqlQuery = "SELECT wifiProb,DATE_FORMAT(hour,:dateFormat),sum(numOfHighActive)," +
                 "sum(numOfMedianActive),sum(numOfLowActive),sum(numOfSleepActive) " +
                 "FROM activeness " +
-                "WHERE TO_SECONDS(hour) >= (:startHour*3600) " + isProbeSelected+
-                " GROUP BY id,wifiProb,DATE_FORMAT(hour,:dateFormat) " +
+                "WHERE UNIX_TIMESTAMP(hour) >= (:startHour*3600) " + isProbeSelected+
+                " GROUP BY wifiProb,DATE_FORMAT(hour,:dateFormat) " +
                 "LIMIT 0,:statRange";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("dateFormat", ThresholdUtil.convertToString(threshold));
@@ -71,7 +71,8 @@ public class ActivenessDaoImpl implements ActivenessDao {
      */
     @Override
     public ActivenessEntity findByHourAndProbe(int hour, String probeId) {
-        Timestamp timestamp = new Timestamp(hour*1000*60*60);
+        Timestamp timestamp = new Timestamp(((long) hour)*3600*1000);
+        System.out.println(timestamp.getTime());
         return activenessRepository.findByHourAndWifiProb(timestamp,probeId);
     }
 
