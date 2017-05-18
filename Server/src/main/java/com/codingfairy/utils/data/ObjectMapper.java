@@ -30,8 +30,9 @@ public class ObjectMapper {
         try {
             object = clazz.newInstance();
             Field[] fields = clazz.getDeclaredFields();
-            for (int i = 0; i < fields.length && i < objects.length; i++) {
-                Field field = fields[i];
+            for (int i = 0; i < fields.length-1 && i < objects.length; i++) {
+                //ignore id attr
+                Field field = fields[i+1];
                 Object attrObj = objects[i];
                 field.setAccessible(true);
                 if (field.getType().equals(attrObj.getClass())
@@ -51,9 +52,10 @@ public class ObjectMapper {
     }
 
     public static List<Tuple<String,Number>> convertToChartData(Object object) {
+        List<Tuple<String, Number>> result = new LinkedList<>();
+        if (object==null) return result;
         Class clazz = object.getClass();
         Field[] fields = clazz.getDeclaredFields();
-        List<Tuple<String, Number>> result = new LinkedList<>();
         for (Field field: fields) {
             if (Number.class.isAssignableFrom(field.getType())) {
                 Tuple<String,Number> tuple = new Tuple<>();

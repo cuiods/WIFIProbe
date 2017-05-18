@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class AuthSecurity implements UserDetailsService{
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         UserEntity userEntity = userDao.findByName(s);
         if (userEntity == null) throw new UsernameNotFoundException("Cannot find user: "+s);
-        List<GrantedAuthority> authorities = Collections.emptyList();
+        List<GrantedAuthority> authorities = new ArrayList<>(1);
         authorities.add(new SimpleGrantedAuthority(userEntity.getRole().toString().toUpperCase()));
         return new ServerUser(userEntity.getUsername(),userEntity.getPassword(),true,
                 true,true,true,authorities);

@@ -43,12 +43,12 @@ public class FlowDaoImpl implements FlowDao {
     @Override
     public List<FlowVo> getFlowStat(int startHour, QueryThreshold threshold, int statRange, String probeId) {
         String isProbeSelected = probeId==null || probeId.isEmpty()? "": "AND wifiProb = :probeId ";
-        String sqlQuery = "SELECT id,wifiProb,DATE_FORMAT(hour,:dateFormat),sum(inNoOutWifi), " +
+        String sqlQuery = "SELECT wifiProb,DATE_FORMAT(hour,:dateFormat),sum(inNoOutWifi), " +
                 "sum(inNoOutStore),sum(outNoInWifi),sum(outNoInStore),sum(inAndOutWifi),sum(intAndOutStore), " +
                 "sum(stayInWifi), sum(stayInStore), avg(jumpRate), avg(deepVisit), avg(inStoreRate)" +
                 "FROM flow " +
-                "WHERE TO_SECONDS(hour) >= (:startHour*3600) " + isProbeSelected+
-                " GROUP BY id,wifiProb,DATE_FORMAT(hour,:dateFormat) " +
+                "WHERE UNIX_TIMESTAMP(hour) >= (:startHour*3600) " + isProbeSelected+
+                " GROUP BY wifiProb,DATE_FORMAT(hour,:dateFormat) " +
                 "LIMIT 0,:statRange";
         Query query = entityManager.createNativeQuery(sqlQuery);
         query.setParameter("dateFormat", ThresholdUtil.convertToString(threshold));
@@ -72,7 +72,7 @@ public class FlowDaoImpl implements FlowDao {
      */
     @Override
     public FlowEntity findByHourAndProbe(int hour, String probeId) {
-        Timestamp timestamp = new Timestamp(hour*1000*3600);
+        Timestamp timestamp = new Timestamp(((long) hour)*3600*1000);
         return flowRepository.findByHourAndWifiProb(timestamp,probeId);
     }
 
