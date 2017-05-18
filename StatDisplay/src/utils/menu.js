@@ -3,7 +3,6 @@ module.exports = [
     id: 1,
     icon: 'laptop',
     name: 'Customer Flow',
-    router: '/dashboard',
   },
   {
     id: 11,
@@ -11,7 +10,7 @@ module.exports = [
     mpid: 1,
     name: 'customer flow',
     icon: 'line-chart',
-    router: '/chart/lineChart',
+    router: '/customerFlow/customerFlow',
   },
   {
     id: 12,
@@ -19,7 +18,7 @@ module.exports = [
     mpid: 1,
     name: 'inStore flow',
     icon: 'line-chart',
-    router: '/chart/lineChart',
+    router: '/customerFlow/instoreFlow',
   },
   {
     id: 13,
@@ -27,7 +26,7 @@ module.exports = [
     mpid: 1,
     name: 'inStore rate',
     icon: 'line-chart',
-    router: '/chart/lineChart',
+    router: '/customerFlow/inStoreRate',
   },
   {
     id: 14,
@@ -35,7 +34,7 @@ module.exports = [
     mpid: 1,
     name: 'deepVisit rate',
     icon: 'line-chart',
-    router: '/chart/lineChart',
+    router: '/customerFlow/deepVisitRate',
   },
   {
     id: 15,
@@ -43,33 +42,35 @@ module.exports = [
     mpid: 1,
     name: 'outStore rate',
     icon: 'line-chart',
-    router: '/chart/lineChart',
+    router: '/customerFlow/outStoreRate',
   },
   {
     id: 2,
     bpid: 1,
     name: 'Customer Activeness',
     icon: 'user',
-    router: '/user',
+    router: '/customerActiveness',
   },
   {
     id: 3,
     bpid: 1,
     name: 'New and Old',
     icon: 'api',
-    router: '/request',
+    router: '/newAndOld',
   },
   {
     id: 4,
     bpid: 1,
     name: 'InStore Hours',
     icon: 'camera-o',
+    router: '/inStoreHours'
   },
   {
     id: 5,
     bpid: 1,
     name: 'Visit Cycle',
     icon: 'code-o',
+    router: '/visitCycle'
   },
 
 ]
