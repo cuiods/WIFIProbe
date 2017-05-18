@@ -23,7 +23,7 @@ import java.util.List;
  * Created by cuihao on 2017-05-17.
  * visit circle stat controller
  */
-@Api(value = "/visitCircle")
+@Api(value = "/visitCircle", description = "Visit circle statistic API")
 @RestController
 @RequestMapping("/api/v1/visitCircle")
 public class VisitCircleController {

@@ -31,7 +31,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("WIFIProbe Application RESTFul APIs")
-                .description("This is system API for IFIProbe application. ")
+                .description("This is system API for WIFIProbe application. ")
                 .termsOfServiceUrl("http://www.codingfairy.com")
                 .contact("CodingFairy")
                 .version("1.0")

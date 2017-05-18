@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * Created by cuihao on 2017-05-17.
  * probe id controller
  */
-@Api(value = "/probe", description = "Probe api")
+@Api(value = "/probe", description = "Probe API")
 @RestController
 @RequestMapping("/api/v1/probe")
 public class ProbeController {

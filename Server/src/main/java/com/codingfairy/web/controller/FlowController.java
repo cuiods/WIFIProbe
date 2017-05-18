@@ -23,7 +23,7 @@ import java.util.List;
  * Created by cuihao on 2017-05-17.
  * flow statistic controller
  */
-@Api(value = "/flow")
+@Api(value = "/flow", description = "Customer flow statistic API")
 @RestController
 @RequestMapping("/api/v1/flow")
 public class FlowController {

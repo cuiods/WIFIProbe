@@ -23,7 +23,7 @@ import java.util.List;
  * Created by cuihao on 2017-05-17.
  * get activeness data controller
  */
-@Api(value = "/activeness")
+@Api(value = "/activeness", description = "Activeness statistic API")
 @RestController
 @RequestMapping("/api/v1/activeness")
 public class ActivenessController {

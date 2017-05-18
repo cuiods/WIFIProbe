@@ -23,7 +23,7 @@ import java.util.List;
  * Created by cuihao on 2017-05-17.
  * in store hours controller
  */
-@Api(value = "/storeHour")
+@Api(value = "/storeHour", description = "In store hour statistic API")
 @RestController
 @RequestMapping("/api/v1/storeHour")
 public class StoreHourController {

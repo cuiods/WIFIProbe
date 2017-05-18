@@ -23,7 +23,7 @@ import java.util.List;
  * Created by cuihao on 2017-05-17.
  * new old controller
  */
-@Api(value = "/newOld")
+@Api(value = "/newOld", description = "New old customer API")
 @RestController
 @RequestMapping("/api/v1/newOld")
 public class NewOldController {
