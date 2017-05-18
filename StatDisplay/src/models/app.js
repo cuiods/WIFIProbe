@@ -33,7 +33,7 @@ export default {
         if (location.pathname !== '/') {
           let userInfo = cookie.load('info');
           if(userInfo == null){//未登录则跳转到登录页面
-            // dispatch(routerRedux.push('/'));
+            dispatch(routerRedux.push('/'));
           }else{
             dispatch({
               type: 'storeInfo',
@@ -57,7 +57,7 @@ export default {
       });
       if(data){
         let verifyFlag = data.code;
-        if(verifyFlag == 200){//登录成功
+        if(verifyFlag == 1000){//登录成功
           let userVo = data.data;
           cookie.save('info',userVo);
           BasicAuth.setAuth(payload.username, payload.password);

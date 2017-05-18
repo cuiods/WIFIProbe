@@ -96,23 +96,22 @@ function IndexPage({ children, location, dispatch, app }) {
   };
 
   const breadProps = {
-    menu,
+    menu
   };
 
   const { iconFontJS, iconFontCSS } = config;
 
-  let test = true;
 
   return (
     <div>
-      {test?
+      {isLogin?
         <div className={classnames(styles.layout, {[styles.fold]: isNavbar ? false : siderFold}, {[styles.withnavbar]: isNavbar})}>
           {!isNavbar ? <aside className={classnames(styles.sider, {[styles.light]: !darkTheme})}>
             <Sider {...siderProps} />
           </aside> : ''}
           <div className={styles.main}>
             <Header {...headerProps} />
-
+            <Bread {...breadProps} location={location}/>
             <div className={styles.container}>
               <div className={styles.content}>
                 {children}

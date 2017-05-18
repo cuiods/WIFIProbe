@@ -2,12 +2,17 @@
  * Created by yyy on 2017/5/16.
  */
 import React, { PropTypes } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
+import { Form, Icon, Input, Button, Checkbox, Card, Alert } from 'antd';
 import styles from './LoginForm.less';
 
 const FormItem = Form.Item;
 
 const LoginForm = ({
+  userId,
+  alertVisible,
+  loginMsg,
+  onLogin,
+  closeAlert,
   form: {
     validateFields,
     getFieldDecorator,
@@ -15,18 +20,42 @@ const LoginForm = ({
 }) => {
   function handleSubmit(e) {
     e.preventDefault();
-    // to do
+    validateFields((err, values) => {
+      if (!err) {
+        // console.log('Received values of form: ', values);
+        onLogin(values);
+      }
+    });
   }
 
+  function onClose() {
+    closeAlert();
+  }
+
+  function loginFail(alertVisible){
+    if(alertVisible){
+      return (
+        <Alert
+          message="Fail! Please ensure your username and password is right."
+          description={loginMsg}
+          type="error"
+          closable
+          onClose = {onClose}
+          />
+      )
+    }
+  }
   return (
     <div className={styles['login-form']}>
-
-      <div className={styles.alert} />
+      <div className={styles.alert} >
+        {loginFail(alertVisible)}
+      </div>
       <Card className={styles['card']} >
         <h1 className={styles['title']}>Log In</h1>
         <Form className={styles['login-inline-form']} onSubmit={handleSubmit}>
           <FormItem>
             {getFieldDecorator('username', {
+              initialValue: userId,
               rules: [{ required: true, message: 'Please enter username' }],
             })(
               <Input addonBefore={<Icon type="user" />} placeholder="username" />,

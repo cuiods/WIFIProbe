@@ -9,10 +9,6 @@ const Bread = ({ menu,location }) => {
   // 匹配当前路由
   let pathArray = []
   let current
-  for(let key in location){
-    console.log("**"+key+":"+location[key]);
-  }
-  console.log(location.href);
   for (let index in menu) {
     if (menu[index].router && pathToRegexp(menu[index].router).exec(location.pathname)) {
       current = menu[index]//当前的url路径与此菜单中的router的路径相匹配
