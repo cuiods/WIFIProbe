@@ -33,7 +33,7 @@ export default {
         if (location.pathname !== '/') {
           let userInfo = cookie.load('info');
           if(userInfo == null){//未登录则跳转到登录页面
-            dispatch(routerRedux.push('/'));
+            // dispatch(routerRedux.push('/'));
           }else{
             dispatch({
               type: 'storeInfo',
