@@ -5,6 +5,7 @@ import com.codingfairy.bl.vo.StoreHoursVo;
 import com.codingfairy.data.dao.StoreHoursDao;
 import com.codingfairy.data.entity.StoreHoursEntity;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.data.ObjectMapper;
 import com.codingfairy.utils.enums.QueryThreshold;
@@ -40,8 +41,10 @@ public class StoreHoursServiceImpl implements StoreHoursService {
     }
 
     @Override
-    public StoreHoursVo findById(int id) {
-        return new StoreHoursVo(storeHoursDao.findById(id));
+    public StoreHoursVo findById(int id) throws ServerException {
+        StoreHoursEntity entity = storeHoursDao.findById(id);
+        if (entity==null) throw new ServerException(ServerCode.NOT_FOUND);
+        return new StoreHoursVo(entity);
     }
 
     @Override

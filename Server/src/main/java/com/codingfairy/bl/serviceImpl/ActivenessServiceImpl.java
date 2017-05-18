@@ -5,6 +5,7 @@ import com.codingfairy.bl.vo.ActivenessVo;
 import com.codingfairy.data.dao.ActivenessDao;
 import com.codingfairy.data.entity.ActivenessEntity;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.data.ObjectMapper;
 import com.codingfairy.utils.enums.QueryThreshold;
@@ -41,8 +42,10 @@ public class ActivenessServiceImpl implements ActivenessService {
     }
 
     @Override
-    public ActivenessVo findById(int id) {
-        return new ActivenessVo(activenessDao.findById(id));
+    public ActivenessVo findById(int id) throws ServerException {
+        ActivenessEntity entity = activenessDao.findById(id);
+        if (entity==null) throw new ServerException(ServerCode.NOT_FOUND);
+        return new ActivenessVo(entity);
     }
 
     @Override

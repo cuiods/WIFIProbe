@@ -2,6 +2,7 @@ package com.codingfairy.bl.service;
 
 import com.codingfairy.bl.vo.FlowVo;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.web.json.Tuple;
 import com.codingfairy.web.json.analysis.element.CustomerFlowElement;
@@ -18,7 +19,7 @@ public interface FlowService {
 
     List<Tuple<String,Number>> findByHourAndProbe(int hour, String probeId);
 
-    FlowVo findById(int id);
+    FlowVo findById(int id) throws ServerException;
 
     FlowVo save(CustomerFlowElement flowElement);
 }

@@ -2,6 +2,7 @@ package com.codingfairy.bl.service;
 
 import com.codingfairy.bl.vo.ActivenessVo;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.web.json.Tuple;
 import com.codingfairy.web.json.analysis.element.CustomerActivenessElement;
@@ -18,7 +19,7 @@ public interface ActivenessService {
 
     List<Tuple<String,Number>> findByHourAndProbe(int hour, String probeId);
 
-    ActivenessVo findById(int id);
+    ActivenessVo findById(int id) throws ServerException;
 
     ActivenessVo save(CustomerActivenessElement activenessElement);
 }

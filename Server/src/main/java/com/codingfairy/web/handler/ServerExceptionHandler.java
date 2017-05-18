@@ -36,8 +36,8 @@ public class ServerExceptionHandler {
     }
 
     @ExceptionHandler(value = ServerException.class)
-    public ResultVo<ServerException> serverExceptionHandler(ServerException exception) throws Exception {
-        return new ResultVo<>(exception,exception);
+    public ResultVo<String> serverExceptionHandler(ServerException exception) throws Exception {
+        return new ResultVo<>(exception,exception.getMessage());
     }
 
     @ExceptionHandler(value = ParamException.class)
@@ -49,5 +49,11 @@ public class ServerExceptionHandler {
     public ResultVo<String> accessDeniedExceptionHandler(AccessDeniedException exception)
             throws Exception {
         return new ResultVo<>(ServerCode.ACCESS_DENIED,exception.getReason() +":"+exception.getMessage());
+    }
+
+    @ExceptionHandler(value = Exception.class)
+    public ResultVo<String> unknownExceptionHandler(Exception exception)
+            throws Exception {
+        return new ResultVo<>(ServerCode.UNKNOWN_ERROR,exception.getMessage());
     }
 }

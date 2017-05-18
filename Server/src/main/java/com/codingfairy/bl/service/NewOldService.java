@@ -2,6 +2,7 @@ package com.codingfairy.bl.service;
 
 import com.codingfairy.bl.vo.NewOldVo;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.web.json.Tuple;
 import com.codingfairy.web.json.analysis.element.NewOldCustomElement;
@@ -18,7 +19,7 @@ public interface NewOldService {
 
     List<Tuple<String,Number>> findByHourAndProbe(int hour, String probeId);
 
-    NewOldVo findById(int id);
+    NewOldVo findById(int id) throws ServerException;
 
     NewOldVo save(NewOldCustomElement newOldCustomElement);
 }

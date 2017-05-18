@@ -4,6 +4,7 @@ import com.codingfairy.bl.service.ActivenessService;
 import com.codingfairy.bl.vo.ActivenessVo;
 import com.codingfairy.bl.vo.ResultVo;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.web.json.QueryJson;
@@ -51,7 +52,7 @@ public class ActivenessController {
     @ApiOperation(value = "Activeness Statistic Detail", notes = "Query detail activeness statistic data by id",
             response = ActivenessVo.class,produces = "application/json;charset=UTF-8")
     @GetMapping(value = "/id",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultVo<ActivenessVo> getById(@RequestParam int id) {
+    public ResultVo<ActivenessVo> getById(@RequestParam int id) throws ServerException {
         return new ResultVo<>(ServerCode.SUCCESS, service.findById(id));
     }
 

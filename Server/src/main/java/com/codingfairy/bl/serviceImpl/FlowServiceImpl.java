@@ -5,6 +5,7 @@ import com.codingfairy.bl.vo.FlowVo;
 import com.codingfairy.data.dao.FlowDao;
 import com.codingfairy.data.entity.FlowEntity;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.data.ObjectMapper;
 import com.codingfairy.utils.enums.QueryThreshold;
@@ -39,8 +40,10 @@ public class FlowServiceImpl implements FlowService {
     }
 
     @Override
-    public FlowVo findById(int id) {
-        return new FlowVo(flowDao.findById(id));
+    public FlowVo findById(int id) throws ServerException {
+        FlowEntity entity = flowDao.findById(id);
+        if (entity==null) throw new ServerException(ServerCode.NOT_FOUND);
+        return new FlowVo(entity);
     }
 
     @Override

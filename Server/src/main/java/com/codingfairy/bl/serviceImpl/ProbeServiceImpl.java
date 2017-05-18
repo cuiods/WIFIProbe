@@ -4,6 +4,8 @@ import com.codingfairy.bl.service.ProbeService;
 import com.codingfairy.bl.vo.ProbeVo;
 import com.codingfairy.data.dao.ProbeDao;
 import com.codingfairy.data.entity.ProbeEntity;
+import com.codingfairy.exception.ServerException;
+import com.codingfairy.utils.constant.ServerCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,9 @@ public class ProbeServiceImpl implements ProbeService {
     }
 
     @Override
-    public ProbeVo findById(int id) {
-        return new ProbeVo(probeDao.findById(id));
+    public ProbeVo findById(int id) throws ServerException {
+        ProbeEntity probeEntity = probeDao.findById(id);
+        if (probeEntity==null) throw new ServerException(ServerCode.NOT_FOUND);
+        return new ProbeVo(probeEntity);
     }
 }

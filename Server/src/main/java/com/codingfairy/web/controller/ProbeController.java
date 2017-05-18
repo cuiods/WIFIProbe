@@ -3,6 +3,7 @@ package com.codingfairy.web.controller;
 import com.codingfairy.bl.service.ProbeService;
 import com.codingfairy.bl.vo.ProbeVo;
 import com.codingfairy.bl.vo.ResultVo;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.web.json.PageJson;
 import io.swagger.annotations.Api;
@@ -36,7 +37,7 @@ public class ProbeController {
     @ApiOperation(value = "Get a probe",notes = "Get a probe by id",
             response = ProbeVo.class, produces = "application/json;charset=UTF-8")
     @GetMapping(value = "/detail",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultVo<ProbeVo> getOne(@RequestParam int id) {
+    public ResultVo<ProbeVo> getOne(@RequestParam int id) throws ServerException {
         return new ResultVo<>(ServerCode.SUCCESS,probeService.findById(id));
     }
 }

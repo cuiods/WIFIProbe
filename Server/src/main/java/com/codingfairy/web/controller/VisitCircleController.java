@@ -4,6 +4,7 @@ import com.codingfairy.bl.service.VisitCircleService;
 import com.codingfairy.bl.vo.ResultVo;
 import com.codingfairy.bl.vo.VisitCircleVo;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.web.json.QueryJson;
@@ -51,7 +52,7 @@ public class VisitCircleController {
     @ApiOperation(value = "VisitCircle Statistic Detail", notes = "Query detail visitCircle statistic data by id",
             response = VisitCircleVo.class,produces = "application/json;charset=UTF-8")
     @GetMapping(value = "/id",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultVo<VisitCircleVo> getById(@RequestParam int id) {
+    public ResultVo<VisitCircleVo> getById(@RequestParam int id) throws ServerException {
         return new ResultVo<>(ServerCode.SUCCESS, service.findById(id));
     }
 

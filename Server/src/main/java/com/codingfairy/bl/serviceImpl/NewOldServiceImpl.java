@@ -5,6 +5,7 @@ import com.codingfairy.bl.vo.NewOldVo;
 import com.codingfairy.data.dao.NewOldDao;
 import com.codingfairy.data.entity.NewOldEntity;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.data.ObjectMapper;
 import com.codingfairy.utils.enums.QueryThreshold;
@@ -39,8 +40,10 @@ public class NewOldServiceImpl implements NewOldService {
     }
 
     @Override
-    public NewOldVo findById(int id) {
-        return new NewOldVo(newOldDao.findById(id));
+    public NewOldVo findById(int id) throws ServerException {
+        NewOldEntity entity = newOldDao.findById(id);
+        if (entity == null) throw new ServerException(ServerCode.NOT_FOUND);
+        return new NewOldVo(entity);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.codingfairy.bl.service.FlowService;
 import com.codingfairy.bl.vo.FlowVo;
 import com.codingfairy.bl.vo.ResultVo;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.web.json.QueryJson;
@@ -51,7 +52,7 @@ public class FlowController {
     @ApiOperation(value = "Flow Statistic Detail", notes = "Query detail flow statistic data by id",
             response = FlowVo.class,produces = "application/json;charset=UTF-8")
     @GetMapping(value = "/id",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResultVo<FlowVo> getById(@RequestParam int id) {
+    public ResultVo<FlowVo> getById(@RequestParam int id) throws ServerException {
         return new ResultVo<>(ServerCode.SUCCESS, service.findById(id));
     }
 }

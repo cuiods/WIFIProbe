@@ -6,6 +6,7 @@ import com.codingfairy.bl.vo.VisitCircleVo;
 import com.codingfairy.data.dao.VisitCircleDao;
 import com.codingfairy.data.entity.VisitCircleEntity;
 import com.codingfairy.exception.ParamException;
+import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.data.ObjectMapper;
 import com.codingfairy.utils.enums.QueryThreshold;
@@ -41,8 +42,10 @@ public class VisitCircleServiceImpl implements VisitCircleService {
     }
 
     @Override
-    public VisitCircleVo findById(int id) {
-        return new VisitCircleVo(visitCircleDao.findById(id));
+    public VisitCircleVo findById(int id) throws ServerException {
+        VisitCircleEntity visitCircleEntity = visitCircleDao.findById(id);
+        if (visitCircleEntity==null) throw new ServerException(ServerCode.NOT_FOUND);
+        return new VisitCircleVo(visitCircleEntity);
     }
 
     @Override
