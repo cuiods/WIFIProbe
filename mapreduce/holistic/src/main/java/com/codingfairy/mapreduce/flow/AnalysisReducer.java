@@ -5,6 +5,7 @@ import com.codingfairy.to.KeyWrapper;
 import com.codingfairy.to.ValueWrapper;
 import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.NewOldCustomElement;
+import com.google.gson.Gson;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
@@ -16,7 +17,17 @@ import java.util.Iterator;
 /**
  * Created by darxan on 17-5-20.
  */
-public class AnalysisReducer extends Reducer<KeyWrapper, ValueWrapper, Text, Text> {
+public class AnalysisReducer extends Reducer<KeyWrapper, ValueWrapper, KeyWrapper, Text> {
+
+    private Gson gson ;
+    private Text text ;
+
+    @Override
+    protected void setup(Context context) throws IOException, InterruptedException {
+        super.setup(context);
+        gson = new Gson();
+        text = new Text();
+    }
 
     @Override
     protected void reduce(KeyWrapper key, Iterable<ValueWrapper> values, Context context)
@@ -51,5 +62,7 @@ public class AnalysisReducer extends Reducer<KeyWrapper, ValueWrapper, Text, Tex
             }
             ((IntWritable)valueWrapper.getValue()).set(first);
         }
+        text.set(gson.toJson(valueWrapper.getValue()));
+        context.write(key, text);
     }
 }

@@ -68,6 +68,9 @@ public class CustomerFlowAnalyze {
         customerFlowElements[hourIndex] = customerFlowElement;
         newOldCustomElements[hourIndex] = newOldCustom;
 
+        customerFlowElement.setHour(startTime);
+        newOldCustom.setHour(startTime);
+
         //move to the first valid position
         for (;;searchIndex++) {
             if (searchIndex>=phoneJsons.size()){
@@ -80,6 +83,7 @@ public class CustomerFlowAnalyze {
 
             Logger.println("--- time is too earlier");
         }
+
         analyzeInStore(false);
         analyzeInWifi(true);
 
@@ -88,7 +92,6 @@ public class CustomerFlowAnalyze {
         customerFlowElement.setInStoreRate(customerFlowElement.getTotalInStore()>0?1:0);
         customerFlowElement.setTotal(1);
         customerFlowElement.setJumpRate(jumpCount);
-        customerFlowElement.setHour(startTime);
 
     }
 

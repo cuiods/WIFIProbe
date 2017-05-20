@@ -3,6 +3,11 @@ package com.codingfairy.mapreduce;
 import com.codingfairy.mapreduce.classify.CustomerKeyCombiner;
 import com.codingfairy.mapreduce.classify.CustomerKeyMapper;
 import com.codingfairy.mapreduce.classify.CustomerKeyReducer;
+import com.codingfairy.mapreduce.flow.AnalysisCombiner;
+import com.codingfairy.mapreduce.flow.AnalysisMapper;
+import com.codingfairy.mapreduce.flow.AnalysisReducer;
+import com.codingfairy.to.KeyWrapper;
+import com.codingfairy.to.ValueWrapper;
 import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import org.apache.hadoop.conf.Configuration;
@@ -22,52 +27,71 @@ public class Holistic {
 
     public static String START_TIME = "START_TIME";
 
-    public static void main(String[] args) throws Exception {
-        final String inputFilePath = args[0];
-        final String outputFilePath = args[1];
-        final Long startTime = args.length>2?Long.parseLong(args[2]):0L;
 
-        Logger.println("initial-----------------------------");
-        Logger.println("input    : "+args[0]);
-        Logger.println("output   : "+args[1]);
-        Logger.println("sta_time : "+args[2]);
-        Logger.println("initial-----------------------------");
+    public static void classify( final String inputFilePath,
+                                 final String outputFilePath,
+                                 final Long startTime) throws Exception{
 
         Configuration conf = new Configuration();
         conf.setLong(START_TIME, startTime);
 
 
-        Logger.println("initial configuration");
         Job jobClassify = Job.getInstance(conf, "classify");
-        Logger.println("setting job name");
+
         jobClassify.setJarByClass(Holistic.class);
-        Logger.println("set jar main class : "+Holistic.class);
+
         jobClassify.setMapperClass(CustomerKeyMapper.class);
-        Logger.println("set mapper");
         jobClassify.setReducerClass(CustomerKeyReducer.class);
-        Logger.println("set reducer");
         jobClassify.setCombinerClass(CustomerKeyCombiner.class);
-        Logger.println("set combiner");
 
 
         jobClassify.setOutputKeyClass(Text.class);
-        Logger.println("set output key:");
         jobClassify.setOutputValueClass(Text.class);
-        Logger.println("set output value");
 
         jobClassify.setMapOutputKeyClass(Text.class);
-        Logger.println("set map output key");
         jobClassify.setMapOutputValueClass(PhoneJson.class);
-        Logger.println("set map output value");
 
 
         FileInputFormat.addInputPath(jobClassify, new Path(inputFilePath));
-        Logger.println("set input path");
         FileOutputFormat.setOutputPath(jobClassify, new Path(outputFilePath));
-        Logger.println("set output path");
 
-        Logger.println("=============================");
-        Logger.println("waiting job.....");
+
         System.exit(jobClassify.waitForCompletion(true) ? 0 : 1);
+    }
+
+
+    public static void analyze(final String inputFilePath,
+                               final String outputFilePath,
+                               final Long startTime) throws Exception {
+        Configuration conf = new Configuration();
+        conf.setLong(START_TIME, startTime);
+
+        Job jobAnalyze = Job.getInstance(conf, "analyze");
+
+        jobAnalyze.setJarByClass(Holistic.class);
+
+        jobAnalyze.setMapperClass(AnalysisMapper.class);
+        jobAnalyze.setReducerClass(AnalysisReducer.class);
+        jobAnalyze.setCombinerClass(AnalysisCombiner.class);
+
+        jobAnalyze.setOutputKeyClass(KeyWrapper.class);
+        jobAnalyze.setOutputValueClass(Text.class);
+
+        jobAnalyze.setMapOutputKeyClass(KeyWrapper.class);
+        jobAnalyze.setMapOutputValueClass(ValueWrapper.class);
+
+        FileInputFormat.addInputPath(jobAnalyze, new Path(inputFilePath));
+        FileOutputFormat.setOutputPath(jobAnalyze, new Path(outputFilePath));
+
+        System.exit(jobAnalyze.waitForCompletion(true) ? 0 : 1);
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length>=2) {
+            final String inputFilePath = args[0];
+            final String outputFilePath = args[1];
+            final Long startTime = args.length>2?Long.parseLong(args[2]):0L;
+            analyze(inputFilePath, outputFilePath, startTime);
+        }
     }
 }

@@ -22,29 +22,27 @@ public class ValueWrapper implements Writable{
 
 
     private Writable value;
-    private Class writableClass;
 
+
+    public ValueWrapper() {
+    }
 
     public ValueWrapper(CustomerFlowElement customerFlowElement) {
-
         this.value = customerFlowElement;
-        this.writableClass = CustomerFlowElement.class;
     }
 
     public ValueWrapper(NewOldCustomElement newOldCustomElement) {
         this.value = newOldCustomElement;
-        this.writableClass = NewOldCustomElement.class;
     }
 
     public ValueWrapper(IntWritable intWritable) {
         this.value = intWritable;
-        this.writableClass = IntWritable.class;
     }
 
 
 
     public void write(DataOutput dataOutput) throws IOException {
-        new Text(this.writableClass.getSimpleName()).write(dataOutput);
+        new Text(this.value.getClass().getSimpleName()).write(dataOutput);
         this.value.write(dataOutput);
     }
 
@@ -52,17 +50,19 @@ public class ValueWrapper implements Writable{
         Text text = new Text();
         text.readFields(dataInput);
 
-        if (text.equals(IntWritable.class.getSimpleName())) {
+        Logger.println("value wrapper read class:"+text.toString());
+        String className = text.toString();
+
+        if (className.equals(IntWritable.class.getSimpleName())) {
             value = new IntWritable();
-        } else if (text.equals(NewOldCustomElement.class.getSimpleName())) {
-            value = new IntWritable();
-        } else if (text.equals(CustomerFlowElement.class.getSimpleName())) {
-            value = new IntWritable();
+        } else if (className.equals(NewOldCustomElement.class.getSimpleName())) {
+            value = new NewOldCustomElement();
+        } else if (className.equals(CustomerFlowElement.class.getSimpleName())) {
+            value = new CustomerFlowElement();
         } else {
             Logger.println("error: unrecognized class.");
             return;
         }
-        writableClass = value.getClass();
         value.readFields(dataInput);
     }
 }

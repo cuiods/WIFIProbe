@@ -16,26 +16,35 @@ public class KeyWrapper implements WritableComparable<KeyWrapper> {
 
     private Text type;
 
-    private WritableComparable writableComparable;
+    private LongWritable millisTime;
 
     public int compareTo(KeyWrapper keyWrapper) {
         int compare = type.compareTo(keyWrapper.getType());
 
         if (compare==0) {
-            return writableComparable.compareTo(keyWrapper.getWritableComparable());
+            return millisTime.compareTo(keyWrapper.getMillisTime());
         }
 
         return compare;
     }
 
     public void write(DataOutput dataOutput) throws IOException {
+        if (type==null) {
+            type = new Text("");
+        }
         type.write(dataOutput);
-        writableComparable.write(dataOutput);
+
+        if (millisTime==null)
+            millisTime = new LongWritable(-1L);
+        millisTime.write(dataOutput);
     }
 
     public void readFields(DataInput dataInput) throws IOException {
+        type = new Text();
         type.readFields(dataInput);
-        writableComparable.readFields(dataInput);
+
+        millisTime = new LongWritable();
+        millisTime.readFields(dataInput);
     }
 
 }

@@ -4,6 +4,7 @@ import com.codingfairy.config.MapKeyConfig;
 import com.codingfairy.mapreduce.logic.IntervalCalculator;
 import com.codingfairy.to.KeyWrapper;
 import com.codingfairy.to.ValueWrapper;
+import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.HourStatistic;
 import com.codingfairy.vo.analysis.element.NewOldCustomElement;
@@ -29,9 +30,14 @@ public class MapperWriter {
     }
 
     public void  write() throws IOException, InterruptedException {
+
+        Logger.println("write cycle");
         writeCycle();
+        Logger.println("write in store hour");
         writeInStoreHour();
+        Logger.println("write flow");
         writCustomerFlow();
+        Logger.println("write new old customer");
         writNewOldCustomer();
     }
 
@@ -43,9 +49,10 @@ public class MapperWriter {
         newOldKey.setType(new Text(MapKeyConfig.NEW_OLD_CUSTOMER));
 
         LongWritable longWritable = new LongWritable();
-        newOldKey.setWritableComparable(longWritable);
+        newOldKey.setMillisTime(longWritable);
 
         for (NewOldCustomElement newOldCustomElement:statistic.getNewOldCustomElements()) {
+            Logger.println("NewOldCustomElement: "+newOldCustomElement);
             longWritable.set(newOldCustomElement.getHour());
             context.write(newOldKey, new ValueWrapper(newOldCustomElement));
         }
@@ -59,9 +66,10 @@ public class MapperWriter {
         customerFlowKey.setType(new Text(MapKeyConfig.CUSTOMER_FLOW_KEY));
 
         LongWritable longWritable = new LongWritable();
-        customerFlowKey.setWritableComparable(longWritable);
+        customerFlowKey.setMillisTime(longWritable);
 
         for (CustomerFlowElement customerFlowElement:statistic.getCustomerFlowElements()) {
+            Logger.println("customerFlowElement: "+customerFlowElement);
             longWritable.set(customerFlowElement.getHour());
             context.write(customerFlowKey, new ValueWrapper(customerFlowElement));
         }
@@ -73,13 +81,14 @@ public class MapperWriter {
         cycleKey.setType(new Text(MapKeyConfig.IN_STORE_HOUR));
 
         LongWritable longWritable = new LongWritable();
-        cycleKey.setWritableComparable(longWritable);
+        cycleKey.setMillisTime(longWritable);
 
         IntWritable value = new IntWritable(1);
 
-        List<Long> cycles = statistic.getInStoreHours();
-        for (Long cycle : cycles) {
-            longWritable.set(IntervalCalculator.getInStoreInterval(cycle));
+        List<Long> inStoreHours = statistic.getInStoreHours();
+        for (Long inStoreTime : inStoreHours) {
+            Logger.println("inStoreTime");
+            longWritable.set(IntervalCalculator.getInStoreInterval(inStoreTime));
             context.write(cycleKey, new ValueWrapper(value));
         }
     }
@@ -91,11 +100,12 @@ public class MapperWriter {
         cycleKey.setType(new Text(MapKeyConfig.CYCLE));
 
         LongWritable longWritable = new LongWritable();
-        cycleKey.setWritableComparable(longWritable);
+        cycleKey.setMillisTime(longWritable);
 
         IntWritable value = new IntWritable(1);
 
         for (Long cycle : statistic.getCycles()) {
+            Logger.println("cycle");
             longWritable.set(IntervalCalculator.getCycleInterval(cycle));
             context.write(cycleKey, new ValueWrapper(value));
         }

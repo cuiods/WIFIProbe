@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Created by darxan on 2017/5/16.
  */
-public class AnalysisMapper extends Mapper<Text, Text, KeyWrapper, ValueWrapper> {
+public class AnalysisMapper extends Mapper<Object, Text, KeyWrapper, ValueWrapper> {
 
     private Gson gson;
 
@@ -46,12 +46,11 @@ public class AnalysisMapper extends Mapper<Text, Text, KeyWrapper, ValueWrapper>
     }
 
     @Override
-    protected void map(Text key, Text value, Context context)
+    protected void map(Object key, Text value, Context context)
             throws IOException, InterruptedException {
 
         Logger.println("map count: " + count++);
         Logger.println(key);
-
 
         Matcher matcher = pattern.matcher(value.toString());
         if (matcher.find()) {
@@ -60,6 +59,8 @@ public class AnalysisMapper extends Mapper<Text, Text, KeyWrapper, ValueWrapper>
             List<PhoneJson> phoneData = gson.fromJson(
                     dataString, new TypeToken<List<PhoneJson>>(){}.getType());
             HourStatistic hourStatistic = extractor.extract(phoneData);
+            if (hourStatistic==null)
+                return;
             MapperWriter mapperWriter = new MapperWriter(context, hourStatistic);
             mapperWriter.write();
         }

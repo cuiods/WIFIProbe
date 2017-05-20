@@ -3,10 +3,12 @@ package com.codingfairy.mapreduce;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import com.codingfairy.to.ValueWrapper;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -47,7 +49,7 @@ public class WordCount {
         }
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void start(String[] args) throws Exception {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "word count");
 
@@ -60,5 +62,10 @@ public class WordCount {
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
+
+    public static void main(String[] args) throws Exception {
+        Writable a = new ValueWrapper();
+        System.out.println(a.getClass().getSimpleName());
     }
 }

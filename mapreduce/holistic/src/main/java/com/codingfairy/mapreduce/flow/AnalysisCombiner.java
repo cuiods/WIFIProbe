@@ -3,6 +3,7 @@ package com.codingfairy.mapreduce.flow;
 import com.codingfairy.config.MapKeyConfig;
 import com.codingfairy.to.KeyWrapper;
 import com.codingfairy.to.ValueWrapper;
+import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.NewOldCustomElement;
 import org.apache.hadoop.io.IntWritable;
@@ -29,6 +30,16 @@ public class AnalysisCombiner extends Reducer<KeyWrapper, ValueWrapper, KeyWrapp
             return;
         }
         ValueWrapper valueWrapper = iterator.next();
+        if (valueWrapper==null) {
+            Logger.err("combiner: value wrapper is null");
+        }
+        if (valueWrapper.getValue()==null) {
+            Logger.err("combiner: value is null");
+        }
+
+        Logger.println("combiner: one key");
+        Logger.println(type);
+        Logger.println(key.getMillisTime());
 
         if (type.equals(MapKeyConfig.CUSTOMER_FLOW_KEY)) {
             CustomerFlowElement first = (CustomerFlowElement)valueWrapper.getValue();
