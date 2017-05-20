@@ -8,4 +8,8 @@ public class Logger {
     public static void println(Object object) {
         System.out.println(object);
     }
+
+    public static void debug(Object object) {
+        System.out.println(object);
+    }
 }

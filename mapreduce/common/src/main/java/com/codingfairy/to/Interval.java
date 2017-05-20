@@ -13,24 +13,16 @@ import java.io.IOException;
  * Created by darxan on 2017/5/16.
  */
 @Data
-public class Interval implements Writable{
+public class Interval{
 
 
-    private PhoneJson lower;
-    private PhoneJson upper;
+    private int lower;
+    private int upper;
 
-    public Interval(PhoneJson lower, PhoneJson upper) {
+    public Interval(int lower, int upper) {
         this.upper = upper;
         this.lower = lower;
     }
 
-    public void write(DataOutput out) throws IOException {
-        lower.write(out);
-        upper.write(out);
-    }
 
-    public void readFields(DataInput in) throws IOException {
-        lower.readFields(in);
-        upper.readFields(in);
-    }
 }

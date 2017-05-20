@@ -13,7 +13,7 @@ import java.io.IOException;
  * Detected phone data json
  */
 @Data
-public class PhoneJson implements Writable{
+public class PhoneJson implements Writable, Cloneable{
 
     private String mac;
     private String rssi;
@@ -94,5 +94,10 @@ public class PhoneJson implements Writable{
         essid5 = readChars(in);
         essid6 = readChars(in);
         time = readLong(in);
+    }
+
+    @Override
+    public PhoneJson clone() throws CloneNotSupportedException {
+        return (PhoneJson)super.clone();
     }
 }

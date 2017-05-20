@@ -5,7 +5,6 @@ import com.codingfairy.mapreduce.logic.PhoneDataCombiner;
 import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import com.google.gson.Gson;
-import org.apache.hadoop.io.ObjectWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 

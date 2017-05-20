@@ -34,7 +34,6 @@ public class PhoneDataCombiner {
     public List<PhoneJson> getPhonesData(Iterable<PhoneJson> values) {
 
         List<PhoneJson> phoneList = new ArrayList<PhoneJson>();
-        List<Interval> result = new ArrayList<Interval>();
         for (PhoneJson tempObject: values) {
             phoneList.add(tempObject);
         }
