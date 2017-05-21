@@ -36,7 +36,16 @@ public class MockData {
         }
     }
 
-    public ProbeJson mockProbeJson(long time) {
+    public List<ProbeJson> mockProbeJsonList(long startTime, long endTime, long interval) {
+        assert startTime<endTime;
+        List<ProbeJson> probeJsons = new LinkedList<ProbeJson>();
+        for (long time = startTime; time <= endTime; time+=interval) {
+            probeJsons.add(mockProbeJson(time));
+        }
+        return probeJsons;
+    }
+
+    private ProbeJson mockProbeJson(long time) {
         ProbeJson probeJson = new ProbeJson();
         probeJson.setId("1s12sz");
         probeJson.setMmac("5e:cf:7f:10:f3:77");
@@ -80,7 +89,7 @@ public class MockData {
             phoneJson.setMac(builder.toString());
             phoneJson.setRange(generateRandom(sizeRandom,1,1000)+"");
             currentRange.put(phoneJson.getMac(),Integer.valueOf(phoneJson.getRange()));
-            phoneJson.setRssi((-(100-generateRandom(sizeRandom,1,Integer.valueOf(phoneJson.getRange())%100)))+"");
+            phoneJson.setRssi((-(100-generateRandom(sizeRandom,1,Integer.valueOf(phoneJson.getRange())%98+2)))+"");
             phoneJson = packagePhoneJson(phoneJson);
             phoneJsons.put(phoneJson.getMac(),phoneJson);
         }
@@ -88,17 +97,17 @@ public class MockData {
         for (String mac: rangeMap.keySet()) {
             if (Math.random()>=0.71) continue;
             int range = rangeMap.get(mac);
-            if (range==0) continue;
+            if (range<1) continue;
             PhoneJson phoneJson = new PhoneJson();
             phoneJson.setMac(mac);
             int random = 0;
             if (Math.random()>0.8) {
                 random+=generateRandom(sizeRandom,0,1000-range>100?generateRandom(sizeRandom,0,100):1000-range);
             } else {
-                random-=generateRandom(sizeRandom,0,range-1>100?generateRandom(sizeRandom,0,100):range-1);
+                random-=generateRandom(sizeRandom,0,range-1>100?generateRandom(sizeRandom,0,100):(range-1>0?range-1:1));
             }
             phoneJson.setRange(random+range+"");
-            phoneJson.setRssi((-(100-generateRandom(sizeRandom,1,Integer.valueOf(phoneJson.getRange())%100)))+"");
+            phoneJson.setRssi((-(100-generateRandom(sizeRandom,1,Integer.valueOf(phoneJson.getRange())%98+2)))+"");
             phoneJson = packagePhoneJson(phoneJson);
             currentRange.put(mac,Integer.valueOf(phoneJson.getRange()));
         }
@@ -112,6 +121,7 @@ public class MockData {
     }
 
     private int generateRandom(Random random, int min, int max) {
+        if (max<1) max = 1;
         return  random.nextInt(max)%(max-min+1) + min;
     }
 
