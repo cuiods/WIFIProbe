@@ -101,6 +101,31 @@ public class CustomerFlowElement implements Writable {
     protected String wifiProb;
     private Long hour;
 
+    /**
+     * 比如把一个小时用分：秒表示
+     *
+     * 一个用户一个小时的的统计序列是（一个时间点表示用户该时间在商店内）：
+     *
+     *  0：00 0：01 0:02   10:00 10:01 10:02  20；01 20：02      59：58 59:59 60；00
+     *  ^^^^^^^^^^^^^^^    ^^^^^^^^^^^^^^^^   ^^^^^^^^^^^^      ^^^^^^^^^^^^^^^^^^^
+     *  ^             ^    进出一次：          进出一次           进入一次且最终没有出去
+     *  ^             ^    inAndOutWifi++；   inAndOutWifi++；   inNoOutWifi++
+     *  ^             ^
+     *  之前就进入了   ^
+     *                out:outNoIn=1
+     *
+     * 有：
+     * inAndOutWifi:2
+     * inNoOut:0
+     * outNoIn:1
+     *
+     * inNoOutStore:是统计的这一个小时内的最后时刻还是呆在里面：1 否则：0
+     * inAndOutStore:是统计的这一个小时内前后用户进出商店的次数。
+     * outNoInStore： 是统计这一个小时如果开始之前就进入了这个商店，且在这个小时内出去了，为1 否则 0
+     * stayInStore：是统计这一个小时如果开始之前就进入了这个商店，且在这个小时内没有出去。
+     *              是指整个小时一直呆在商店里面没有出去过：1 否则：0
+     *
+     */
     private int inNoOutWifi;
     private int inNoOutStore;
     private int outNoInWifi;
