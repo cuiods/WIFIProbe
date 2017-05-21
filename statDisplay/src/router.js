@@ -9,7 +9,7 @@ export default function ({history}) {
   return (
     <Router history={history}>
       <Route path="/" component={IndexPage}>
-        <Route path="/customerFlow/customerFlow" component={CustomerFlowPage}/>
+        <Route path="/customerFlow" component={CustomerFlowPage}/>
       </Route>
     </Router>
   );

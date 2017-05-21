@@ -7,11 +7,29 @@ import { Row, Col, Card } from 'antd';
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import HourFlowChart from '../../components/charts/customerFlow/customerFlow';
+import SelectorForm from '../../components/charts/customerFlow/selectorForm';
 
-function CustomerFlowPage({customerFlowInfo}) {
-  const {hourData} = customerFlowInfo;
+function CustomerFlowPage({dispatch,customerFlowInfo}) {
+  const {hourData, detailData, probeOptions} = customerFlowInfo;
+
+  const selectorProps = {
+    probeOptions,
+    getFlowData(fieldValue) {
+      dispatch({
+        type: 'customerFlowInfo/getFlow',
+        payload: fieldValue,
+      });
+
+    }
+  }
+
   return (
     <Row gutter={16}>
+      <Col lg={24} md={24}>
+        <Card title="select to get expected data">
+        <SelectorForm {...selectorProps}/>
+        </Card>
+      </Col>
       <Col lg={12} md={24} >
         <Card title="Customer Hour Flow">
           <HourFlowChart data={hourData}/>

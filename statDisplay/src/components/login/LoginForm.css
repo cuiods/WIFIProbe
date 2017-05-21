@@ -4,6 +4,12 @@
   margin-left: auto;
   margin-right: auto;
 }
+.alert[data-visible='true'] {
+  display: block;
+}
+.alert[data-visible='false'] {
+  display: none;
+}
 .title {
   margin-left: auto;
   margin-right: auto;

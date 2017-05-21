@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'dva';
-import { BackTop } from 'antd';
-import { Helmet } from 'react-helmet';
+import { BackTop,LocaleProvider} from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 import { classnames,config, menu } from '../utils';
 import '../themes/index.less';
 import './IndexPage.less';
@@ -11,6 +11,7 @@ import Sider from '../components/layout/Sider';
 import Bread from '../components/layout/Bread';
 import Footer from '../components/layout/Footer';
 import LoginForm from '../components/login/LoginForm';
+
 
 
 function IndexPage({ children, location, dispatch, app }) {
@@ -103,25 +104,27 @@ function IndexPage({ children, location, dispatch, app }) {
 
 
   return (
-    <div>
-      {isLogin?
-        <div className={classnames(styles.layout, {[styles.fold]: isNavbar ? false : siderFold}, {[styles.withnavbar]: isNavbar})}>
-          {!isNavbar ? <aside className={classnames(styles.sider, {[styles.light]: !darkTheme})}>
-            <Sider {...siderProps} />
-          </aside> : ''}
-          <div className={styles.main}>
-            <Header {...headerProps} />
-            <Bread {...breadProps} location={location}/>
-            <div className={styles.container}>
-              <div className={styles.content}>
-                {children}
+    <LocaleProvider locale={enUS}>
+      <div>
+        {isLogin?
+          <div className={classnames(styles.layout, {[styles.fold]: isNavbar ? false : siderFold}, {[styles.withnavbar]: isNavbar})}>
+            {!isNavbar ? <aside className={classnames(styles.sider, {[styles.light]: !darkTheme})}>
+              <Sider {...siderProps} />
+            </aside> : ''}
+            <div className={styles.main}>
+              <Header {...headerProps} />
+              <Bread {...breadProps} location={location}/>
+              <div className={styles.container}>
+                <div className={styles.content}>
+                  {children}
+                </div>
               </div>
+              <Footer />
+              <BackTop />
             </div>
-            <Footer />
-            <BackTop />
-          </div>
-        </div>:<LoginForm {...userLoginProps} /> }
-    </div>
+          </div>:<LoginForm {...userLoginProps} /> }
+      </div>
+    </LocaleProvider>
   )
 
 

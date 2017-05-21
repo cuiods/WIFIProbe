@@ -1,0 +1,167 @@
+/**
+ * Created by yyy on 2017/5/21.
+ * to provide the selector for users to choose
+ */
+
+import React, { PropTypes } from 'react';
+import { Form, Icon, Input, Button, Cascader, Card, Alert, DatePicker} from 'antd';
+import styles from './selectorForm.less';
+
+
+const FormItem = Form.Item;
+
+const SelectorForm = ({
+  probeOptions,
+  getFlowData,
+  form : {
+    getFieldDecorator,
+    validateFields,
+    getFieldsValue,
+    setFieldsValue
+  }
+}) => {
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    validateFields((err)=> {
+      if(!err) {
+        const form = getFieldsValue();
+        let divided = 1;
+        if(form.threshold == 'HOUR'){
+          divided = 1000*60*60;
+        }else if(form.threshold == 'DAY'){
+          divided = 1000*60*60*24;
+        }else if(form.threshold == 'WEEK'){
+          divided = 1000*60*60*24*7;
+        }else if(form.threshold == 'MONTH'){
+          divided = 1000*60*60*24*30;
+        }else{
+          divided = 1000*60*60*24*365;
+        }
+        const startHour =parseInt( (form.startTime).valueOf()/divided ) ;
+        const endHour = parseInt( (form.endTime).valueOf()/divided );
+        let range = endHour-startHour ;
+        console.log(form.probeId+" "+startHour+" "+range+" "+form.threshold);
+        const data = {
+          probeId: form.probeId,
+          startHour: startHour,
+          range:range,
+          threshold: form.threshold,
+        };
+        getFlowData(data);
+      }
+    });
+  }
+
+  const formItemLayout = {
+    labelCol: {
+      xs: {span:24},
+      sm: {span:6},
+    },
+    wrapperCol: {
+      xs: {span:24},
+      sm: {span:14},
+    },
+  };
+
+  function onProbeChange(value){}
+
+  const thresholdOptions = [
+    {
+      value:'HOUR', label:'HOUR',
+    },
+    {
+      value:'DAY', label:'DAY',
+    },
+    {
+      value:'WEEK', label:'WEEK',
+    },
+    {
+      value:'MONTH', label:'MONTH',
+    },
+    {
+      value:'YEAR', label:'YEAR',
+    }
+  ];
+
+  function onThreshHoldChange(value){}
+
+
+
+  return (
+    <div className={styles['selector-form']}>
+      <Form onSubmit={handleSubmit}>
+        <FormItem
+          {...formItemLayout}
+          label="ProbeId"
+          className={styles['form-item']}
+        >
+          {getFieldDecorator('probeId',{
+            initialValue: '1s12sz'
+          })(
+          <Cascader
+            options={probeOptions}
+            onChange={onProbeChange}
+            placeholder="1s12sz"
+             />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Threshold"
+          className={styles['form-item']}
+        >
+          {getFieldDecorator('threshold',{
+            initialValue: 'YEAR'
+          })(
+            <Cascader
+              options={thresholdOptions}
+              onChange={onThreshHoldChange}
+              placeholder="YEAR"
+            />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="StartTime"
+          className={styles['form-item']}
+        >
+          {getFieldDecorator('startTime',{
+            rules: [{ type: 'object', required: true, message: 'please enter the start time' }],
+          })(
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              placeholder="startTime"
+            />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="EndTime"
+          className={styles['form-item']}
+        >
+          {getFieldDecorator('endTime',{
+            rules: [{ type: 'object', required: true, message: 'please enter the end time' }],
+          })(
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              placeholder="endTime"
+            />
+          )}
+        </FormItem>
+        <FormItem className={styles['form-item']}>
+          <Button type="primary" htmlType="submit" className={styles["selector-form-button"]}>submit</Button>
+        </FormItem>
+
+      </Form>
+    </div>
+  )
+}
+
+SelectorForm.propTypes = {
+  getFlowData: PropTypes.func,
+};
+
+export default  Form.create()(SelectorForm);

@@ -3,53 +3,14 @@ module.exports = [
     id: 1,
     icon: 'laptop',
     name: 'Customer Flow',
-  },
-  {
-    id: 11,
-    bpid: 1,
-    mpid: 1,
-    name: 'customer flow',
-    icon: 'line-chart',
-    router: '/customerFlow/customerFlow',
-  },
-  {
-    id: 12,
-    bpid: 1,
-    mpid: 1,
-    name: 'inStore flow',
-    icon: 'line-chart',
-    router: '/customerFlow/instoreFlow',
-  },
-  {
-    id: 13,
-    bpid: 1,
-    mpid: 1,
-    name: 'inStore rate',
-    icon: 'line-chart',
-    router: '/customerFlow/inStoreRate',
-  },
-  {
-    id: 14,
-    bpid: 1,
-    mpid: 1,
-    name: 'deepVisit rate',
-    icon: 'line-chart',
-    router: '/customerFlow/deepVisitRate',
-  },
-  {
-    id: 15,
-    bpid: 1,
-    mpid: 1,
-    name: 'outStore rate',
-    icon: 'line-chart',
-    router: '/customerFlow/outStoreRate',
+    router: '/customerFlow'
   },
   {
     id: 2,
     bpid: 1,
-    name: 'Customer Activeness',
+    name: 'Activeness',
     icon: 'user',
-    router: '/customerActiveness',
+    router: '/activeness',
   },
   {
     id: 3,
@@ -72,5 +33,6 @@ module.exports = [
     icon: 'code-o',
     router: '/visitCycle'
   },
+
 
 ]
