@@ -8,9 +8,11 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Progressable;
 
+import javax.xml.soap.Node;
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
@@ -103,5 +105,24 @@ public class HDFSTool {
         Path dstPath = new Path(dst);
         fs.rename(srcPath, dstPath);
         fs.close();
+    }
+
+    public static void concat(String ...args) throws IOException {
+        if(args.length < 2) {
+            System.err.println("Usage HDFSConcat target srcs..");
+           return;
+        }
+
+        Configuration conf = new Configuration();
+        String uri = conf.get("fs.default.name", NodeConfig.HDFS_PATH);
+        Path path = new Path(uri);
+        DistributedFileSystem dfs =
+                (DistributedFileSystem)FileSystem.get(path.toUri(), conf);
+
+        Path [] srcs = new Path[args.length-1];
+        for(int i=1; i<args.length; i++) {
+            srcs[i-1] = new Path(args[i]);
+        }
+        dfs.concat(new Path(args[0]), srcs);
     }
 }

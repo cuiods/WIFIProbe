@@ -1,5 +1,6 @@
 package com.codingfairy.mapreduce;
 
+import com.codingfairy.config.MapKeyConfig;
 import com.codingfairy.mapreduce.classify.CustomerKeyCombiner;
 import com.codingfairy.mapreduce.classify.CustomerKeyMapper;
 import com.codingfairy.mapreduce.classify.CustomerKeyReducer;
@@ -12,11 +13,13 @@ import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-
+import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 
 /**
@@ -70,11 +73,21 @@ public class Holistic {
 
         jobAnalyze.setJarByClass(Holistic.class);
 
+        MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.NEW_OLD_CUSTOMER,
+                TextOutputFormat.class, KeyWrapper.class, Text.class);
+        MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.CUSTOMER_FLOW_KEY,
+                TextOutputFormat.class, KeyWrapper.class, Text.class);
+        MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.CYCLE,
+                TextOutputFormat.class, KeyWrapper.class, Text.class);
+        MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.IN_STORE_HOUR,
+                TextOutputFormat.class, KeyWrapper.class, Text.class);
+
+
         jobAnalyze.setMapperClass(AnalysisMapper.class);
         jobAnalyze.setReducerClass(AnalysisReducer.class);
         jobAnalyze.setCombinerClass(AnalysisCombiner.class);
 
-        jobAnalyze.setOutputKeyClass(KeyWrapper.class);
+        jobAnalyze.setOutputKeyClass(LongWritable.class);
         jobAnalyze.setOutputValueClass(Text.class);
 
         jobAnalyze.setMapOutputKeyClass(KeyWrapper.class);

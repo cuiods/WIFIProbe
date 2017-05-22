@@ -7,9 +7,11 @@ import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.NewOldCustomElement;
 import com.google.gson.Gson;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -17,17 +19,27 @@ import java.util.Iterator;
 /**
  * Created by darxan on 17-5-20.
  */
-public class AnalysisReducer extends Reducer<KeyWrapper, ValueWrapper, KeyWrapper, Text> {
+public class AnalysisReducer extends Reducer<KeyWrapper, ValueWrapper, LongWritable, Text> {
 
     private Gson gson ;
     private Text text ;
+    private MultipleOutputs<LongWritable, Text> multipleOutputs;
+
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
         super.setup(context);
         gson = new Gson();
         text = new Text();
+        multipleOutputs = new MultipleOutputs<LongWritable, Text>(context);
     }
+
+    @Override
+    public void cleanup(Context cxt)throws IOException,InterruptedException{
+        multipleOutputs.close();
+    }
+
+
 
     @Override
     protected void reduce(KeyWrapper key, Iterable<ValueWrapper> values, Context context)
@@ -63,6 +75,6 @@ public class AnalysisReducer extends Reducer<KeyWrapper, ValueWrapper, KeyWrappe
             ((IntWritable)valueWrapper.getValue()).set(first);
         }
         text.set(gson.toJson(valueWrapper.getValue()));
-        context.write(key, text);
+        multipleOutputs.write(type, key.getMillisTime(), text, type);
     }
 }
