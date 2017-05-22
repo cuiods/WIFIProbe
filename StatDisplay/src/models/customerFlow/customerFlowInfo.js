@@ -53,22 +53,21 @@ export default {
     },
 
     *updateFlow ({payload}, {call,put}) {
-      console.log('payload: '+ payload);
+      console.log("json: "+JSON.stringify(payload));
+      for(let key in payload){
+        console.log(key+":"+payload[key]);
+      }
+      console.log("MMM:"+payload.probeId);
       const data = yield call(getCustomerFlow, payload);
       console.log("updatedData is : "+ data.code);
-      for(let key in data.data){
-        console.log(key+": "+data.data[key]);
-      }
+      console.log("data is: "+ data);
+      console.log("data.data is: " + data.data);
       if(data){
         const hourVo = data.data;
         yield put({
           type: 'setHourData',
           payload:hourVo
         });
-
-        dispatch(routerRedux.push({
-          pathname:'/customerFlow'
-        }))
       }
     },
 

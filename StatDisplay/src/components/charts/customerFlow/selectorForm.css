@@ -2,3 +2,11 @@
   margin-left: auto;
   margin-right: auto;
 }
+.form-item {
+  margin-left: 1%;
+  margin-right: 2%;
+}
+.selector-form-button {
+  position: relative;
+  left: 50%;
+}

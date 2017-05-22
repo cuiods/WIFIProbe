@@ -4,11 +4,13 @@
  */
 
 import React, { PropTypes } from 'react';
-import { Form, Icon, Input, Button, Cascader, Card, Alert, DatePicker} from 'antd';
+import { Form, Icon, Input, Button, Select, Card, Alert, DatePicker} from 'antd';
 import styles from './selectorForm.less';
 
 
 const FormItem = Form.Item;
+
+const Option = Select.Option;
 
 const SelectorForm = ({
   probeOptions,
@@ -46,7 +48,7 @@ const SelectorForm = ({
         const data = {
           probeId: form.probeId,
           startHour: hours,
-          range:range,
+          startRange:range,
           threshold: form.threshold,
         };
         console.log("param data is : "+ data);
@@ -58,7 +60,7 @@ const SelectorForm = ({
   const formItemLayout = {
     labelCol: {
       xs: {span:12},
-      sm: {span:9},
+      sm: {span:12},
     },
     wrapperCol: {
       xs: {span:12},
@@ -101,11 +103,9 @@ const SelectorForm = ({
           {getFieldDecorator('probeId',{
             initialValue: '1s12sz'
           })(
-          <Cascader
-            options={probeOptions}
-            onChange={onProbeChange}
-            placeholder="please select"
-             />
+            <Select>
+              <Option value="1s12sz">1s12sz</Option>
+            </Select>
           )}
         </FormItem>
         <FormItem
@@ -116,11 +116,13 @@ const SelectorForm = ({
           {getFieldDecorator('threshold',{
             initialValue: 'YEAR'
           })(
-            <Cascader
-              options={thresholdOptions}
-              onChange={onThreshHoldChange}
-              placeholder="please select"
-            />
+            <Select>
+              <Option value = "HOUR">HOUR</Option>
+              <Option value = "DAY">DAY</Option>
+              <Option value = "WEEK">WEEK</Option>
+              <Option value = "MONTH">MONTH</Option>
+              <Option value = "YEAR">YEAR</Option>
+            </Select>
           )}
         </FormItem>
         <FormItem

@@ -4,7 +4,7 @@
     "index": "./src/index.js"
   },
   "dependencies": {
-    "antd": "^2.3.2",
+    "antd": "^2.10.1",
     "basic-authorization-header": "^0.2.7",
     "classnames": "latest",
     "dva": "^1.1.0",
