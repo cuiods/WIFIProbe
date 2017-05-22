@@ -16,7 +16,7 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
     probeOptions,
     getFlowData(fieldValue) {
       dispatch({
-        type: 'customerFlowInfo/getFlow',
+        type: 'customerFlowInfo/updateFlow',
         payload: fieldValue,
       });
 
@@ -25,16 +25,18 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
 
   return (
     <Row gutter={16}>
-      <Col lg={24} md={24}>
-        <Card title="select to get expected data">
-        <SelectorForm {...selectorProps}/>
-        </Card>
-      </Col>
-      <Col lg={12} md={24} >
-        <Card title="Customer Hour Flow">
-          <HourFlowChart data={hourData}/>
-        </Card>
-      </Col>
+      <Card>
+        <Col lg={24} md={24}>
+          <Card title="select to get expected data">
+          <SelectorForm {...selectorProps}/>
+          </Card>
+        </Col>
+        <Col lg={12} md={24} >
+          <Card title="Customer Hour Flow">
+            <HourFlowChart data={hourData}/>
+          </Card>
+        </Col>
+      </Card>
     </Row>
   )
 }

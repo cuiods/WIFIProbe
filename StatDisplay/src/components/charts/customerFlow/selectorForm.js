@@ -38,16 +38,18 @@ const SelectorForm = ({
         }else{
           divided = 1000*60*60*24*365;
         }
+        const hours = parseInt( (form.startTime).valueOf()/(1000*60*60) )
         const startHour =parseInt( (form.startTime).valueOf()/divided ) ;
         const endHour = parseInt( (form.endTime).valueOf()/divided );
         let range = endHour-startHour ;
-        console.log(form.probeId+" "+startHour+" "+range+" "+form.threshold);
+        console.log(form.probeId+" "+hours+" "+range+" "+form.threshold);
         const data = {
           probeId: form.probeId,
-          startHour: startHour,
+          startHour: hours,
           range:range,
           threshold: form.threshold,
         };
+        console.log("param data is : "+ data);
         getFlowData(data);
       }
     });
@@ -55,12 +57,12 @@ const SelectorForm = ({
 
   const formItemLayout = {
     labelCol: {
-      xs: {span:24},
-      sm: {span:6},
+      xs: {span:12},
+      sm: {span:9},
     },
     wrapperCol: {
-      xs: {span:24},
-      sm: {span:14},
+      xs: {span:12},
+      sm: {span:12},
     },
   };
 
@@ -90,7 +92,7 @@ const SelectorForm = ({
 
   return (
     <div className={styles['selector-form']}>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} layout="inline">
         <FormItem
           {...formItemLayout}
           label="ProbeId"
@@ -102,7 +104,7 @@ const SelectorForm = ({
           <Cascader
             options={probeOptions}
             onChange={onProbeChange}
-            placeholder="1s12sz"
+            placeholder="please select"
              />
           )}
         </FormItem>
@@ -117,7 +119,7 @@ const SelectorForm = ({
             <Cascader
               options={thresholdOptions}
               onChange={onThreshHoldChange}
-              placeholder="YEAR"
+              placeholder="please select"
             />
           )}
         </FormItem>

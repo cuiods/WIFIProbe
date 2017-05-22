@@ -7,6 +7,7 @@ import pathToRegexp from 'path-to-regexp';
 import {getProbeAll, getProbeDetail} from '../../services/probeService';
 import {getCustomerFlow, getCustomerFlowDetail} from '../../services/customerFlowService';
 import cookie from 'react-cookie';
+import { routerRedux } from 'dva/router';
 
 export default {
   namespace: 'customerFlowInfo',
@@ -48,6 +49,26 @@ export default {
           type: 'setHourData',
           payload:hourVo
         });
+      }
+    },
+
+    *updateFlow ({payload}, {call,put}) {
+      console.log('payload: '+ payload);
+      const data = yield call(getCustomerFlow, payload);
+      console.log("updatedData is : "+ data.code);
+      for(let key in data.data){
+        console.log(key+": "+data.data[key]);
+      }
+      if(data){
+        const hourVo = data.data;
+        yield put({
+          type: 'setHourData',
+          payload:hourVo
+        });
+
+        dispatch(routerRedux.push({
+          pathname:'/customerFlow'
+        }))
       }
     },
 
