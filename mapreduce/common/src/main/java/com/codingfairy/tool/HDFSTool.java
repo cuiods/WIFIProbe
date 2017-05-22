@@ -16,6 +16,8 @@ import javax.xml.soap.Node;
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -61,7 +63,7 @@ public class HDFSTool {
 
 
     /**从HDFS上读取文件*/
-    public static DataInputStream readFromHdfs(String fileName) throws FileNotFoundException,IOException {
+    public static DataInputStream readFromHdfs(String fileName) throws IOException {
 
         String dst = NodeConfig.HDFS_PATH+fileName;
         Configuration conf = new Configuration();
@@ -71,7 +73,7 @@ public class HDFSTool {
 
 
     /**从HDFS上删除文件*/
-    public static void deleteFromHdfs(String fileName) throws FileNotFoundException,IOException {
+    public static void deleteFromHdfs(String fileName) throws IOException {
         String dst = NodeConfig.HDFS_PATH + fileName;
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(URI.create(dst), conf);
@@ -79,9 +81,23 @@ public class HDFSTool {
         fs.close();
     }
 
+    /**从HDFS上清空目录*/
+    public static void emptyDirectory(String directory) throws IOException {
+        String dst = NodeConfig.HDFS_PATH + directory;
+        Configuration conf = new Configuration();
+        FileSystem fs = FileSystem.get(URI.create(dst), conf);
+        FileStatus fileList[] = fs.listStatus(new Path(dst));
+        List<String> subFiles = new ArrayList<String>(fileList.length);
+        for (FileStatus aFileList : fileList) {
+            fs.delete(aFileList.getPath(), true);
+        }
+        fs.close();
+        
+    }
+
 
     /**遍历HDFS上的文件和目录*/
-    public static List<String> getDirectoryFromHdfs(String directory) throws FileNotFoundException,IOException {
+    public static List<String> getDirectoryFromHdfs(String directory) throws IOException {
 
         String dst = NodeConfig.HDFS_PATH + directory;
         Configuration conf = new Configuration();
@@ -107,22 +123,47 @@ public class HDFSTool {
         fs.close();
     }
 
-    public static void concat(String ...args) throws IOException {
-        if(args.length < 2) {
-            System.err.println("Usage HDFSConcat target srcs..");
-           return;
-        }
+//    public static void concat(String ...args) throws IOException {
+//        if(args.length < 2) {
+//            System.err.println("Usage HDFSConcat target srcs..");
+//           return;
+//        }
+//
+//        Configuration conf = new Configuration();
+//        String uri = conf.get("fs.default.name", NodeConfig.HDFS_PATH);
+//        Path path = new Path(uri);
+//        DistributedFileSystem dfs =
+//                (DistributedFileSystem)FileSystem.get(path.toUri(), conf);
+//
+//        Path [] srcs = new Path[args.length-1];
+//        for(int i=1; i<args.length; i++) {
+//            srcs[i-1] = new Path(args[i]);
+//        }
+//        dfs.concat(new Path(args[0]), srcs);
+//    }
 
+
+    public static void concat(String dest, String dir, boolean delete) throws IOException {
+        String directory = NodeConfig.HDFS_PATH + dir;
         Configuration conf = new Configuration();
-        String uri = conf.get("fs.default.name", NodeConfig.HDFS_PATH);
-        Path path = new Path(uri);
-        DistributedFileSystem dfs =
-                (DistributedFileSystem)FileSystem.get(path.toUri(), conf);
-
-        Path [] srcs = new Path[args.length-1];
-        for(int i=1; i<args.length; i++) {
-            srcs[i-1] = new Path(args[i]);
+        DistributedFileSystem fs = (DistributedFileSystem)FileSystem.get(URI.create(directory), conf);
+        FileStatus fileList[] = fs.listStatus(new Path(directory));
+        ArrayList<Path>  srcs = new ArrayList<Path>(fileList.length);
+        for (FileStatus fileStatus : fileList) {
+            if (fileStatus.isFile()) {
+                srcs.add(fileStatus.getPath());
+            }
         }
-        dfs.concat(new Path(args[0]), srcs);
+        
+        Path appended = new Path(dest);
+        fs.create(appended);
+        fs.concat(appended, (Path[]) srcs.toArray());
+        if (delete) {
+            for (Path file:srcs) {
+                fs.delete(file, false);
+            }
+        }
+        
+        fs.close();
     }
 }

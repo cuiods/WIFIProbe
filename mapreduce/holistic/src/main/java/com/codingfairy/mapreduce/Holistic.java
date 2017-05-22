@@ -1,6 +1,7 @@
 package com.codingfairy.mapreduce;
 
 import com.codingfairy.config.MapKeyConfig;
+import com.codingfairy.config.NodeConfig;
 import com.codingfairy.mapreduce.classify.CustomerKeyCombiner;
 import com.codingfairy.mapreduce.classify.CustomerKeyMapper;
 import com.codingfairy.mapreduce.classify.CustomerKeyReducer;
@@ -31,80 +32,25 @@ public class Holistic {
     public static String START_TIME = "START_TIME";
 
 
-    public static void classify( final String inputFilePath,
-                                 final String outputFilePath,
-                                 final Long startTime) throws Exception{
 
-        Configuration conf = new Configuration();
-        conf.setLong(START_TIME, startTime);
-
-
-        Job jobClassify = Job.getInstance(conf, "classify");
-
-        jobClassify.setJarByClass(Holistic.class);
-
-        jobClassify.setMapperClass(CustomerKeyMapper.class);
-        jobClassify.setReducerClass(CustomerKeyReducer.class);
-        jobClassify.setCombinerClass(CustomerKeyCombiner.class);
+    public static void main(String[] args) {
+        long time;
+        try {
+            time = Long.parseLong(args[0]);
+        }catch (Exception e) {
+            time = System.currentTimeMillis() - NodeConfig.MAX_WIFI_DATA_INTERVAL;
+        }
 
 
-        jobClassify.setOutputKeyClass(Text.class);
-        jobClassify.setOutputValueClass(Text.class);
+        while (true) {
+            try {
+                long lastTime = time;
+                time = System.currentTimeMillis() - NodeConfig.MAX_WIFI_DATA_INTERVAL;
+                new Task(lastTime).execute();
 
-        jobClassify.setMapOutputKeyClass(Text.class);
-        jobClassify.setMapOutputValueClass(PhoneJson.class);
-
-
-        FileInputFormat.addInputPath(jobClassify, new Path(inputFilePath));
-        FileOutputFormat.setOutputPath(jobClassify, new Path(outputFilePath));
-
-
-        System.exit(jobClassify.waitForCompletion(true) ? 0 : 1);
-    }
-
-
-    public static void analyze(final String inputFilePath,
-                               final String outputFilePath,
-                               final Long startTime) throws Exception {
-        Configuration conf = new Configuration();
-        conf.setLong(START_TIME, startTime);
-
-        Job jobAnalyze = Job.getInstance(conf, "analyze");
-
-        jobAnalyze.setJarByClass(Holistic.class);
-
-        MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.NEW_OLD_CUSTOMER,
-                TextOutputFormat.class, KeyWrapper.class, Text.class);
-        MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.CUSTOMER_FLOW_KEY,
-                TextOutputFormat.class, KeyWrapper.class, Text.class);
-        MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.CYCLE,
-                TextOutputFormat.class, KeyWrapper.class, Text.class);
-        MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.IN_STORE_HOUR,
-                TextOutputFormat.class, KeyWrapper.class, Text.class);
-
-
-        jobAnalyze.setMapperClass(AnalysisMapper.class);
-        jobAnalyze.setReducerClass(AnalysisReducer.class);
-        jobAnalyze.setCombinerClass(AnalysisCombiner.class);
-
-        jobAnalyze.setOutputKeyClass(LongWritable.class);
-        jobAnalyze.setOutputValueClass(Text.class);
-
-        jobAnalyze.setMapOutputKeyClass(KeyWrapper.class);
-        jobAnalyze.setMapOutputValueClass(ValueWrapper.class);
-
-        FileInputFormat.addInputPath(jobAnalyze, new Path(inputFilePath));
-        FileOutputFormat.setOutputPath(jobAnalyze, new Path(outputFilePath));
-
-        System.exit(jobAnalyze.waitForCompletion(true) ? 0 : 1);
-    }
-
-    public static void main(String[] args) throws Exception {
-        if (args.length>=2) {
-            final String inputFilePath = args[0];
-            final String outputFilePath = args[1];
-            final Long startTime = args.length>2?Long.parseLong(args[2]):0L;
-            analyze(inputFilePath, outputFilePath, startTime);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
