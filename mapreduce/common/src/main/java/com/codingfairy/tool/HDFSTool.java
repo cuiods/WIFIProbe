@@ -156,8 +156,12 @@ public class HDFSTool {
         }
         
         Path appended = new Path(dest);
+        Path[] sources = new Path[srcs.size()];
+        for (int i=0; i<srcs.size(); i++) {
+            sources[i] = srcs.get(i);
+        }
         fs.create(appended);
-        fs.concat(appended, (Path[]) srcs.toArray());
+        fs.concat(appended, sources );
         if (delete) {
             for (Path file:srcs) {
                 fs.delete(file, false);

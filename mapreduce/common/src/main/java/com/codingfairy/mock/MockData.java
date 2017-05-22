@@ -39,7 +39,8 @@ public class MockData {
     public List<ProbeJson> mockProbeJsonList(long startTime, long endTime, long interval) {
         assert startTime<endTime;
         List<ProbeJson> probeJsons = new LinkedList<ProbeJson>();
-        for (long time = startTime; time <= endTime; time+=interval) {
+        Random random = new Random();
+        for (long time = startTime; time <= endTime; time += generateRandom(random, 100, (int)interval) ) {
             probeJsons.add(mockProbeJson(time));
         }
         return probeJsons;

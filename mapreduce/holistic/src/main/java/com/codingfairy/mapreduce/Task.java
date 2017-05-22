@@ -11,6 +11,7 @@ import com.codingfairy.mapreduce.flow.AnalysisReducer;
 import com.codingfairy.to.KeyWrapper;
 import com.codingfairy.to.ValueWrapper;
 import com.codingfairy.tool.HDFSTool;
+import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -54,6 +55,7 @@ public class Task implements Runnable {
     }
 
     public void run() {
+        Logger.println("task executing.....");
         clear();
         result = merge()&&classify()&&analyze();
     }
@@ -61,28 +63,32 @@ public class Task implements Runnable {
 
     private boolean merge() {
         try {
-            HDFSTool.concat(FileConfig.data+System.currentTimeMillis(), FileConfig.upload, true);
+            Logger.println("merging upload smaller files");
+            HDFSTool.concat(FileConfig.data+"/"+System.currentTimeMillis(), FileConfig.upload, true);
+            Logger.println("merged upload smaller files");
             return true;
         }catch (IOException e) {
-            e.printStackTrace();
+            Logger.println(e);
             return false;
         }
     }
 
     private boolean classify() {
         try {
+            Logger.println("classifying ....");
             return classify(FileConfig.data, FileConfig.classify, time);
         }catch (Exception e) {
-            e.printStackTrace();
+            Logger.println(e);
             return false;
         }
     }
 
     private boolean analyze() {
         try {
+            Logger.println("analyzing ....");
             return analyze(FileConfig.classify, FileConfig.statistic, time);
         }catch (Exception e) {
-            e.printStackTrace();
+            Logger.println(e);
             return false;
         }
     }
@@ -90,10 +96,12 @@ public class Task implements Runnable {
     private boolean clear() {
 
         try {
+            Logger.println("clearing classify files");
             HDFSTool.emptyDirectory(FileConfig.classify);
+            Logger.println("cleared classify files");
             return true;
         }catch (Exception e) {
-            e.printStackTrace();
+            Logger.println(e);
             return false;
         }
     }
@@ -152,7 +160,6 @@ public class Task implements Runnable {
                 TextOutputFormat.class, KeyWrapper.class, Text.class);
         MultipleOutputs.addNamedOutput(jobAnalyze, MapKeyConfig.IN_STORE_HOUR,
                 TextOutputFormat.class, KeyWrapper.class, Text.class);
-
 
         jobAnalyze.setMapperClass(AnalysisMapper.class);
         jobAnalyze.setReducerClass(AnalysisReducer.class);

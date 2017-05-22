@@ -20,4 +20,8 @@ public class DateFormatter {
         return dateFomat.parse(time).getTime();
     }
 
+    public static void main(String[] args) throws Exception{
+        String time = "Mon May 22 22:00:00 2017";
+        System.out.println(DateFormatter.getMillis(time));
+    }
 }
