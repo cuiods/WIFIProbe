@@ -1,5 +1,6 @@
 package com.codingfairy.mapreduce;
 
+import com.codingfairy.config.FileConfig;
 import com.codingfairy.config.MapKeyConfig;
 import com.codingfairy.config.NodeConfig;
 import com.codingfairy.mapreduce.classify.CustomerKeyCombiner;
@@ -10,6 +11,7 @@ import com.codingfairy.mapreduce.flow.AnalysisMapper;
 import com.codingfairy.mapreduce.flow.AnalysisReducer;
 import com.codingfairy.to.KeyWrapper;
 import com.codingfairy.to.ValueWrapper;
+import com.codingfairy.tool.HDFSTool;
 import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import org.apache.hadoop.conf.Configuration;
@@ -32,13 +34,13 @@ public class Holistic {
     public static String START_TIME = "START_TIME";
 
 
-
-    public static void main(String[] args) {
+    private static void start(String[] args){
         long time;
         try {
             time = Long.parseLong(args[0]);
         }catch (Exception e) {
             time = System.currentTimeMillis() - NodeConfig.MAX_WIFI_DATA_INTERVAL;
+            time = 1495461600000L;
         }
 
         while (true) {
@@ -48,11 +50,15 @@ public class Holistic {
                 Logger.println("time: "+time);
                 time = System.currentTimeMillis() - NodeConfig.MAX_WIFI_DATA_INTERVAL;
                 new Task(lastTime).execute();
-
+                break;
             }catch (Exception e) {
                 e.printStackTrace();
             }
             break;
         }
+    }
+
+    public static void main(String[] args) throws Exception{
+        start(args);
     }
 }

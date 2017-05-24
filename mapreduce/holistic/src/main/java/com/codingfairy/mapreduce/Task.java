@@ -46,8 +46,13 @@ public class Task implements Runnable {
 
     private boolean result ;
 
+    private String classifyPath ;
+    private String statisticPath ;
+
     public Task(final long time) {
         this.time = time;
+        this.classifyPath = FileConfig.classify+"/"+time;
+        this.statisticPath = FileConfig.statistic+"/"+time;
     }
 
     public boolean isResult() {
@@ -64,7 +69,7 @@ public class Task implements Runnable {
     private boolean merge() {
         try {
             Logger.println("merging upload smaller files");
-            HDFSTool.concat(FileConfig.data+"/"+System.currentTimeMillis(), FileConfig.upload, true);
+            HDFSTool.concat(FileConfig.upload);
             Logger.println("merged upload smaller files");
             return true;
         }catch (IOException e) {
@@ -76,7 +81,7 @@ public class Task implements Runnable {
     private boolean classify() {
         try {
             Logger.println("classifying ....");
-            return classify(FileConfig.data, FileConfig.classify, time);
+            return classify(FileConfig.data, classifyPath, time);
         }catch (Exception e) {
             Logger.println(e);
             return false;
@@ -86,7 +91,7 @@ public class Task implements Runnable {
     private boolean analyze() {
         try {
             Logger.println("analyzing ....");
-            return analyze(FileConfig.classify, FileConfig.statistic, time);
+            return analyze(classifyPath, statisticPath, time);
         }catch (Exception e) {
             Logger.println(e);
             return false;

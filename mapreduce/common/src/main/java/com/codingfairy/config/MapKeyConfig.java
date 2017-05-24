@@ -7,10 +7,10 @@ public class MapKeyConfig {
 
     public static String CYCLE = "CYCLE";
 
-    public static String IN_STORE_HOUR = "IN_STORE_HOUR";
+    public static String IN_STORE_HOUR = "INSTOREHOUR";
 
-    public static String CUSTOMER_FLOW_KEY = "CUSTOMER_FLOW_KEY";
+    public static String CUSTOMER_FLOW_KEY = "CUSTOMERFLOWKEY";
 
-    public static String NEW_OLD_CUSTOMER = "NEW_OLD_CUSTOMER";
+    public static String NEW_OLD_CUSTOMER = "NEWOLDCUSTOMER";
 
 }

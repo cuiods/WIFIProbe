@@ -5,7 +5,8 @@ package com.codingfairy.config;
  */
 public class FileConfig {
     public static String upload = "/wifi/upload";
-    public static String data = "/wifi/data";
+    public static String data = "/wifi/upload";
+//    public static String data = "/wifi/data";
     public static String classify = "/wifi/classify";
     public static String statistic = "/wifi/statistic";
 

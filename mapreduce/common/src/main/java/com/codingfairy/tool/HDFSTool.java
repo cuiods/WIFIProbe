@@ -11,6 +11,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Progressable;
+import sun.rmi.runtime.Log;
 
 import javax.xml.soap.Node;
 import java.io.*;
@@ -28,16 +29,9 @@ public class HDFSTool {
 
     public static void main(String[] args) {
         try {
-            readFromHdfs("/input/sample.txt");
-//            Gson gson = new Gson();
-//            String file = "/home/darxan/code/WIFIProbe/mapreduce/common/src/main/resources/sample.txt";
-//            ProbeJson probeJson = gson.fromJson(new FileReader(file), ProbeJson.class);
-//            List<ProbeJson> probeJsonList = new ArrayList<ProbeJson>(1);
-//            probeJsonList.add(probeJson);
-//            System.out.println(gson.toJson(probeJsonList));
-//            uploadFiles(new FileInputStream(file), "/input/a.txt");
+            HDFSTool.concat("/input");
         }catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -48,9 +42,7 @@ public class HDFSTool {
     public static void uploadFiles(final InputStream in, final String outputFile) throws IOException{
 
         String dst = NodeConfig.HDFS_PATH+outputFile;
-        System.out.println(dst);
         Configuration conf = new Configuration();
-
         FileSystem fs = FileSystem.get(URI.create(dst), conf);
         OutputStream out = fs.create(new Path(dst), new Progressable() {
             public void progress() {
@@ -123,51 +115,43 @@ public class HDFSTool {
         fs.close();
     }
 
-//    public static void concat(String ...args) throws IOException {
-//        if(args.length < 2) {
-//            System.err.println("Usage HDFSConcat target srcs..");
-//           return;
-//        }
-//
-//        Configuration conf = new Configuration();
-//        String uri = conf.get("fs.default.name", NodeConfig.HDFS_PATH);
-//        Path path = new Path(uri);
-//        DistributedFileSystem dfs =
-//                (DistributedFileSystem)FileSystem.get(path.toUri(), conf);
-//
-//        Path [] srcs = new Path[args.length-1];
-//        for(int i=1; i<args.length; i++) {
-//            srcs[i-1] = new Path(args[i]);
-//        }
-//        dfs.concat(new Path(args[0]), srcs);
-//    }
+    public static void concat(String dir) throws IOException {
 
 
-    public static void concat(String dest, String dir, boolean delete) throws IOException {
         String directory = NodeConfig.HDFS_PATH + dir;
         Configuration conf = new Configuration();
         DistributedFileSystem fs = (DistributedFileSystem)FileSystem.get(URI.create(directory), conf);
         FileStatus fileList[] = fs.listStatus(new Path(directory));
-        ArrayList<Path>  srcs = new ArrayList<Path>(fileList.length);
-        for (FileStatus fileStatus : fileList) {
-            if (fileStatus.isFile()) {
-                srcs.add(fileStatus.getPath());
+
+        if (fileList.length>=2) {
+
+            ArrayList<Path>  srcs = new ArrayList<Path>(fileList.length);
+            for (FileStatus fileStatus : fileList) {
+                if ( fileStatus.isFile() &&
+                        (fileStatus.getLen()&~fileStatus.getBlockSize())<fileStatus.getBlockSize()/2 ) {
+                    srcs.add(fileStatus.getPath());
+                }
             }
-        }
-        
-        Path appended = new Path(dest);
-        Path[] sources = new Path[srcs.size()];
-        for (int i=0; i<srcs.size(); i++) {
-            sources[i] = srcs.get(i);
-        }
-        fs.create(appended);
-        fs.concat(appended, sources );
-        if (delete) {
-            for (Path file:srcs) {
-                fs.delete(file, false);
+
+            if (srcs.size()>=2) {
+                Logger.println("come to here");
+                Path appended = srcs.get(0);
+                Path[] sources = new Path[srcs.size()-1];
+                for (int i=0; i<srcs.size()-1; i++) {
+                    sources[i] = srcs.get(i+1);
+                }
+                Logger.println(fs==null);
+                Logger.println(appended==null);
+                Logger.println(sources==null);
+                fs.concat(appended, sources);
+                Logger.println("concat to : " + appended.getName());
+                Logger.println(Arrays.toString(sources));
             }
+
+            fs.close();
         }
-        
-        fs.close();
+
+
     }
+
 }
