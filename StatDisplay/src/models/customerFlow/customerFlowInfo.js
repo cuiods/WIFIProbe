@@ -52,31 +52,15 @@ export default {
       }
     },
 
-    *updateFlow ({payload}, {call,put}) {
-      console.log("json: "+JSON.stringify(payload));
-      for(let key in payload){
-        console.log(key+":"+payload[key]);
-      }
-      console.log("MMM:"+payload.probeId);
-      const data = yield call(getCustomerFlow, payload);
-      console.log("updatedData is : "+ data.code);
-      console.log("data is: "+ data);
-      console.log("data.data is: " + data.data);
-      if(data){
-        const hourVo = data.data;
-        yield put({
-          type: 'setHourData',
-          payload:hourVo
-        });
-      }
-    },
-
     *getDetail({payload}, {call,put}) {
       const data = yield call(getCustomerFlowDetail, payload);
-      if(data){
+      if(data.code==1000){
+        const dataVo = data.data;
+        dataVo.splice(8,3);
+        console.log("info detail data: "+ JSON.stringify(dataVo));
         yield put({
           type: 'setDetailData',
-          payload:data.data
+          payload:dataVo
         })
       }
     },
