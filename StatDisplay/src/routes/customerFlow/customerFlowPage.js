@@ -10,11 +10,10 @@ import HourFlowChart from '../../components/charts/customerFlow/hourFlowChart';
 import HourCompareChart from '../../components/charts/customerFlow/hourCompareChart';
 import HourDetailChart from '../../components/charts/customerFlow/hourDetailChart';
 import SelectorForm from '../../components/charts/customerFlow/selectorForm';
+import DetailSelectorForm from '../../components/charts/customerFlow/detailSelectorForm';
 
 function CustomerFlowPage({dispatch,customerFlowInfo}) {
   const {hourData, detailData, probeOptions} = customerFlowInfo;
-
-  console.log("detailData: "+ JSON.stringify(detailData));
 
   const selectorProps = {
     probeOptions,
@@ -24,6 +23,16 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
         payload: fieldValue,
       });
     }
+  }
+
+  const detailProps = {
+    probeOptions,
+    getDetailData(fieldValue) {
+      dispatch({
+        type: 'customerFlowInfo/getDetail',
+        payload: fieldValue,
+      })
+    },
   }
 
   return (
@@ -48,8 +57,8 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
 
       <Card>
         <Col lg={24} md={24}>
-          <Card title="select to get expected data">
-            <SelectorForm {...selectorProps}/>
+          <Card title="select time to get detail">
+            <DetailSelectorForm {...detailProps}/>
           </Card>
         </Col>
         <Col lg={24} md={24} >
