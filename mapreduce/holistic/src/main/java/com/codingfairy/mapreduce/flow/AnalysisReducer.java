@@ -32,6 +32,7 @@ public class AnalysisReducer extends AbstractReducer<LongWritable, Text> {
     }
 
 
+    @Override
     protected void write(Context context, KeyWrapper key, ValueWrapper value)
             throws InterruptedException, IOException {
         text.set(gson.toJson(value.getValue()));

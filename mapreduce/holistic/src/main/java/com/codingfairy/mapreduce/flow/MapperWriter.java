@@ -24,12 +24,14 @@ public class MapperWriter {
     private Mapper.Context context;
     private HourStatistic statistic;
 
+
     public MapperWriter(Mapper.Context context, HourStatistic statistic) {
         this.context = context;
         this.statistic = statistic;
     }
 
-    public void  write() throws IOException, InterruptedException {
+
+    public void write() throws IOException, InterruptedException {
 
         Logger.println("write cycle");
         writeCycle();
@@ -39,6 +41,7 @@ public class MapperWriter {
         writCustomerFlow();
         Logger.println("write new old customer");
         writNewOldCustomer();
+
     }
 
 
@@ -51,7 +54,7 @@ public class MapperWriter {
         LongWritable longWritable = new LongWritable();
         newOldKey.setMillisTime(longWritable);
 
-        for (NewOldCustomElement newOldCustomElement:statistic.getNewOldCustomElements()) {
+        for (NewOldCustomElement newOldCustomElement : statistic.getNewOldCustomElements()) {
             Logger.println("NewOldCustomElement: "+newOldCustomElement);
             longWritable.set(newOldCustomElement.getHour());
             context.write(newOldKey, new ValueWrapper(newOldCustomElement));

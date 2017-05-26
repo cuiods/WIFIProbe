@@ -42,7 +42,6 @@ public class CustomerFlowAnalyze {
         cycles = new ArrayList<Long>();
         inStoreHours = new ArrayList<Long>();
 
-
         for (int i=0; i<count; i++) {
             analyze(i);
         }
@@ -73,15 +72,19 @@ public class CustomerFlowAnalyze {
 
         //move to the first valid position
         for (;;searchIndex++) {
+            Logger.println("searchIndex: "+searchIndex+" json size:"+phoneJsons.size());
+
             if (searchIndex>=phoneJsons.size()){
-                Logger.println("all time is too earlier");
+                Logger.println("************ break and return ::all time is too earlier");
                 return ;
             }
             if (phoneJsons.get(searchIndex).getTime()>=startTime) {
+                Logger.println("-----------break continue analyze time is perfect to continue");
                break;
             }
 
-            Logger.println("--- time is too earlier");
+            Logger.println("============ continue loop time is too earlier :"
+                    + phoneJsons.get(searchIndex).getTime());
         }
 
         analyzeInStore(false);
@@ -126,7 +129,7 @@ public class CustomerFlowAnalyze {
         boolean lastInWifi = firstInWifi;
 
 
-        for ( i=searchIndex+1; true; i++) {
+        for ( i=searchIndex; true; i++) {
 
             if (i>=phoneJsons.size()) {
                 endInfWifi = (IsContinuous.isContinuous(endTime, last))&&InStoreJudge.isInStore(last);
@@ -232,7 +235,7 @@ public class CustomerFlowAnalyze {
         boolean endInfWifi = false;
 
 
-        for ( i=searchIndex+1; true; i++) {
+        for ( i=searchIndex; true; i++) {
 
             if (i>=phoneJsons.size()) {
                 endInfWifi = (IsContinuous.isContinuous(endTime, last));
