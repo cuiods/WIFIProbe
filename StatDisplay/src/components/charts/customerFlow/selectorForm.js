@@ -14,7 +14,7 @@ const Option = Select.Option;
 
 const SelectorForm = ({
   probeOptions,
-  getFlowData,
+  getHourData,
   form : {
     getFieldDecorator,
     validateFields,
@@ -52,7 +52,7 @@ const SelectorForm = ({
           threshold: form.threshold,
         };
         console.log("param data is : "+ data);
-        getFlowData(data);
+        getHourData(data);
       }
     });
   }

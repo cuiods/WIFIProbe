@@ -17,7 +17,7 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
 
   const selectorProps = {
     probeOptions,
-    getFlowData(fieldValue) {
+    getHourData(fieldValue) {
       dispatch({
         type: 'customerFlowInfo/getFlow',
         payload: fieldValue,

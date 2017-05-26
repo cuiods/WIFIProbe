@@ -1,16 +1,15 @@
 /**
- * Created by yyy on 2017/5/17.
- * to get the data for customerFlow's charts
+ * Created by yyy on 2017/5/26.
+ * to get the data for the activeness charts
  */
-import {message} from 'antd';
+
 import pathToRegexp from 'path-to-regexp';
 import {getProbeAll, getProbeDetail} from '../../services/probeService';
-import {getCustomerFlow, getCustomerFlowDetail} from '../../services/customerFlowService';
-import cookie from 'react-cookie';
-import { routerRedux } from 'dva/router';
+import {getActiveness, getActivenessDetail} from '../../services/activenessService';
+
 
 export default {
-  namespace: 'customerFlowInfo',
+  namespace: 'activenessInfo',
 
   state: {
     probeOptions:[],
@@ -21,11 +20,11 @@ export default {
   subscriptions: {
     setup ({ dispatch, history }) {
       history.listen(location => {
-        const matchFlow = pathToRegexp('/customerFlow').exec(location.pathname);
+        const matchFlow = pathToRegexp('/activeness').exec(location.pathname);
         if(matchFlow) {
           dispatch({
-            type: 'getFlow',
-            payload: {probeId:"1s12sz",startHour:60000,startRange:5,threshold:"YEAR"}
+            type: 'getHourData',
+            payload: {probeId:"1s12sz",startHour:40000,startRange:5,threshold:"HOUR"}
           });
           dispatch({
             type: 'getDetail',
@@ -41,9 +40,9 @@ export default {
   },
 
   effects: {
-    *getFlow ({payload}, {call,put}) {
-      const data = yield call(getCustomerFlow, payload);
-      if(data){
+    *getHourData ({payload}, {call,put}) {
+      const data = yield call(getActiveness, payload);
+      if(data.code==1000){
         const hourVo = data.data;
         yield put({
           type: 'setHourData',
@@ -53,10 +52,9 @@ export default {
     },
 
     *getDetail({payload}, {call,put}) {
-      const data = yield call(getCustomerFlowDetail, payload);
+      const data = yield call(getActivenessDetail, payload);
       if(data.code==1000){
         const dataVo = data.data;
-        dataVo.splice(8,3);
         yield put({
           type: 'setDetailData',
           payload:dataVo
@@ -115,3 +113,4 @@ export default {
 
 
 }
+
