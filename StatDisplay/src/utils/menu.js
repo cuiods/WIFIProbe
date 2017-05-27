@@ -21,13 +21,13 @@ module.exports = [
     id: 4,
     name: 'InStore Hours',
     icon: 'camera-o',
-    router: '/inStoreHours'
+    router: '/inStoreHour'
   },
   {
     id: 5,
     name: 'Visit Cycle',
     icon: 'code-o',
-    router: '/visitCycle'
+    router: '/visitCircle'
   },
 
 
