@@ -1,6 +1,8 @@
 package com.codingfairy.mapreduce.logic;
 
 import com.codingfairy.mapreduce.logic.analyze.CustomerFlowAnalyze;
+import com.codingfairy.mock.GsonTool;
+import com.codingfairy.mock.MockData;
 import com.codingfairy.to.Interval;
 import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
@@ -9,6 +11,9 @@ import com.codingfairy.vo.analysis.element.HourStatistic;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -82,9 +87,12 @@ public class PhoneDataExtractor {
 
 
     public static void main(String[] args) {
+
         Gson gson = new Gson();
         PhoneDataExtractor extractor = new PhoneDataExtractor(0);
         String dataString = "[{\"mac\":\"f0:b4:29:76:96:1f\",\"rssi\":\"-68\",\"range\":\"129\",\"ts\":\"\",\"tmc\":\"\",\"tc\":\"\",\"ds\":\"\",\"essid0\":\"\",\"essid1\":\"\",\"essid2\":\"\",\"essid3\":\"\",\"essid4\":\"\",\"essid5\":\"\",\"essid6\":\"\",\"time\":1492595762000,\"text\":{\"bytes\":[49,50,57,98,52,58,50,57,58,55,54,58,57,54,58,49,102],\"length\":0},\"longWritable\":{\"value\":1492595762000}}]";
+
+
         List<PhoneJson> phoneData = gson.fromJson(
                 dataString, new TypeToken<List<PhoneJson>>(){}.getType());
 
