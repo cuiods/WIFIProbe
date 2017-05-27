@@ -39,7 +39,7 @@ public class MockData {
     public List<ProbeJson> mockProbeJsonList(long startTime, long endTime, long interval) {
         assert startTime<endTime;
         List<ProbeJson> probeJsons = new LinkedList<ProbeJson>();
-        for (long time = startTime; time <= endTime; time+=interval*Math.random()) {
+        for (long time = startTime; time <= endTime; time+=interval) {
             probeJsons.add(mockProbeJson(time));
         }
         return probeJsons;
@@ -113,7 +113,7 @@ public class MockData {
         }
         rangeMap = new HashMap<String, Integer>();
         for (String mac: currentRange.keySet()) {
-            if (Math.random()>=0.71) {
+            if (Math.random()<=0.71) {
                 rangeMap.put(mac,currentRange.get(mac));
             }
         }
