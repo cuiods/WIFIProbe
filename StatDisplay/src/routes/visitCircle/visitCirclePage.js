@@ -6,6 +6,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import SelectorForm from '../../components/charts/selectorForm';
 import DetailSelectorForm from '../../components/charts/detailSelectorForm';
+import HourVisitCircleChart from '../../components/charts/visitCircle/hourVisitCircleChart';
+import DetailBarChart from '../../components/charts/detailBarChart';
 
 function VisitCirclePage({dispatch,visitCircleInfo}) {
   const {hourData, detailData, probeOptions} = visitCircleInfo;
@@ -40,7 +42,7 @@ function VisitCirclePage({dispatch,visitCircleInfo}) {
         </Col>
         <Col lg={24} md={24}>
           <Card title="Hour Visit Circle chart">
-
+            <HourVisitCircleChart data={hourData}/>
           </Card>
         </Col>
       </Card>
@@ -53,11 +55,10 @@ function VisitCirclePage({dispatch,visitCircleInfo}) {
         </Col>
         <Col lg={24} md={24}>
           <Card title="detail Visit Circle chart">
-
+            <DetailBarChart data={detailData}/>
           </Card>
         </Col>
       </Card>
-
     </Row>
   )
 }

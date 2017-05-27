@@ -8,7 +8,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import HourFlowChart from '../../components/charts/customerFlow/hourFlowChart';
 import HourCompareChart from '../../components/charts/customerFlow/hourCompareChart';
-import HourDetailChart from '../../components/charts/customerFlow/hourDetailChart';
+import DetailBarChart from '../../components/charts/detailBarChart';
 import SelectorForm from '../../components/charts/selectorForm';
 import DetailSelectorForm from '../../components/charts/detailSelectorForm';
 
@@ -63,7 +63,7 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
         </Col>
         <Col lg={24} md={24} >
           <Card title="Detail Hour Flow">
-            <HourDetailChart data={detailData}/>
+            <DetailBarChart data={detailData}/>
           </Card>
         </Col>
       </Card>

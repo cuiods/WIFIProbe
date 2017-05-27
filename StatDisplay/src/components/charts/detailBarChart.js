@@ -3,7 +3,7 @@
  */
 
 import React, { PropTypes } from 'react';
-import Container from '../container';
+import Container from './container';
 import {
   BarChart,
   Bar,
@@ -14,7 +14,7 @@ import {
   Legend,
 } from 'recharts';
 
-const DetailActiveChart = ({data}) => (
+const DetailBarChart = ({data}) => (
   <Container>
     <BarChart data = {data} margin={{
       top: 10,
@@ -53,4 +53,4 @@ TriangleBar.propTypes = {
   height: PropTypes.number,
 };
 
-export default DetailActiveChart
+export default DetailBarChart

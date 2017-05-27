@@ -6,6 +6,8 @@ import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import SelectorForm from '../../components/charts/selectorForm';
 import DetailSelectorForm from '../../components/charts/detailSelectorForm';
+import InStoreHourChart from '../../components/charts/inStoreHour/inStoreHourChart';
+import DetailBarChart from '../../components/charts/detailBarChart';
 
 function InStoreHourPage({dispatch,inStoreHourInfo}) {
   const {hourData, detailData, probeOptions} = inStoreHourInfo;
@@ -40,7 +42,7 @@ function InStoreHourPage({dispatch,inStoreHourInfo}) {
         </Col>
         <Col lg={24} md={24}>
           <Card title="Hour InStoreHour chart">
-
+            <InStoreHourChart data={hourData}/>
           </Card>
         </Col>
       </Card>
@@ -53,7 +55,7 @@ function InStoreHourPage({dispatch,inStoreHourInfo}) {
         </Col>
         <Col lg={24} md={24}>
           <Card title="detail InStoreHour chart">
-
+            <DetailBarChart data={detailData}/>
           </Card>
         </Col>
       </Card>
