@@ -59,8 +59,11 @@ public class AnalysisMapper extends Mapper<Object, Text, KeyWrapper, ValueWrappe
             List<PhoneJson> phoneData = gson.fromJson(
                     dataString, new TypeToken<List<PhoneJson>>(){}.getType());
             HourStatistic hourStatistic = extractor.extract(phoneData);
-            if (hourStatistic==null)
+            if (hourStatistic==null) {
+                System.out.println("no result");
+                System.out.println(dataString);
                 return;
+            }
             MapperWriter mapperWriter = new MapperWriter(context, hourStatistic);
             mapperWriter.write();
         }

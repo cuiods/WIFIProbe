@@ -13,11 +13,14 @@ public class MockGenerator {
     public static void main(String[] args) {
         MockData mockData = new MockData();
         long currentHour = System.currentTimeMillis()/(3600*1000);
+        System.out.println(currentHour*3600000);
         String json = GsonTool.convertObjectToJson(
-                mockData.mockProbeJsonList( currentHour*3600000,(currentHour+2)*3600000,360000));
+                mockData.mockProbeJsonList( currentHour*3600000,(currentHour+2)*3600000,60000));
         try {
             FileWriter fileWriter = new FileWriter(new File("mock.txt"));
             fileWriter.write(json);
+            fileWriter.flush();
+            fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
