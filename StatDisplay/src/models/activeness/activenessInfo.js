@@ -28,7 +28,7 @@ export default {
           });
           dispatch({
             type: 'getDetail',
-            payload: {hour:415357,probeId:"1s12sz"}
+            payload: {hour:415300,probeId:"1s12sz"}
           });
           dispatch({
             type: 'getProbeOptions',

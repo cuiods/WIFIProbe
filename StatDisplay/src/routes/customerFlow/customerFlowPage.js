@@ -9,8 +9,8 @@ import { connect } from 'dva';
 import HourFlowChart from '../../components/charts/customerFlow/hourFlowChart';
 import HourCompareChart from '../../components/charts/customerFlow/hourCompareChart';
 import HourDetailChart from '../../components/charts/customerFlow/hourDetailChart';
-import SelectorForm from '../../components/charts/customerFlow/selectorForm';
-import DetailSelectorForm from '../../components/charts/customerFlow/detailSelectorForm';
+import SelectorForm from '../../components/charts/selectorForm';
+import DetailSelectorForm from '../../components/charts/detailSelectorForm';
 
 function CustomerFlowPage({dispatch,customerFlowInfo}) {
   const {hourData, detailData, probeOptions} = customerFlowInfo;

@@ -6,6 +6,10 @@
 import { Row, Col, Card } from 'antd';
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
+import SelectorForm from '../../components/charts/selectorForm';
+import DetailSelectorForm from '../../components/charts/detailSelectorForm';
+import HourActiveChart from '../../components/charts/activeness/hourActiveChart';
+import DetailActiveChart from '../../components/charts/activeness/detailActiveChart';
 
 function ActivenessPage({dispatch,activenessInfo}) {
   const {hourData, detailData, probeOptions} = activenessInfo;
@@ -31,7 +35,34 @@ function ActivenessPage({dispatch,activenessInfo}) {
   }
 
   return (
-    <Row></Row>
+    <Row>
+      <Card>
+        <Col lg={24} md={24}>
+          <Card title="select to get expected data">
+            <SelectorForm {...selectorProps}/>
+          </Card>
+        </Col>
+        <Col lg={24} md={24}>
+          <Card title="Hour Activeness chart">
+            <HourActiveChart data={hourData}/>
+          </Card>
+        </Col>
+      </Card>
+
+      <Card>
+        <Col lg={24} md={24}>
+          <Card title="select time to get detail">
+            <DetailSelectorForm {...detailProps}/>
+          </Card>
+        </Col>
+        <Col lg={24} md={24}>
+          <Card title="detail active chart">
+            <DetailActiveChart data={detailData} />
+          </Card>
+        </Col>
+      </Card>
+
+    </Row>
   )
 }
 

@@ -9,7 +9,6 @@ const Bread = ({ menu,location }) => {
   // 匹配当前路由
   let pathArray = []
   let current
-  console.log("location pathname:"+location.pathname);
   for (let index in menu) {
     if (menu[index].router && pathToRegexp(menu[index].router).exec(location.pathname)) {
       current = menu[index]//当前的url路径与此菜单中的router的路径相匹配
@@ -33,8 +32,6 @@ const Bread = ({ menu,location }) => {
   } else {
     getPathArray(current)
   }
-
-  console.log("path array: "+JSON.stringify(pathArray));
 
   // 递归查找父级
   const breads = pathArray.map((item, key) => {
