@@ -1,6 +1,7 @@
 package com.codingfairy.mapreduce.flow;
 
 import com.codingfairy.config.MapKeyConfig;
+import com.codingfairy.mock.GsonTool;
 import com.codingfairy.to.KeyWrapper;
 import com.codingfairy.to.ValueWrapper;
 import com.codingfairy.tool.Logger;
@@ -30,13 +31,15 @@ public abstract class AbstractReducer<KEYOUT, VALUEOUT>  extends Reducer<KeyWrap
         if (valueWrapper==null) {
             return;
         }
-        Logger.println("key  : "+key);
+
+        Logger.println("key  : "+GsonTool.convertObjectToJson(key));
 
         if (type.equals(MapKeyConfig.CUSTOMER_FLOW_KEY)) {
             CustomerFlowElement first = (CustomerFlowElement)valueWrapper.getValue();
             while (iterator.hasNext()) {
                 CustomerFlowElement next = (CustomerFlowElement)iterator.next().getValue();
                 first.addAnother(next);
+
             }
         }
         else if (type.equals(MapKeyConfig.NEW_OLD_CUSTOMER)){
@@ -60,7 +63,7 @@ public abstract class AbstractReducer<KEYOUT, VALUEOUT>  extends Reducer<KeyWrap
             return;
         }
 
-        Logger.println("write value: "+valueWrapper);
+        Logger.println("write value: "+GsonTool.convertObjectToJson(valueWrapper));
         write(context, key, valueWrapper);
 
     }

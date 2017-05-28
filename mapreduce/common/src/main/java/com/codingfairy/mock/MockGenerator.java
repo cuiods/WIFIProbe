@@ -22,8 +22,9 @@ public class MockGenerator {
 
         try {
             long currentHour = System.currentTimeMillis()/(3600*1000);
-            System.out.println(currentHour*3600000);
-            String json = GsonTool.convertObjectToJson(generate( (currentHour-2)*3600000L,(currentHour-1L)*3600000L,10000));
+            System.out.println((currentHour-2)*3600000);
+            String json = GsonTool.convertObjectToJson(generate(
+                    (currentHour-2)*3600000L,(currentHour-1L)*3600000L,100000));
 
             FileWriter fileWriter = new FileWriter(new File("mock.txt"));
             fileWriter.write(json);
@@ -53,7 +54,7 @@ public class MockGenerator {
 
         ProbeJson probeJsonPrototype = probeJsonList.get(0).clone();
         PhoneJson phoneJsonPrototype = probeJsonList.get(0).getData().get(0);
-
+        phoneJsonPrototype.setRange("5");
 
         probeJsonList.clear();
 
@@ -62,7 +63,7 @@ public class MockGenerator {
         for (long time = start; time < end; time+=Math.random()*rand) {
 
             PhoneJson phoneJson = phoneJsonPrototype.clone();
-            phoneJson.setMac(mac[(int)Math.random()*mac.length]);
+            phoneJson.setMac(mac[(int)(Math.random()*mac.length)]);
             ArrayList<PhoneJson> dataList = new ArrayList<PhoneJson>();
             dataList.add(phoneJson);
 

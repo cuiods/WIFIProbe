@@ -49,8 +49,6 @@ public class AnalysisMapper extends Mapper<Object, Text, KeyWrapper, ValueWrappe
     protected void map(Object key, Text value, Context context)
             throws IOException, InterruptedException {
 
-        Logger.println("map count: " + count++);
-        Logger.println(key);
 
         Matcher matcher = pattern.matcher(value.toString());
         if (matcher.find()) {
@@ -60,8 +58,6 @@ public class AnalysisMapper extends Mapper<Object, Text, KeyWrapper, ValueWrappe
                     dataString, new TypeToken<List<PhoneJson>>(){}.getType());
             HourStatistic hourStatistic = extractor.extract(phoneData);
             if (hourStatistic==null) {
-                System.out.println("no result");
-                System.out.println(dataString);
                 return;
             }
             MapperWriter mapperWriter = new MapperWriter(context, hourStatistic);

@@ -60,8 +60,7 @@ public class ValueWrapper implements Writable{
         } else if (className.equals(CustomerFlowElement.class.getSimpleName())) {
             value = new CustomerFlowElement();
         } else {
-            Logger.println("error: unrecognized class.");
-            return;
+           throw new IOException("can not read fields "+className);
         }
         value.readFields(dataInput);
     }

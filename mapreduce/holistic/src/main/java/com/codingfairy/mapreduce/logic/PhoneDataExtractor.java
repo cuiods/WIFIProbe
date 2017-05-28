@@ -42,7 +42,6 @@ public class PhoneDataExtractor {
     public PhoneDataExtractor(final long time) {
         this.current = System.currentTimeMillis();
         this.start_time = time>current?-2:time; //如果不符合规范，默认统计前2小时数据
-
     }
 
 

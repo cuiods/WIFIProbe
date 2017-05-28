@@ -14,6 +14,7 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class MapperWriter {
 
-    private Mapper.Context context;
+    private AnalysisMapper.Context context;
     private HourStatistic statistic;
 
 
@@ -33,13 +34,9 @@ public class MapperWriter {
 
     public void write() throws IOException, InterruptedException {
 
-        Logger.println("write cycle");
         writeCycle();
-        Logger.println("write in store hour");
         writeInStoreHour();
-        Logger.println("write flow");
         writCustomerFlow();
-        Logger.println("write new old customer");
         writNewOldCustomer();
 
     }
@@ -55,7 +52,6 @@ public class MapperWriter {
         newOldKey.setMillisTime(longWritable);
 
         for (NewOldCustomElement newOldCustomElement : statistic.getNewOldCustomElements()) {
-            Logger.println("NewOldCustomElement: "+newOldCustomElement);
             longWritable.set(newOldCustomElement.getHour());
             context.write(newOldKey, new ValueWrapper(newOldCustomElement));
         }
@@ -71,8 +67,8 @@ public class MapperWriter {
         LongWritable longWritable = new LongWritable();
         customerFlowKey.setMillisTime(longWritable);
 
+
         for (CustomerFlowElement customerFlowElement:statistic.getCustomerFlowElements()) {
-            Logger.println("customerFlowElement: "+customerFlowElement);
             longWritable.set(customerFlowElement.getHour());
             context.write(customerFlowKey, new ValueWrapper(customerFlowElement));
         }
@@ -88,9 +84,9 @@ public class MapperWriter {
 
         IntWritable value = new IntWritable(1);
 
+
         List<Long> inStoreHours = statistic.getInStoreHours();
         for (Long inStoreTime : inStoreHours) {
-            Logger.println("inStoreTime");
             longWritable.set(IntervalCalculator.getInStoreInterval(inStoreTime));
             context.write(cycleKey, new ValueWrapper(value));
         }
@@ -108,7 +104,6 @@ public class MapperWriter {
         IntWritable value = new IntWritable(1);
 
         for (Long cycle : statistic.getCycles()) {
-            Logger.println("cycle");
             longWritable.set(IntervalCalculator.getCycleInterval(cycle));
             context.write(cycleKey, new ValueWrapper(value));
         }

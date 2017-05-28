@@ -9,6 +9,10 @@ public class Logger {
         System.out.println(object);
     }
 
+    public static void print(Object object) {
+        System.out.print(object);
+    }
+
     public static void debug(Object object) {
         System.out.println(object);
     }

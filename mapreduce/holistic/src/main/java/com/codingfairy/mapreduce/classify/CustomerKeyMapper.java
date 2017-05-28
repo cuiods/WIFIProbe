@@ -48,7 +48,7 @@ public class CustomerKeyMapper extends Mapper<Object, Text, Text, PhoneJson> {
 
             long time = -1L;
             try {
-                Logger.println(time);
+                System.out.println(prob.getTime());
                 time = DateFormatter.getMillis(prob.getTime());
             }catch (Exception e) {
                 Logger.println("time format error!!");
@@ -60,7 +60,7 @@ public class CustomerKeyMapper extends Mapper<Object, Text, Text, PhoneJson> {
                     phoneJson.setTime(time);
                     phoneAsKey.set(phoneJson.getMac());
                     context.write(phoneAsKey, phoneJson);
-                    Logger.println("print line phone data : "+phoneJson.getMac());
+                    Logger.println("print line phone data : "+phoneJson.getTime());
                 }
             }
 
