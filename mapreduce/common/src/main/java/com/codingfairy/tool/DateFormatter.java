@@ -16,6 +16,11 @@ public class DateFormatter {
         return dateFomat.parse(time);
     }
 
+    public static String toString(long time) {
+        return dateFomat.format(new Date(time));
+    }
+
+
     public static long getMillis(String time) throws ParseException {
         return dateFomat.parse(time).getTime();
     }
