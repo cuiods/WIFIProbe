@@ -9,7 +9,7 @@ import { connect } from 'dva';
 import SelectorForm from '../../components/charts/selectorForm';
 import DetailSelectorForm from '../../components/charts/detailSelectorForm';
 import HourActiveChart from '../../components/charts/activeness/hourActiveChart';
-import DetailActiveChart from '../../components/charts/activeness/detailActiveChart';
+import DetailBarChart from '../../components/charts/detailBarChart';
 
 function ActivenessPage({dispatch,activenessInfo}) {
   const {hourData, detailData, probeOptions} = activenessInfo;
@@ -57,7 +57,7 @@ function ActivenessPage({dispatch,activenessInfo}) {
         </Col>
         <Col lg={24} md={24}>
           <Card title="detail active chart">
-            <DetailActiveChart data={detailData} />
+            <DetailBarChart data={detailData} />
           </Card>
         </Col>
       </Card>
