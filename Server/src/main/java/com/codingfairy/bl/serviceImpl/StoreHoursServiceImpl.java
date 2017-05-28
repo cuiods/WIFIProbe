@@ -8,6 +8,7 @@ import com.codingfairy.exception.ParamException;
 import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.data.ObjectMapper;
+import com.codingfairy.utils.enums.ConvertType;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.web.json.Tuple;
 import com.codingfairy.web.json.analysis.element.InStoreHoursElement;
@@ -37,7 +38,9 @@ public class StoreHoursServiceImpl implements StoreHoursService {
 
     @Override
     public List<Tuple<String, Number>> findByHourAndProbe(int hour, String probeId) {
-        return ObjectMapper.convertToChartData(storeHoursDao.findByHourAndProbe(hour, probeId));
+        return ObjectMapper.convertToViewData(
+                ObjectMapper.convertToChartData(storeHoursDao.findByHourAndProbe(hour, probeId)),
+                ConvertType.store);
     }
 
     @Override

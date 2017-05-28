@@ -1,17 +1,25 @@
 package com.codingfairy.utils.data;
 
+import com.codingfairy.utils.enums.ConvertType;
 import com.codingfairy.web.json.Tuple;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by cuihao on 2017-05-16.
  * Map object
  */
 public class ObjectMapper {
+
+    private static final String[] STORE_RANGES = {"0-0.5min","0.5-2min","2-5min","5-15min","15-30min",
+                                                  "30-60min","1-2h","2-4h","4-6h",">6h"};
+    private static final String[] VISIT_RANGES = {"0-5min","5-30min","0.5-1h","1-6h","6-24h",
+                                                  "1-3day","3-7day","7-30day","30-180day",">180day"};
+    private static final String DATA_PREFIX = "data";
 
     /**
      * Map object attr array to object
@@ -51,6 +59,11 @@ public class ObjectMapper {
         return object;
     }
 
+    /**
+     * Map number attr to {@code Tuple<String,Number>}
+     * @param object any object with Number attribute
+     * @return list of {@link Tuple}
+     */
     public static List<Tuple<String,Number>> convertToChartData(Object object) {
         List<Tuple<String, Number>> result = new LinkedList<>();
         if (object==null) return result;
@@ -72,6 +85,28 @@ public class ObjectMapper {
             }
         }
         return result;
+    }
+
+    public static List<Tuple<String,Number>> convertToViewData(List<Tuple<String,Number>> chartDatas, ConvertType type) {
+        assert STORE_RANGES.length>=chartDatas.size() && VISIT_RANGES.length >= chartDatas.size();
+        String[] convertStrs;
+        switch (type) {
+            case store:
+                convertStrs = STORE_RANGES;
+                break;
+            case circle:
+                convertStrs = VISIT_RANGES;
+                break;
+            default:
+                return null;
+        }
+        return chartDatas.stream()
+                .filter(tuple -> tuple.getX().contains(DATA_PREFIX))
+                .map(tuple -> new Tuple<>(
+                        convertStrs[Integer.valueOf(tuple.getX().charAt(tuple.getX().length() - 1) + "")],
+                        tuple.getY()
+                ))
+                .collect(Collectors.toList());
     }
 
 }

@@ -21,12 +21,12 @@ public class StoreHoursServiceImplTest extends BaseTest {
     @Test
     public void getStoreHoursStat() throws Exception {
         System.out.println(storeHoursService
-                .getStoreHoursStat((int)(System.currentTimeMillis()/(3600*1000)-1), QueryThreshold.HOUR,10,null));
+                .getStoreHoursStat((int)(System.currentTimeMillis()/(3600*1000)-1000), QueryThreshold.DAY,30,null));
     }
 
     @Test
     public void findByHourAndProbe() throws Exception {
-        System.out.println(storeHoursService.findByHourAndProbe((int)(System.currentTimeMillis()/(3600*1000)-1),"1s12sz"));
+        System.out.println(storeHoursService.findByHourAndProbe((int)(System.currentTimeMillis()/(3600*1000)),"1s12sz"));
     }
 
     @Test

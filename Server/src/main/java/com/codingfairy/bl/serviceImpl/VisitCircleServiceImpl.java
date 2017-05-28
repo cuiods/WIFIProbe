@@ -9,6 +9,7 @@ import com.codingfairy.exception.ParamException;
 import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.data.ObjectMapper;
+import com.codingfairy.utils.enums.ConvertType;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.web.json.Tuple;
 import com.codingfairy.web.json.analysis.element.VisitingCycleElement;
@@ -38,7 +39,9 @@ public class VisitCircleServiceImpl implements VisitCircleService {
 
     @Override
     public List<Tuple<String, Number>> findByHourAndProbe(int hour, String probeId) {
-        return ObjectMapper.convertToChartData(visitCircleDao.findByHourAndProbe(hour, probeId));
+        return ObjectMapper.convertToViewData(
+                ObjectMapper.convertToChartData(visitCircleDao.findByHourAndProbe(hour, probeId)),
+                ConvertType.circle);
     }
 
     @Override
