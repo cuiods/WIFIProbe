@@ -18,7 +18,7 @@ import java.io.IOException;
  * Created by darxan on 17-5-20.
  */
 @Data
-public class ValueWrapper implements Writable{
+public class ValueWrapper implements Writable, Cloneable{
 
 
     private Writable value;
@@ -40,6 +40,10 @@ public class ValueWrapper implements Writable{
     }
 
 
+    @Override
+    public ValueWrapper clone() throws CloneNotSupportedException {
+        return (ValueWrapper)super.clone();
+    }
 
     public void write(DataOutput dataOutput) throws IOException {
         new Text(this.value.getClass().getSimpleName()).write(dataOutput);

@@ -30,20 +30,27 @@ public abstract class AbstractReducer<KEYOUT, VALUEOUT>  extends Reducer<KeyWrap
         if (!iterator.hasNext()) {
             return;
         }
-        ValueWrapper valueWrapper = iterator.next();
+
+        ValueWrapper valueWrapper = null;
+        try {
+            valueWrapper = iterator.next().clone();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
         if (valueWrapper==null) {
             return;
         }
 
-        Logger.println("key  : "+key.getType().toString()+"_"+key.getMillisTime().toString());
+        Logger.println("key  : "+key.getType().toString()+"_"+key.getMillisTime());
 
         if (type.equals(MapKeyConfig.CUSTOMER_FLOW_KEY)) {
             CustomerFlowElement first = (CustomerFlowElement)valueWrapper.getValue();
             while (iterator.hasNext()) {
                 CustomerFlowElement next = (CustomerFlowElement)iterator.next().getValue();
                 first.addAnother(next);
-
             }
         }
         else if (type.equals(MapKeyConfig.NEW_OLD_CUSTOMER)){
@@ -67,7 +74,7 @@ public abstract class AbstractReducer<KEYOUT, VALUEOUT>  extends Reducer<KeyWrap
             return;
         }
 
-        Logger.println("write value: "+GsonTool.convertObjectToJson(valueWrapper.getValue()));
+        Logger.println("write value: "+GsonTool.convertObjectToJson(valueWrapper));
         write(context, key, valueWrapper);
 
     }
