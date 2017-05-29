@@ -1,6 +1,7 @@
 package com.codingfairy.mapreduce.logic;
 
 import com.codingfairy.to.Interval;
+import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import org.apache.hadoop.io.ObjectWritable;
 import org.apache.htrace.fasterxml.jackson.databind.util.LinkedNode;
@@ -34,13 +35,21 @@ public class PhoneDataCombiner {
     public List<PhoneJson> getPhonesData(Iterable<PhoneJson> values) {
 
         List<PhoneJson> phoneList = new ArrayList<PhoneJson>();
-        for (PhoneJson tempObject: values) {
-            phoneList.add(tempObject);
+
+        for (PhoneJson tempObject : values) {
+            try {
+                phoneList.add(tempObject.clone());
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         if (phoneList.size()==0) {
             return null;
         }
+
         Collections.sort(phoneList, phoneJsonComparator);
+
         return phoneList;
     }
 

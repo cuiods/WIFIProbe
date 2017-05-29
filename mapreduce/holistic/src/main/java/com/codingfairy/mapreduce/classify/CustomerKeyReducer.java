@@ -28,9 +28,9 @@ public class CustomerKeyReducer extends Reducer<Text,PhoneJson,Text,Text> {
         Logger.println("reduce count: " + count++);
         Logger.println(key);
         if (startTime<0) {
-            Logger.println("first time to initial");
+            Logger.println("[INITIAL] first time to initial");
             startTime = context.getConfiguration().getLong(Holistic.START_TIME, 0L);
-            Logger.println("initial start time");
+            Logger.println("[INITIAL] initial start time");
             phoneDataCombiner = new PhoneDataCombiner(startTime);
 
         }
@@ -39,9 +39,10 @@ public class CustomerKeyReducer extends Reducer<Text,PhoneJson,Text,Text> {
         if (intervalList!=null&&intervalList.size()>0) {
             text.set(gson.toJson(intervalList));
             context.write(key, text);
-            Logger.println("write one line result");
+            Logger.println("[SUCCESS] write one line result");
+            Logger.println("[write] : " + text.toString());
         }else {
-            Logger.println("a empty address. wrong!!");
+            Logger.println("[ERROR] a empty address. wrong!!");
         }
     }
 }

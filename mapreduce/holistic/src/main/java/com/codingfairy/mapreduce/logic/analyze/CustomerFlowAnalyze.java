@@ -11,6 +11,7 @@ import com.codingfairy.vo.analysis.element.NewOldCustomElement;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,6 +59,8 @@ public class CustomerFlowAnalyze {
 
     private void analyze(int hourIndex) {
 
+        Logger.println("[hourIndex]: "+hourIndex);
+
         startTime = startHour + (long) hourIndex*(long) 3600000;
         endTime = startHour + (long) (hourIndex+1)*(long) 3600000;
 
@@ -72,18 +75,18 @@ public class CustomerFlowAnalyze {
 
         //move to the first valid position
         for (;;searchIndex++) {
-            Logger.println("searchIndex: "+searchIndex+" json size:"+phoneJsons.size());
+            Logger.println("[searchIndex]: "+searchIndex+" json size:"+phoneJsons.size());
 
             if (searchIndex>=phoneJsons.size()){
-                Logger.println("************ break and return ::all time is too earlier");
+                Logger.println("[!!!!!!!!]: break and return ::reach to end");
                 return ;
             }
             if (phoneJsons.get(searchIndex).getTime()>=startTime) {
-                Logger.println("-----------break continue analyze time is perfect to continue");
+                Logger.println("[ perfect ]: break continue analyze time is perfect to continue");
                break;
             }
 
-            Logger.println("============ continue loop time is too earlier :"
+            Logger.println("[=========]continue loop time is too earlier :"
                     + phoneJsons.get(searchIndex).getTime());
         }
 
@@ -136,20 +139,23 @@ public class CustomerFlowAnalyze {
                 if (!endInfWifi && lastInWifi) {
                     out++;
                     inStoreHours.add(last.getTime()-lastStartInTime);
-                    Logger.debug("reach to list end, out at: "+last.getTime());
-                    Logger.debug("in store time is : "+(last.getTime()-lastStartInTime));
+                    Logger.debug("[in store debug] reach to list end, out at: "+last.getTime());
+                    Logger.debug("[in store debug] in store time is : "+(last.getTime()-lastStartInTime));
                 }
-                Logger.debug("end at: "+last.getTime());
+                Logger.debug("[in store debug] end because of read end, at: "+last.getTime());
                 break;
             }
 
             PhoneJson current = phoneJsons.get(i);
+            Logger.debug("[in store debug] current phone json: " + new Date(current.getTime()));
 
             boolean isContinuous = IsContinuous.isContinuous(last, current);
             boolean isIn = InStoreJudge.isInStore(current);
 
+            Logger.println("[in store debug] is in store: " + isIn);
+
             if (!isIn) {
-                Logger.debug("skip one at: "+current.getTime());
+                Logger.debug("[in store debug] skip one at: "+current.getTime());
                 continue;
             }
 
@@ -162,11 +168,11 @@ public class CustomerFlowAnalyze {
                 }else {
                     jumpCount++;
                 }
-                Logger.debug("out at: "+current.getTime());
-                Logger.debug("in store time is : "+(last.getTime()-lastStartInTime));
+                Logger.debug("[in store debug] out at: "+current.getTime());
+                Logger.debug("[in store debug] in store time is : "+(last.getTime()-lastStartInTime));
             }
 
-            if ((!lastInWifi||!isContinuous) && isIn) {
+             else if ((!lastInWifi||!isContinuous) && isIn) {
                 if (lastStartInTime>0) {
                     cycles.add(current.getTime()-lastStartInTime);
                 }
@@ -174,18 +180,20 @@ public class CustomerFlowAnalyze {
                 lastStartInTime = current.getTime();
                 in++;
                 isNew = false;
-                Logger.debug("in at: "+current.getTime());
+                Logger.debug("[in store debug] in at: "+current.getTime());
 
             }
 
 
-
             if (current.getTime() >= endTime) {
+
+                Logger.println("[in store debug] out of time");
+
                 if (isContinuous && isIn) {
                     endInfWifi = true;
-                    Logger.debug("out at: "+current.getTime());
+                    Logger.debug("[in store debug] current time at: "+current.getTime());
                 }
-                Logger.debug("out time  at: "+last.getTime());
+                Logger.debug("[in store debug] last time  at: "+last.getTime());
                 break;
 
             }
@@ -195,15 +203,15 @@ public class CustomerFlowAnalyze {
         }
 
 
-        int stayInWifi = firstInWifi&&out==0?1:0;
-        int inNoOutWifi = endInfWifi&&(out>1||firstInWifi) ? 1 : 0;
+        int stayInWifi = ( firstInWifi && out==0 ) ? 1 : 0;
+        int inNoOutWifi = endInfWifi && ( out>1 || firstInWifi ) ? 1 : 0;
         int outNoInWifi = out>0&&firstInWifi ? 1 : 0;
         int inAndOutWifi = Math.min(in-inNoOutWifi, out-outNoInWifi);
 
-        Logger.println("in :"+in);
-        Logger.println("out:"+out);
-        Logger.println("firstInWifi:"+firstInWifi);
-        Logger.println("endInfWifi:"+endInfWifi);
+        Logger.println("[in store debug] in :"+in);
+        Logger.println("[in store debug] out:"+out);
+        Logger.println("[in store debug] firstInWifi:"+firstInWifi);
+        Logger.println("[in store debug] endInfWifi:"+endInfWifi);
 
         customerFlowElement.setInAndOutStore(inAndOutWifi);
         customerFlowElement.setInNoOutStore(inNoOutWifi);

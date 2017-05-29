@@ -21,18 +21,22 @@ public abstract class AbstractReducer<KEYOUT, VALUEOUT>  extends Reducer<KeyWrap
     protected void reduce(KeyWrapper key, Iterable<ValueWrapper> values, Context context)
             throws IOException, InterruptedException {
 
-        Logger.println(this.getClass().getSimpleName()+": get one key values");
+        Logger.println(this.getClass().getSimpleName() + ": get one key values");
+
         String type = key.getType().toString();
+
         Iterator<ValueWrapper> iterator = values.iterator();
+
         if (!iterator.hasNext()) {
             return;
         }
         ValueWrapper valueWrapper = iterator.next();
+
         if (valueWrapper==null) {
             return;
         }
 
-        Logger.println("key  : "+GsonTool.convertObjectToJson(key));
+        Logger.println("key  : "+key.getType().toString()+"_"+key.getMillisTime().toString());
 
         if (type.equals(MapKeyConfig.CUSTOMER_FLOW_KEY)) {
             CustomerFlowElement first = (CustomerFlowElement)valueWrapper.getValue();
@@ -63,7 +67,7 @@ public abstract class AbstractReducer<KEYOUT, VALUEOUT>  extends Reducer<KeyWrap
             return;
         }
 
-        Logger.println("write value: "+GsonTool.convertObjectToJson(valueWrapper));
+        Logger.println("write value: "+GsonTool.convertObjectToJson(valueWrapper.getValue()));
         write(context, key, valueWrapper);
 
     }

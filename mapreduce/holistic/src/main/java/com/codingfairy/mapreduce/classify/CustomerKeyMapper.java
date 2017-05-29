@@ -35,15 +35,15 @@ public class CustomerKeyMapper extends Mapper<Object, Text, Text, PhoneJson> {
     protected void map(Object key, Text value, Context context)
             throws IOException, InterruptedException {
 
-        Logger.println("map one line: " + count++);
+        Logger.println("[map one line]: " + count++);
         if (value.getLength()==0) {
-            Logger.println("empty lone");
+            Logger.println("[mapper error]empty lone");
             return;
         }
         List<ProbeJson> probeJsons = gson.fromJson(
                 value.toString(), new TypeToken<List<ProbeJson>>(){}.getType());
         Logger.println("convert to java list, size =  "+probeJsons.size());
-        Logger.println("for each prob in list, classify by mac");
+
         for (ProbeJson prob:probeJsons) {
 
             long time = -1L;
