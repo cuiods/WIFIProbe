@@ -1,20 +1,10 @@
 package com.codingfairy.mapreduce.logic;
 
-import com.codingfairy.mapreduce.logic.analyze.CustomerFlowAnalyze;
-import com.codingfairy.mock.GsonTool;
-import com.codingfairy.mock.MockData;
-import com.codingfairy.to.Interval;
-import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
-import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.HourStatistic;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
