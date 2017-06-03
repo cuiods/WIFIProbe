@@ -13,7 +13,7 @@ import java.util.List;
  * Created by darxan on 17-5-17.
  */
 @Data
-public class HourStatistic implements Writable{
+public class HourStatistic {
 
 
 
@@ -25,12 +25,5 @@ public class HourStatistic implements Writable{
     private List<Long> cycles ;
     private List<Long> inStoreHours;
 
-    public void write(DataOutput dataOutput) throws IOException {
-
-    }
-
-    public void readFields(DataInput dataInput) throws IOException {
-
-    }
 
 }

@@ -1,10 +1,13 @@
 package com.codingfairy.mapreduce.logic;
 
+import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.NewOldCustomElement;
 import lombok.Data;
+import sun.rmi.runtime.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,13 +58,27 @@ public class FlowState {
     protected int firstOutNoInWifi;
 
 
-    public FlowState(long startHour){
+    private int newCustomer;
+    private int oldCustomer;
+
+    public FlowState(long startHour) {
+
         this.startHour = startHour;
+
+        this.cycles = new ArrayList<Long>();
+        this.inStoreHours = new ArrayList<Long>();
+
         this.isNew = true;
+
         this.lastInStoreStartTime = -1;
         this.lastInWifiStartTime = -1;
         this.lastInStore = -1;
         this.lastInWifi = -1;
+
+        initForHour();
+    }
+
+    private void initForHour() {
 
         this.inAndOutStore = 0;
         this.lastInNoOutStore = 0;
@@ -71,14 +88,28 @@ public class FlowState {
         this.lastInNoOutWifi = 0;
         this.firstOutNoInWifi = 0;
 
+        this.newCustomer = 0;
+        this.oldCustomer = 0;
+        this.countOfInStore = 0;
+        this.countOfInWifi = 0;
+
     }
 
     public void newHourIndex(int hourIndex) {
+
+        Logger.println("[ new hour ] "+hourIndex);
+
         startTime = startHour + (long) hourIndex*(long) 3600000;
         endTime = startHour + (long) (hourIndex+1)*(long) 3600000;
 
         customerFlowElement = new CustomerFlowElement();
         newOldCustom = new NewOldCustomElement();
+
+        customerFlowElement.setHour(startTime);
+        newOldCustom.setHour(endTime);
+
+
+        initForHour();
     }
 
     /**
@@ -88,15 +119,20 @@ public class FlowState {
      */
     public boolean accept(PhoneJson data) {
 
+        Logger.println("[data time] "+data.getTime());
+
         if (data.getTime()>endTime) {
+            Logger.println("[out hour]");
             return false;
         }
 
         //in store
         if (InStoreJudge.isInStore(data)) {
+            Logger.println("[in sore]");
             inStoreAction( data);
         }
         //in wifi
+        Logger.println("[in wifi]");
         inWifiAction(data);
 
         return true;
@@ -104,28 +140,53 @@ public class FlowState {
 
 
     protected void inStoreAction(PhoneJson data) {
+
         if (data.getTime()<endTime && data.getTime()>startTime) {
+
+            Logger.println("[in range]");
             countOfInStore++;
         }
+
         if (lastInStore >0) {
+
             boolean isBreak = !IsContinuous.isContinuous(lastInStore, data);
+            Logger.println("[isBreak] "+isBreak);
+
             if (isBreak) {
-                if (lastInStoreStartTime<startTime && data.getTime()<data.getTime()) {
+
+                if (lastInStoreStartTime<startTime && endTime<data.getTime()) {
                     //abandoned
-                } else if (lastInStoreStartTime<startTime && data.getTime()>data.getTime()) {
+                }
+
+                else if (lastInStoreStartTime<startTime && endTime>data.getTime()) {
                     firstOutNoInStore = 1;
-                } else if (lastInStoreStartTime>startTime && data.getTime()>data.getTime()) {
+                }
+                else if (lastInStoreStartTime>startTime && endTime>data.getTime()) {
                     inAndOutStore++;
                 }
+
                 cycles.add(data.getTime()-lastInStoreStartTime);
                 inStoreHours.add(lastInStore-lastInStoreStartTime);
                 lastInStoreStartTime = data.getTime();
+
+                if (data.getTime()<endTime && data.getTime()>startTime) {
+                    oldCustomer++;
+                }
+
             }
         } else {
+
             lastInStoreStartTime = data.getTime();
+
+            if (data.getTime()<endTime && data.getTime()>startTime) {
+                newCustomer = 1;
+            }
+
+            isNew = false;
         }
+
         lastInStore = data.getTime();
-        isNew = false;
+
     }
 
     protected void inWifiAction(PhoneJson data) {
@@ -139,17 +200,20 @@ public class FlowState {
             boolean isBreak = !IsContinuous.isContinuous(lastInWifi, data);
 
             if (isBreak) {
-                if (lastInWifiStartTime<startTime && data.getTime()<startTime) {
+
+                if (lastInWifiStartTime<startTime && endTime<data.getTime()) {
                     //abandoned
-                } else if (lastInWifiStartTime<startTime && data.getTime()>startTime) {
+                } else if (lastInWifiStartTime<startTime && endTime<data.getTime()) {
                     firstOutNoInWifi = 1;
-                } else if (lastInWifiStartTime<startTime && data.getTime()<startTime) {
+                } else if (lastInWifiStartTime<startTime && endTime<data.getTime()) {
                     inAndOutWifi++;
                 }
 
                 lastInWifiStartTime = data.getTime();
             }
-        } else {
+
+        }
+        else {
             lastInWifiStartTime = data.getTime();
         }
     }
@@ -158,11 +222,17 @@ public class FlowState {
 
     public void summary() {
 
+        newOldCustom.setNewCustomer(newCustomer);
+        newOldCustom.setOldCustomer(oldCustomer);
+
         if (inAndOutStore==0 && firstOutNoInStore==0) {
+
             if (countOfInStore>0) {
                 customerFlowElement.setStayInStore(1);
             }
+
         } else {
+
             if (IsContinuous.isContinuous(lastInStore, endTime)) {
                 lastInNoOutStore = 1;
             } else {
@@ -174,15 +244,19 @@ public class FlowState {
         }
 
         if (inAndOutWifi==0 && firstOutNoInWifi==0) {
+
             if (countOfInWifi>0) {
                 customerFlowElement.setStayInWifi(1);
             }
+
         } else {
+
             if (IsContinuous.isContinuous(lastInWifi, endTime)) {
                 lastInNoOutWifi = 1;
             } else {
                 inAndOutWifi++;
             }
+
             customerFlowElement.setInAndOutWifi(inAndOutWifi);
             customerFlowElement.setInNoOutWifi(lastInNoOutWifi);
             customerFlowElement.setOutNoInWifi(firstOutNoInWifi);

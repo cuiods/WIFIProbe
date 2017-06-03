@@ -64,6 +64,9 @@ public class CustomerFlowAnalyze {
         while (phoneJsons.size()>searchIndex &&
                 flowState.accept(phoneJsons.get(searchIndex++)));
 
+        if (searchIndex>0) {
+            searchIndex--;
+        }
         flowState.summary();
 
         customerFlowElements[hourIndex] = flowState.getCustomerFlowElement();

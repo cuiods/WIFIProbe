@@ -7,7 +7,7 @@ import com.codingfairy.vo.PhoneJson;
  */
 public class IsContinuous {
 
-    public static long INTERVAL_MAX = 60000;
+    public static long INTERVAL_MAX = 5000;
 
     public static boolean isContinuous(long time, PhoneJson phoneJson) {
         return isContinuous(time, phoneJson.getTime());
