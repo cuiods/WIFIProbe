@@ -23,6 +23,13 @@ const SelectorForm = ({
   }
 }) => {
 
+  const options_shows = probeOptions.map((item,key) => {
+    console.log(JSON.stringify(item.value));
+    return (
+      <Option value={item.value}>{item.value}</Option>
+    )
+  })
+
   function handleSubmit(e) {
     e.preventDefault();
     validateFields((err)=> {
@@ -68,6 +75,8 @@ const SelectorForm = ({
     },
   };
 
+
+
   function onProbeChange(value){}
 
   const thresholdOptions = [
@@ -104,7 +113,7 @@ const SelectorForm = ({
             initialValue: '1s12sz'
           })(
             <Select>
-              <Option value="1s12sz">1s12sz</Option>
+              {options_shows}
             </Select>
           )}
         </FormItem>

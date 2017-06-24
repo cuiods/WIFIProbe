@@ -8,6 +8,8 @@ import { connect } from 'dva';
 import SelectorForm from '../../components/charts/selectorForm';
 import DetailSelectorForm from '../../components/charts/detailSelectorForm';
 import HourNewOldChart from '../../components/charts/newOld/hourNewOldChart';
+import DetailPieChart from '../../components/charts/detailPieChart';
+import DetailBarChart from '../../components/charts/detailBarChart';
 
 function NewOldPage({dispatch,newOldInfo}) {
   const {hourData, detailData, probeOptions} = newOldInfo;
@@ -55,7 +57,7 @@ function NewOldPage({dispatch,newOldInfo}) {
         </Col>
         <Col lg={24} md={24}>
           <Card title="detail NewAndHour chart">
-
+            <DetailBarChart data={detailData}/>
           </Card>
         </Col>
       </Card>
