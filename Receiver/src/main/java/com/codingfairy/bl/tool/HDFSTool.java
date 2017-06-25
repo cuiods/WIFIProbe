@@ -32,7 +32,7 @@ public class HDFSTool {
     }
 
     /**从HDFS上读取文件*/
-    public static DataInputStream readFromHdfs(String fileName) throws FileNotFoundException,IOException {
+    public static DataInputStream readFromHdfs(String fileName) throws IOException {
 
         String dst = NodeConfig.HDFS_PATH+fileName;
         Configuration conf = new Configuration();
@@ -42,7 +42,7 @@ public class HDFSTool {
 
 
     /**从HDFS上删除文件*/
-    public static void deleteFromHdfs(String fileName) throws FileNotFoundException,IOException {
+    public static void deleteFromHdfs(String fileName) throws IOException {
         String dst = NodeConfig.HDFS_PATH + fileName;
         Configuration conf = new Configuration();
         FileSystem fs = FileSystem.get(URI.create(dst), conf);
@@ -77,4 +77,16 @@ public class HDFSTool {
         fs.rename(srcPath, dstPath);
         fs.close();
     }
+
+
+
+//    public static void main(String[] args) {
+//        try {
+//            HDFSTool.uploadFiles(new FileInputStream(new File("H:\\bug.png")), "/input/bug.png");
+////            DataInputStream inputStream = HDFSTool.readFromHdfs ("/input/input.txt");
+////            IOUtils.copyBytes(inputStream, System.out, 1024,true);
+//        }catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
