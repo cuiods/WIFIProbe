@@ -36,6 +36,13 @@ const DetailSelectorForm = ({
 
   }
 
+  const options_shows = probeOptions.map((item,key) => {
+
+    return (
+      <Option value={item.value}>{item.value}</Option>
+    )
+  })
+
   return (
     <div className={styles['selector-form']}>
       <Form onSubmit={handleSubmit} layout="inline">
@@ -44,10 +51,10 @@ const DetailSelectorForm = ({
           className={styles['form-item']}
         >
           {getFieldDecorator('probeId',{
-            initialValue: '1s12sz'
+            initialValue: 'probeId'
           })(
             <Select>
-              <Option value="1s12sz">1s12sz</Option>
+              {options_shows}
             </Select>
           )}
         </FormItem>
