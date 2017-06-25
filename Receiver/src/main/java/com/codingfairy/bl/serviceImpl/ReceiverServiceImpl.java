@@ -45,8 +45,8 @@ public class ReceiverServiceImpl implements ReceiverService {
     @Override
     @Scheduled(cron = "0 0/20 7-23 * * ?")
     public void commit() {
-        try {
-            new Thread( () -> {
+        new Thread( () -> {
+            try {
                 if (concurrentDataList.getSize()>0) {
                     int sleep = (int) (Math.random()*60000);
                     try {
@@ -66,10 +66,10 @@ public class ReceiverServiceImpl implements ReceiverService {
                         e.printStackTrace();
                     }
                 }
-            }).start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     /**
