@@ -21,17 +21,17 @@ export default {
         const matchFlow = pathToRegexp('/newAndOld').exec(location.pathname);
         if(matchFlow) {
           dispatch({
+            type: 'getProbeOptions',
+            payload: {page:0, size: 10}
+          });
+          dispatch({
             type: 'getHourData',
-            payload: {probeId:"1s12sz",startHour:40000,startRange:5,threshold:"HOUR"}
+            payload: {probeId: '1s12sz', startHour:40000, startRange:5, threshold:"HOUR"}
           });
           dispatch({
             type: 'getDetail',
             payload: {hour:415300,probeId:"1s12sz"}
           });
-          dispatch({
-            type: 'getProbeOptions',
-            payload: {page:0, size: 10}
-          })
         }
       })
     }

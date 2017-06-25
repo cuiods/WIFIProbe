@@ -24,7 +24,7 @@ const SelectorForm = ({
 }) => {
 
   const options_shows = probeOptions.map((item,key) => {
-    console.log(JSON.stringify(item.value));
+
     return (
       <Option value={item.value}>{item.value}</Option>
     )
@@ -110,7 +110,7 @@ const SelectorForm = ({
           className={styles['form-item']}
         >
           {getFieldDecorator('probeId',{
-            initialValue: '1s12sz'
+            initialValue: 'probeId'
           })(
             <Select>
               {options_shows}
