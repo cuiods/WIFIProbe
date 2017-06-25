@@ -27,7 +27,7 @@ public class VisitCircleServiceImplTest extends BaseTest {
     @Test
     public void findByHourAndProbe() throws Exception {
         System.out.println((int)(System.currentTimeMillis()/(3600*1000)-1));
-        System.out.println(visitCircleService.findByHourAndProbe((int)(System.currentTimeMillis()/(3600*1000)-1),"1s12sz"));
+        System.out.println(visitCircleService.findByHourAndProbe((int)(System.currentTimeMillis()/(3600*1000)),"1s12sz"));
     }
 
     @Test

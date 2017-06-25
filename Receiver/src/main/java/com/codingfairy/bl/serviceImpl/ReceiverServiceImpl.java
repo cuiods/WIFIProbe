@@ -45,27 +45,31 @@ public class ReceiverServiceImpl implements ReceiverService {
     @Override
     @Scheduled(cron = "0 0/20 7-23 * * ?")
     public void commit() {
-        new Thread( () -> {
-            if (concurrentDataList.getSize()>0) {
-                int sleep = (int) (Math.random()*60000);
-                try {
-                    Thread.sleep(sleep);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        try {
+            new Thread( () -> {
+                if (concurrentDataList.getSize()>0) {
+                    int sleep = (int) (Math.random()*60000);
+                    try {
+                        Thread.sleep(sleep);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    List<ProbeJson> probeJsons = concurrentDataList.getAll();
+                    InputStream inputStream =
+                            new ByteArrayInputStream(GsonTool.convertObjectToJson(probeJsons).getBytes());
+                    try {
+                        Calendar c = Calendar.getInstance();
+                        HDFSTool.uploadFiles(inputStream, String.valueOf(c.get(Calendar.YEAR)) + "-"
+                                + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DATE) + "/"
+                                + c.get(Calendar.MILLISECOND) + "-" + receiverConfig.getName()+".json");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-                List<ProbeJson> probeJsons = concurrentDataList.getAll();
-                InputStream inputStream =
-                        new ByteArrayInputStream(GsonTool.convertObjectToJson(probeJsons).getBytes());
-                try {
-                    Calendar c = Calendar.getInstance();
-                    HDFSTool.uploadFiles(inputStream, String.valueOf(c.get(Calendar.YEAR)) + "-"
-                            + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DATE) + "/"
-                            + c.get(Calendar.MILLISECOND) + "-" + receiverConfig.getName()+".json");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
