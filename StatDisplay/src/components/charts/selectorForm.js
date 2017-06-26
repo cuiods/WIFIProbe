@@ -110,7 +110,7 @@ const SelectorForm = ({
           className={styles['form-item']}
         >
           {getFieldDecorator('probeId',{
-            initialValue: 'probeId'
+            initialValue: '1s12sz'
           })(
             <Select>
               {options_shows}
