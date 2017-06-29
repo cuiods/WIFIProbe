@@ -17,7 +17,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1000</stringProp>
+        <stringProp name="ThreadGroup.num_threads">231</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1498367458000</longProp>
         <longProp name="ThreadGroup.end_time">1498367458000</longProp>
@@ -27,7 +27,7 @@
       </ThreadGroup>
       <hashTree>
         <SyncTimer guiclass="TestBeanGUI" testclass="SyncTimer" testname="Synchronizing Timer" enabled="true">
-          <intProp name="groupSize">1000</intProp>
+          <intProp name="groupSize">1</intProp>
         </SyncTimer>
         <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="probe send request" enabled="true">
