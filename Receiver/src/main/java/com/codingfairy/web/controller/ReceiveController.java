@@ -4,11 +4,9 @@ import com.codingfairy.bl.service.ReceiverService;
 import com.codingfairy.bl.tool.GsonTool;
 import com.codingfairy.web.json.ProbeJson;
 import com.codingfairy.web.json.RealTimeJson;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 
 /**
  * Receive json from device
