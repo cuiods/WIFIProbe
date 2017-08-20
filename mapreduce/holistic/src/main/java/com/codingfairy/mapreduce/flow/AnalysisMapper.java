@@ -25,10 +25,13 @@ public class AnalysisMapper extends Mapper<Object, Text, KeyWrapper, ValueWrappe
 
     private Gson gson;
 
-    //00:23:89:30:89:91
+    //00:23:89:30:89:91 pattern for mac address
     private Pattern pattern;
+
     private PhoneDataExtractor extractor ;
+
     private long startTime ;
+
     private static int count ;
 
 
@@ -53,7 +56,9 @@ public class AnalysisMapper extends Mapper<Object, Text, KeyWrapper, ValueWrappe
         Matcher matcher = pattern.matcher(value.toString());
         if (matcher.find()) {
 
+            //找到对应于每一个mac地址的的所有数据
             String dataString = matcher.group(4);
+
             List<PhoneJson> phoneData = gson.fromJson(
                     dataString, new TypeToken<List<PhoneJson>>(){}.getType());
             HourStatistic hourStatistic = extractor.extract(phoneData);
