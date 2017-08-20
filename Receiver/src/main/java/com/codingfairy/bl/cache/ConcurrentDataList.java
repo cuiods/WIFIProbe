@@ -75,9 +75,11 @@ public class ConcurrentDataList {
 
     public void addProbeJson(ProbeJson probeJson) {
         executorService.execute(() -> {
-            readWriteLock.writeLock().lock();
-            jsonList.add(0,probeJson);
-            readWriteLock.writeLock().unlock();
+            if (probeJson!=null) {
+                readWriteLock.writeLock().lock();
+                jsonList.add(0,probeJson);
+                readWriteLock.writeLock().unlock();
+            }
         });
     }
 }

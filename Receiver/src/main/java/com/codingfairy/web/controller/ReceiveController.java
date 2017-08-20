@@ -1,14 +1,14 @@
 package com.codingfairy.web.controller;
 
 import com.codingfairy.bl.service.ReceiverService;
+import com.codingfairy.bl.tool.GsonTool;
 import com.codingfairy.web.json.ProbeJson;
 import com.codingfairy.web.json.RealTimeJson;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 
 /**
  * Receive json from device
@@ -21,9 +21,9 @@ public class ReceiveController {
     private ReceiverService receiverService;
 
     @PostMapping(value = "/receive")
-    public ProbeJson receive(@RequestBody ProbeJson probeJson) {
+    public void receive(@RequestParam(value = "data")String probeJsonStr) {
+        ProbeJson probeJson = GsonTool.convertJsonToObject(ProbeJson.class, probeJsonStr);
         receiverService.receive(probeJson);
-        return probeJson;
     }
 
     @GetMapping(value = "/latest")

@@ -65,7 +65,7 @@ export default {
             type: 'storeInfo',
             payload: userVo
           });
-          yield put(routerRedux.push('/'));
+          yield put(routerRedux.push('/customerFlow'));
         }else{//登录失败
           BasicAuth.clearAuth();
           yield put({
