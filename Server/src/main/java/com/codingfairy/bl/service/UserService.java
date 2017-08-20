@@ -2,6 +2,7 @@ package com.codingfairy.bl.service;
 
 import com.codingfairy.bl.vo.UserVo;
 import com.codingfairy.exception.ServerException;
+import org.apache.catalina.Server;
 
 /**
  * Created by cuihao on 2017-05-16.
@@ -9,4 +10,6 @@ import com.codingfairy.exception.ServerException;
  */
 public interface UserService {
     UserVo login(String username, String password) throws ServerException;
+
+    UserVo register(String username, String password) throws ServerException;
 }

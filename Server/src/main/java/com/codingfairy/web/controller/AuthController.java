@@ -45,4 +45,12 @@ public class AuthController {
         return new ResultVo<>(ServerCode.SUCCESS,null);
     }
 
+    @ApiOperation(value = "User register auth",notes = "User register.",
+            response = ResultVo.class, produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResultVo<UserVo> register(@Valid @RequestBody LoginJson registerJson) throws ServerException {
+        UserVo userVo = userService.register(registerJson.getUsername(),registerJson.getPassword());
+        return new ResultVo<>(ServerCode.SUCCESS,userVo);
+    }
+
 }
