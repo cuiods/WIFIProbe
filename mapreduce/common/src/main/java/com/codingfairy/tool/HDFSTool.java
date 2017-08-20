@@ -1,9 +1,6 @@
 package com.codingfairy.tool;
 
 import com.codingfairy.config.NodeConfig;
-import com.codingfairy.vo.PhoneJson;
-import com.codingfairy.vo.ProbeJson;
-import com.google.gson.Gson;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
@@ -11,14 +8,11 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Progressable;
-import sun.rmi.runtime.Log;
 
-import javax.xml.soap.Node;
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

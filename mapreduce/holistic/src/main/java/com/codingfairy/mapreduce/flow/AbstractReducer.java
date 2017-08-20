@@ -16,7 +16,9 @@ import java.util.Iterator;
 /**
  * Created by darxan on 17-5-22.
  */
-public abstract class AbstractReducer<KEYOUT, VALUEOUT>  extends Reducer<KeyWrapper, ValueWrapper, KEYOUT, VALUEOUT> {
+public abstract class AbstractReducer<KEYOUT, VALUEOUT>
+        extends Reducer<KeyWrapper, ValueWrapper, KEYOUT, VALUEOUT> {
+
     @Override
     protected void reduce(KeyWrapper key, Iterable<ValueWrapper> values, Context context)
             throws IOException, InterruptedException {
