@@ -6,7 +6,7 @@ const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 module.exports = function(webpackConfig, env) {
   webpackConfig.babel.plugins.push('transform-runtime');
 
-  //webpackConfig.plugins.push(new OpenBrowserPlugin({ url: 'http://localhost:8989' }));
+  // webpackConfig.plugins.push(new OpenBrowserPlugin({ url: 'http://localhost:8989' }));
 
   webpackConfig.babel.plugins.push(['import', {
     libraryName: 'antd',
