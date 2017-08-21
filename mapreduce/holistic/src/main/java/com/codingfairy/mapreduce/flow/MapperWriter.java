@@ -38,7 +38,6 @@ public class MapperWriter {
         writeInStoreHour();
         writCustomerFlow();
         writNewOldCustomer();
-
     }
 
 
@@ -67,12 +66,13 @@ public class MapperWriter {
         LongWritable longWritable = new LongWritable();
         customerFlowKey.setMillisTime(longWritable);
 
-
         for (CustomerFlowElement customerFlowElement:statistic.getCustomerFlowElements()) {
             longWritable.set(customerFlowElement.getHour());
             context.write(customerFlowKey, new ValueWrapper(customerFlowElement));
         }
     }
+
+
 
     private void writeInStoreHour() throws IOException, InterruptedException{
 
@@ -108,4 +108,6 @@ public class MapperWriter {
             context.write(cycleKey, new ValueWrapper(value));
         }
     }
+
+
 }

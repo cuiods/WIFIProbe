@@ -14,7 +14,9 @@ import lombok.Data;
  * 统计该小时内离去的客户的驻店时长
  */
 @Data
-public class InStoreHoursElement extends ChartData<Tuple<Long, Integer>>{
+public class InStoreHoursElement extends ChartData<Tuple<Long, Integer>> {
+
     protected String wifiProb;
     private Long hour;
+
 }

@@ -16,6 +16,7 @@ public class Logger {
     public static void debug(Object object) {
         System.out.println(object);
     }
+
     public static void err(Object object) {
         System.err.println(object);
     }
