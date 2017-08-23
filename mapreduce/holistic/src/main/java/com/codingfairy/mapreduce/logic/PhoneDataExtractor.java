@@ -35,7 +35,7 @@ public class PhoneDataExtractor {
     }
 
 
-    private void calculate_hours(final long earliest) {
+    private void _calculateHours(final long earliest) {
 
 
         if (start_time>=0){
@@ -55,7 +55,7 @@ public class PhoneDataExtractor {
             return null;
         }
 
-        calculate_hours(phoneJsonList.get(0).getTime());
+        _calculateHours(phoneJsonList.get(0).getTime());
 
         if (count<=0) {
             return null;

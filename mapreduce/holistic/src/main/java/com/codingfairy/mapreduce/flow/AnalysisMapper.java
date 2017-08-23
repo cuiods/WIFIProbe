@@ -36,20 +36,6 @@ public class AnalysisMapper extends Mapper<Object, Text, KeyWrapper, ValueWrappe
 
     private long startTime ;
 
-    public static void main(String[] args) {
-        String mac = "20:f4:1b:7d:b8:33   fdfdfdf";
-        Pattern pattern =  Pattern.compile("(([A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2})(\\s+)(.*)");
-        Matcher matcher = pattern.matcher(mac);
-        matcher.find();
-
-        for (int i = 0; i<=4; i++) {
-            try {
-                System.out.println(matcher.group(i));
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     @Override
     protected void setup(Context context) throws IOException, InterruptedException {
