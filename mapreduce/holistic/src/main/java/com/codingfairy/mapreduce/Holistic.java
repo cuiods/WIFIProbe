@@ -18,7 +18,7 @@ public class Holistic {
         try {
             time = Long.parseLong(args[0]);
         }catch (Exception e) {
-            time = System.currentTimeMillis() - NodeConfig.MAX_WIFI_DATA_INTERVAL;
+            time = 0;
         }
 
         while (true) {
