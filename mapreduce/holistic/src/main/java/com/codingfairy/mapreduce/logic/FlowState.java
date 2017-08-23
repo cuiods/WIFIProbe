@@ -1,11 +1,12 @@
 package com.codingfairy.mapreduce.logic;
 
+import com.codingfairy.mapreduce.config.InStoreJudge;
+import com.codingfairy.mapreduce.config.IsContinuous;
 import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.NewOldCustomElement;
 import lombok.Data;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.List;

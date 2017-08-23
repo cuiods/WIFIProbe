@@ -23,7 +23,7 @@ public abstract class AbstractReducer<KEYOUT, VALUEOUT>
     protected void reduce(KeyWrapper key, Iterable<ValueWrapper> values, Context context)
             throws IOException, InterruptedException {
 
-        Logger.println(this.getClass().getSimpleName() + ": get one key values");
+        Logger.println("["+this.getClass().getSimpleName() + "] : get one key values");
 
         String type = key.getType().toString();
 
@@ -40,9 +40,8 @@ public abstract class AbstractReducer<KEYOUT, VALUEOUT>
             e.printStackTrace();
         }
 
-
-
         if (valueWrapper==null) {
+            Logger.println("[read value] : empty");
             return;
         }
 

@@ -1,4 +1,4 @@
-package com.codingfairy.mapreduce.logic;
+package com.codingfairy.mapreduce.config;
 
 import com.codingfairy.vo.PhoneJson;
 

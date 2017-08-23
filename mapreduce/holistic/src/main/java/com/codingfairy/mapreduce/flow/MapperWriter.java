@@ -1,10 +1,9 @@
 package com.codingfairy.mapreduce.flow;
 
 import com.codingfairy.config.MapKeyConfig;
-import com.codingfairy.mapreduce.logic.IntervalCalculator;
+import com.codingfairy.mapreduce.config.IntervalCalculator;
 import com.codingfairy.to.KeyWrapper;
 import com.codingfairy.to.ValueWrapper;
-import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.HourStatistic;
 import com.codingfairy.vo.analysis.element.NewOldCustomElement;
@@ -14,7 +13,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 
 /**

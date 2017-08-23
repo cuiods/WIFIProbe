@@ -60,7 +60,7 @@ public class Task implements Runnable {
     }
 
     public void run() {
-        Logger.println("task executing.....");
+        Logger.println("[task]: task executing.....");
         clear();
         result = merge()&&classify()&&analyze();
     }
@@ -68,9 +68,9 @@ public class Task implements Runnable {
 
     private boolean merge() {
         try {
-            Logger.println("merging upload smaller files");
+            Logger.println("[task]: merging upload smaller files");
             HDFSTool.concat(FileConfig.upload);
-            Logger.println("merged upload smaller files");
+            Logger.println("[task]: merged upload smaller files");
             return true;
         }catch (IOException e) {
             Logger.println(e);
@@ -80,7 +80,7 @@ public class Task implements Runnable {
 
     private boolean classify() {
         try {
-            Logger.println("classifying ....");
+            Logger.println("[task]: classifying ....");
             return classify(FileConfig.data, classifyPath, time);
         }catch (Exception e) {
             Logger.println(e);
@@ -90,7 +90,7 @@ public class Task implements Runnable {
 
     private boolean analyze() {
         try {
-            Logger.println("analyzing ....");
+            Logger.println("[task]: analyzing ....");
             return analyze(classifyPath, statisticPath, time);
         }catch (Exception e) {
             Logger.println(e);

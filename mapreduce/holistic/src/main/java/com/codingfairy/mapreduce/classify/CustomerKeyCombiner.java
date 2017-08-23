@@ -18,7 +18,7 @@ public class CustomerKeyCombiner extends Reducer<Text, PhoneJson, Text, PhoneJso
     protected void reduce(Text key, Iterable<PhoneJson> values, Context context)
             throws IOException, InterruptedException {
 
-        Logger.println("combiner one : "+ count++);
+        Logger.println("[combiner one] with key: " + key.toString() + "index:"+ (++count) );
         super.reduce(key, values, context);
 
     }

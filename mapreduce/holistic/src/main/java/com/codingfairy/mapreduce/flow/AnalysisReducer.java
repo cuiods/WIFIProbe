@@ -2,6 +2,7 @@ package com.codingfairy.mapreduce.flow;
 
 import com.codingfairy.to.KeyWrapper;
 import com.codingfairy.to.ValueWrapper;
+import com.codingfairy.tool.Logger;
 import com.google.gson.Gson;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -36,6 +37,9 @@ public class AnalysisReducer extends AbstractReducer<LongWritable, Text> {
     protected void write(Context context, KeyWrapper key, ValueWrapper value)
             throws InterruptedException, IOException {
         text.set(gson.toJson(value.getValue()));
+        Logger.println("[reducer key:]  " + key.getType().toString());
+        Logger.println("[reducer value] " + text.toString());
+        Logger.println("");
         multipleOutputs.write(key.getType().toString(), key.getMillisTime(), text);
     }
 }

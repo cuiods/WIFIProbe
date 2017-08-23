@@ -1,4 +1,4 @@
-package com.codingfairy.mapreduce.logic;
+package com.codingfairy.mapreduce.config;
 
 /**
  * Created by darxan on 17-5-20.

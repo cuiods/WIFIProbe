@@ -24,8 +24,8 @@ public class Holistic {
         while (true) {
             try {
                 long lastTime = time;
-                Logger.println("loop: ");
-                Logger.println("time: "+time);
+                Logger.println("[Holistic]: loop");
+                Logger.println("[Holistic]:start time: "+time);
                 time = System.currentTimeMillis() - NodeConfig.MAX_WIFI_DATA_INTERVAL;
                 new Task(lastTime).execute();
             }catch (Exception e) {

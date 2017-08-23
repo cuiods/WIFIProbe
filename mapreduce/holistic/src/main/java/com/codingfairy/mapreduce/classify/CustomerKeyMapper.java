@@ -28,14 +28,14 @@ public class CustomerKeyMapper extends Mapper<Object, Text, Text, PhoneJson> {
     protected void map(Object key, Text value, Context context)
             throws IOException, InterruptedException {
 
-        Logger.println("[map one line]: " + count++);
+        Logger.println("[map read line]: " + count++);
         if (value.getLength()==0) {
-            Logger.println("[mapper error]empty lone");
+            Logger.println("[map empty line]: empty line");
             return;
         }
         List<ProbeJson> probeJsons = gson.fromJson(
                 value.toString(), new TypeToken<List<ProbeJson>>(){}.getType());
-        Logger.println("convert to java list, size =  "+probeJsons.size());
+        Logger.println("[probes converted]: convert to java list, size =  "+probeJsons.size());
 
         for (ProbeJson prob:probeJsons) {
 
@@ -44,16 +44,17 @@ public class CustomerKeyMapper extends Mapper<Object, Text, Text, PhoneJson> {
                 System.out.println(prob.getTime());
                 time = DateFormatter.getMillis(prob.getTime());
             }catch (Exception e) {
-                Logger.println("time format error!!");
+                Logger.println("[warn]: time format error!!");
             }
 
             if (time>=0) {
                 for (PhoneJson phoneJson : prob.getData()) {
-                    Logger.println("one  line phone  data : "+phoneJson.getMac());
+                    Logger.println("[phone data]: one phone data with mac address: " +phoneJson.getMac() );
+                    Logger.println("[phone data]: one phone data with time: " +phoneJson.getTime() );
                     phoneJson.setTime(time);
                     phoneAsKey.set(phoneJson.getMac());
                     context.write(phoneAsKey, phoneJson);
-                    Logger.println("print line phone data : "+phoneJson.getTime());
+                    Logger.println("[map write to combiner]");
                 }
             }
 

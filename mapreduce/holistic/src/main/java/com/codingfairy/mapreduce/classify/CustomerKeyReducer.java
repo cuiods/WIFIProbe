@@ -25,12 +25,12 @@ public class CustomerKeyReducer extends Reducer<Text,PhoneJson,Text,Text> {
     protected void reduce(Text key, Iterable<PhoneJson> values, Context context)
             throws IOException, InterruptedException {
 
-        Logger.println("reduce count: " + count++);
+        Logger.println("[reduce count]: " + count++);
         Logger.println(key);
         if (startTime<0) {
-            Logger.println("[INITIAL] first time to initial");
+            Logger.println("[INIT reducer] first time to initial");
             startTime = context.getConfiguration().getLong(Holistic.START_TIME, 0L);
-            Logger.println("[INITIAL] initial start time");
+            Logger.println("[INIT reducer] initial start time");
             phoneDataCombiner = new PhoneDataCombiner(startTime);
 
         }
@@ -40,7 +40,7 @@ public class CustomerKeyReducer extends Reducer<Text,PhoneJson,Text,Text> {
             text.set(gson.toJson(intervalList));
             context.write(key, text);
             Logger.println("[SUCCESS] write one line result");
-            Logger.println("[write] : " + text.toString());
+            Logger.println("[reducer write] : " + text.toString());
         }else {
             Logger.println("[ERROR] a empty address. wrong!!");
         }
