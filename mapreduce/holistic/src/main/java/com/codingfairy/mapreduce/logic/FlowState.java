@@ -37,10 +37,11 @@ public class FlowState {
 
     //是否曾经来过
     private boolean isNew ;
-    //上一次入店的时间
-    private long lastInStoreStartTime;
     //上一次在店内的时刻
     private long lastInStore ;
+    //上一次入店的时间
+    private long lastInStoreStartTime;
+
     //上一次在指针范围内的时刻
     private long lastInWifi ;
     //上一次在指针范围内的时间
@@ -76,10 +77,10 @@ public class FlowState {
         this.lastInStore = -1;
         this.lastInWifi = -1;
 
-        initForHour();
+        _initForHour();
     }
 
-    private void initForHour() {
+    private void _initForHour() {
 
         this.inAndOutStore = 0;
         this.lastInNoOutStore = 0;
@@ -109,8 +110,7 @@ public class FlowState {
         customerFlowElement.setHour(startTime);
         newOldCustom.setHour(endTime);
 
-
-        initForHour();
+        _initForHour();
     }
 
     /**
@@ -157,12 +157,9 @@ public class FlowState {
 
                 if (lastInStoreStartTime<startTime && endTime<data.getTime()) {
                     //abandoned
-                }
-
-                else if (lastInStoreStartTime<startTime && endTime>data.getTime()) {
+                } else if (lastInStoreStartTime<startTime && endTime>data.getTime()) {
                     firstOutNoInStore = 1;
-                }
-                else if (lastInStoreStartTime>startTime && endTime>data.getTime()) {
+                } else if (lastInStoreStartTime>=startTime && endTime>data.getTime()) {
                     inAndOutStore++;
                 }
 
@@ -204,9 +201,9 @@ public class FlowState {
 
                 if (lastInWifiStartTime<startTime && endTime<data.getTime()) {
                     //abandoned
-                } else if (lastInWifiStartTime<startTime && endTime<data.getTime()) {
+                } else if (lastInWifiStartTime<startTime && endTime>data.getTime()) {
                     firstOutNoInWifi = 1;
-                } else if (lastInWifiStartTime<startTime && endTime<data.getTime()) {
+                } else if (lastInWifiStartTime>=startTime && endTime>data.getTime()) {
                     inAndOutWifi++;
                 }
 
@@ -215,10 +212,12 @@ public class FlowState {
 
         }
         else {
+            // 这是当前小时内对应的第一个数据
             lastInWifiStartTime = data.getTime();
         }
-    }
 
+        lastInWifi = data.getTime();
+    }
 
 
     public void summary() {

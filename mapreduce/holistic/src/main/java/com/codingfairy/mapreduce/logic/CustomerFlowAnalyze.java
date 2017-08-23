@@ -58,15 +58,19 @@ public class CustomerFlowAnalyze {
 
         Logger.println("[hourIndex]: "+hourIndex);
 
-
+        //设置flowState的新状态，统计新的一个小时的数据
         flowState.newHourIndex(hourIndex);
 
+        // 移动到第一个有效的数据，
+        //
         while (phoneJsons.size()>searchIndex &&
                 flowState.accept(phoneJsons.get(searchIndex++)));
 
         if (searchIndex>0) {
+            // overlap一个保证不丢失，主要是应对时间是整点上的数据
             searchIndex--;
         }
+
         flowState.summary();
 
         customerFlowElements[hourIndex] = flowState.getCustomerFlowElement();
