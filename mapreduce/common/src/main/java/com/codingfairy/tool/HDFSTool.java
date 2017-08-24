@@ -82,7 +82,7 @@ public class HDFSTool {
     }
 
 
-    /**遍历HDFS上的文件和目录*/
+    /**遍历HDFS上的文件和目录，返回的是不带路径的文件名*/
     public static List<String> getDirectoryFromHdfs(String directory) throws IOException {
 
         String dst = NodeConfig.HDFS_PATH + directory;

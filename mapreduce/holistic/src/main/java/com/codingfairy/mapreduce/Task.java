@@ -116,7 +116,7 @@ public class Task implements Runnable {
     }
 
 
-    public boolean classify( final String inputFilePath,
+    private boolean classify( final String inputFilePath,
                                  final String outputFilePath,
                                  final Long startTime) throws Exception{
 
@@ -148,7 +148,7 @@ public class Task implements Runnable {
     }
 
 
-    public boolean analyze(final String inputFilePath,
+    private boolean analyze(final String inputFilePath,
                                final String outputFilePath,
                                final Long startTime) throws Exception {
         Configuration conf = new Configuration();
