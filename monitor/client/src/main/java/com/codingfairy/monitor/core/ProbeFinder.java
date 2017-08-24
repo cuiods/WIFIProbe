@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ProbeFinder {
 
-    public static List<String> getConnectedProbes() {
+    static List<String> getConnectedProbes() {
         String localIp = HttpTools.getLocalIp();
         localIp = "http://"+localIp;
         List<String> resultList = new ArrayList<>(10);

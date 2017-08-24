@@ -29,7 +29,7 @@ public class HttpTools {
     }
 
     public static String getLocalIp() {
-        InputStream inputStream = HttpTools.class.getClassLoader().getResourceAsStream("ipconfig");
+        InputStream inputStream = HttpTools.class.getClassLoader().getResourceAsStream("config/ipconfig");
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         try {
             String config = reader.readLine();

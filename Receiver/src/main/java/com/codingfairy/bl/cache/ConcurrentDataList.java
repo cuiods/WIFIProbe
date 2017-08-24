@@ -3,8 +3,6 @@ package com.codingfairy.bl.cache;
 import com.codingfairy.web.json.ProbeJson;
 import com.google.common.collect.Lists;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
