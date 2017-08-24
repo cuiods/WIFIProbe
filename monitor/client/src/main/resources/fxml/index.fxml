@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.codingfairy.monitor.ui.controller.IndexController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane fx:controller="com.codingfairy.monitor.ui.controller.IndexController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <buttons>
+                <Button fx:id="searchButton" mnemonicParsing="false" text="查询状态" />
+              </buttons>
+            </ButtonBar>
+         </top>
+         <center>
+            <TableView fx:id="statusTable" prefHeight="599.0" prefWidth="924.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn prefWidth="100.0" text="编号" />
+                <TableColumn prefWidth="100.0" text="状态" />
+                <TableColumn prefWidth="250.0" text="局域网IP" />
+                <TableColumn prefWidth="250.0" text="操作" />
+              </columns>
+            </TableView>
+         </center>
+         <bottom>
+            <TableView fx:id="processTable" prefHeight="97.0" prefWidth="924.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn prefWidth="100.0" text="状态" />
+                <TableColumn prefWidth="475.0" text="进度" />
+                <TableColumn prefWidth="120.0" text="百分比" />
+                <TableColumn prefWidth="230.0" text="上次更新" />
+              </columns>
+            </TableView>
+         </bottom>
+      </BorderPane>
+   </center>
+</BorderPane>
