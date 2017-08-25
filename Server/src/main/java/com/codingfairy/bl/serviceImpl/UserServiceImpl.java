@@ -7,6 +7,7 @@ import com.codingfairy.data.entity.UserEntity;
 import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.utils.enums.RoleType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
  * user service impl
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Resource
@@ -32,10 +34,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVo register(String username, String password) throws ServerException {
+        if(null != userDao.findByName(username)){
+            throw new ServerException(ServerCode.USER_EXISTED);
+        }
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(username);
         userEntity.setPassword(password);
         userEntity.setRole(RoleType.user);
-        return new UserVo(userDao.save(userEntity));
+        UserEntity user = userDao.save(userEntity);
+        if(user==null){
+            throw new ServerException(ServerCode.USER_SAVE_ERR);
+        }
+        return new UserVo(user);
+    }
+
+    @Override
+    public UserVo changePassword(String username, String oldPassword, String newPassword) throws ServerException {
+        UserEntity userEntity = userDao.findByNameAndPassword(username,oldPassword);
+        log.info("userEntity is {}",userEntity);
+        if(userEntity==null) throw new ServerException(ServerCode.ERROR_PASSWORD);
+        userEntity.setPassword(newPassword);
+        UserEntity user = userDao.save(userEntity);
+        log.info("user is {}",user);
+        if(user==null){
+            throw new ServerException(ServerCode.USER_SAVE_ERR);
+        }
+        return new UserVo(user);
     }
 }

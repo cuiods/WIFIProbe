@@ -9,6 +9,7 @@ import com.codingfairy.data.entity.UserEntity;
 public interface UserDao {
     UserEntity findById(int id);
     UserEntity findByName(String name);
+    UserEntity findByNameAndPassword(String name,String password);
     UserEntity save(UserEntity userEntity);
     void delete(int id);
 }

@@ -7,6 +7,8 @@ import ActivenessPage from './routes/activeness/activessnessPage';
 import NewOldPage from './routes/newOld/newOldPage';
 import InStoreHourPage from './routes/inStoreHour/inStoreHourPage';
 import VisitCirclePage from './routes/visitCircle/visitCirclePage';
+import RegisterPage from './routes/user/registerPage';
+import ChangePasswordPage from './routes/user/changePasswordPage'
 
 
 export default function ({history}) {
@@ -18,8 +20,13 @@ export default function ({history}) {
         <Route path="/newAndOld" component={NewOldPage} />
         <Route path="/inStoreHour" component={InStoreHourPage} />
         <Route path="/visitCircle" component={VisitCirclePage} />
+        <Route path="/changePassword" component={ChangePasswordPage} />
+        <Route path="/register" component={RegisterPage} />
 
       </Route>
+
+
+
     </Router>
   );
 };

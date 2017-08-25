@@ -12,6 +12,7 @@ const LoginForm = ({
   alertVisible,
   loginMsg,
   onLogin,
+  onRegister,
   closeAlert,
   form: {
     validateFields,
@@ -45,6 +46,11 @@ const LoginForm = ({
       )
     }
   }
+
+  function onButtonRegister(){
+    onRegister();
+  }
+
   return (
     <div className={styles['login-form']}>
       <div className={styles.alert} >
@@ -75,12 +81,17 @@ const LoginForm = ({
             })(
               <Checkbox>Remember me</Checkbox>,
             )}
-            <a className={styles['login-form-forget']} href="">Forgot password</a>
+            <a className={styles['login-form-forget']} href="/#/customerFlow">Forgot password</a>
             <Button type="primary" htmlType="submit" className={styles['login-form-button']}>
               Log in
             </Button>
+            <div style={{textAlign: "center"}}>or</div>
+            <Button type="primary" onClick={onButtonRegister} className={styles["login-form-button"]}>
+              register
+            </Button>
           </FormItem>
         </Form>
+
       </Card>
     </div>
   );

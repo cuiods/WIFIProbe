@@ -6,8 +6,10 @@ import com.codingfairy.bl.vo.UserVo;
 import com.codingfairy.exception.ServerException;
 import com.codingfairy.utils.constant.ServerCode;
 import com.codingfairy.web.json.LoginJson;
+import com.codingfairy.web.json.PasswordJson;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ import javax.validation.Valid;
  * Created by cuihao on 2017-05-17.
  * Login auth controller
  */
+@Slf4j
 @Api(value = "/auth", description = "Auth API")
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -50,6 +53,16 @@ public class AuthController {
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResultVo<UserVo> register(@Valid @RequestBody LoginJson registerJson) throws ServerException {
         UserVo userVo = userService.register(registerJson.getUsername(),registerJson.getPassword());
+        return new ResultVo<>(ServerCode.SUCCESS,userVo);
+    }
+
+    @ApiOperation(value = "User change password auth", notes = "User change password.",
+    response =  ResultVo.class, produces = "application/json;charset=UTF-8")
+    @PostMapping(value = "/changePassword", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResultVo<UserVo> changePassword(@Valid @RequestBody PasswordJson passwordJson) throws ServerException{
+        log.info("start change password={}",passwordJson);
+        UserVo userVo = userService.changePassword(passwordJson.getUsername(), passwordJson.getOldPassword(),
+                passwordJson.getNewPassword());
         return new ResultVo<>(ServerCode.SUCCESS,userVo);
     }
 

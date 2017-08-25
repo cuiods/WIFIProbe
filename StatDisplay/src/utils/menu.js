@@ -29,6 +29,12 @@ module.exports = [
     icon: 'code-o',
     router: '/visitCircle'
   },
+  {
+    id: 6,
+    name: 'Modify Password',
+    icon: 'lock',
+    router: '/changePassword'
+  },
 
 
 ]

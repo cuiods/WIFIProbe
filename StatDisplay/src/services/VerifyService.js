@@ -13,8 +13,29 @@ export async function login(params) {
   });
 }
 
+export async function register(params) {
+  return request(`/auth/register`,{
+    method: `post`,
+    body: JSON.stringify({
+      username: params.username,
+      password: params.password
+    })
+  });
+}
+
 export async function logout(params) {
   return request(`/auth/logout`, {
     method: `GET`
   });
+}
+
+export async function changePassword(params) {
+  return request(`/auth/changePassword`, {
+    method: `post`,
+    body: JSON.stringify({
+      username: params.username,
+      oldPassword: params.oldPassword,
+      newPassword: params.newPassword,
+    })
+  })
 }

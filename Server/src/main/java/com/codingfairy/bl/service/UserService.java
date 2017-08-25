@@ -12,4 +12,6 @@ public interface UserService {
     UserVo login(String username, String password) throws ServerException;
 
     UserVo register(String username, String password) throws ServerException;
+
+    UserVo changePassword(String username, String oldPassword, String newPassword) throws ServerException;
 }

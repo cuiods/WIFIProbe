@@ -3,9 +3,10 @@
  */
 import cookie from 'react-cookie';
 import {routerRedux} from 'dva/router';
-import {login, logout} from '../services/VerifyService';
+import {login, logout,register,changePassword} from '../services/VerifyService';
 import BasicAuth from '../utils/BasicAuth';
-import {message} from 'antd';
+import {message,notification} from 'antd';
+
 
 export default {
   namespace: 'app',
@@ -16,6 +17,8 @@ export default {
     },
     userId: cookie.load('userId'),
     isLogin:false,
+    isRegister:false,
+    isChange: false,
     alertVisible: false,
     loginMsg:'',
     menuPopoverVisible: false,
@@ -105,6 +108,54 @@ export default {
         type: 'logoutSuccess'
       })
     },
+
+    *register ({payload}, {call,put}){
+      yield put({type: "setRegister"});
+      console.log("jump to register");
+      yield put(routerRedux.push(`/register`));
+      console.log("end jump to register");
+    },
+
+    *createUser({payload}, {call,put}) {
+      const data = yield call(register, payload);
+      if (data && data.code == 1000) {
+        yield put({type: 'finishRegister'});
+        yield put(routerRedux.push(`/`));
+      } else {
+        message.error(data? data.message: "Sign up fail!");
+      }
+    },
+
+    *changePassword({payload}, {call,put}){
+      let userInfo = cookie.load("info");
+      const userName = userInfo.username;
+      const data = yield call(changePassword, {
+        oldPassword: payload.oldPassword,
+        newPassword: payload.newPassword,
+        username: userName
+      })
+
+      if(data&&data.code == 1000) {
+        //yield put({type: "setChange"});
+        const args = {
+          message: 'Password Changed',
+          description: 'Your password has been changed, Please login again',
+          duration: 3,
+        }
+        notification.open(args);
+        yield put({type:"app/logout"});
+        yield put(routerRedux.push(`/`));
+      }else{
+        message.error(data? data.message: "change password fail!");
+        console.log(data.message);
+      }
+    },
+
+    *changePasswordFinish({payload},{call,put}){
+      yield put({type: "finishChange"});
+      yield put(routerRedux.push(`/`));
+    }
+
   },
 
   reducers:{
@@ -158,6 +209,30 @@ export default {
     logoutSuccess(state){
       return {
         ...state,isLogin:false
+      }
+    },
+
+    setRegister(state){
+      return {
+        ...state,isRegister:true
+      }
+    },
+
+    finishRegister(state){
+      return {
+        ...state,isRegister:false
+      }
+    },
+
+    setChange(state){
+      return {
+        ...state, isChange:true
+      }
+    },
+
+    finishChange(state){
+      return {
+        ...state, isChange:false
       }
     }
 

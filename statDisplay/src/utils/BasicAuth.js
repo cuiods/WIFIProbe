@@ -7,14 +7,16 @@ export default {
     return cookie.load("token");
   },
 
-  setAuth(username, password){
+  setAuth(username, password,avatar){
     let token = basic(username, password);
     cookie.save("token", token);
+    cookie.save("avatar", avatar);
     cookie.save("username",username);
   },
 
   clearAuth(){
     cookie.remove("token","/");
+    cookie.remove("avatar","/");
     cookie.remove("username","/");
   }
 }

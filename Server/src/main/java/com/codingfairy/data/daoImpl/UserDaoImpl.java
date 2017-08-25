@@ -29,6 +29,11 @@ public class UserDaoImpl implements UserDao {
 }
 
     @Override
+    public UserEntity findByNameAndPassword(String name, String password) {
+        return userRepository.findByUsernameAndPassword(name,password);
+    }
+
+    @Override
     public UserEntity save(UserEntity userEntity) {
         return userRepository.save(userEntity);
     }

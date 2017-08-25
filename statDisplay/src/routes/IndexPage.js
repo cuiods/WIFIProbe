@@ -11,11 +11,12 @@ import Sider from '../components/layout/Sider';
 import Bread from '../components/layout/Bread';
 import Footer from '../components/layout/Footer';
 import LoginForm from '../components/login/LoginForm';
+import RegisterForm from '../components/login/RegisterForm';
 
 
 
 function IndexPage({ children, location, dispatch, app }) {
-  const {user, userId, isLogin, alertVisible, loginMsg, menuPopoverVisible,
+  const {user, userId, isLogin,isRegister, alertVisible, loginMsg, menuPopoverVisible,
     siderFold, darkTheme, isNavbar, navOpenKeys, loading } = app;
 
   const userLoginProps = {
@@ -30,11 +31,27 @@ function IndexPage({ children, location, dispatch, app }) {
       })
     },
 
+    onRegister(fieldValue){
+      dispatch({
+        type: 'app/register',
+        payload: {}
+      })
+    },
+
     closeAlert() {
       dispatch({
         type: 'app/closeAlert',
         payload: {}
       })
+    }
+  }
+
+  const registerProps = {
+    onRegister(fieldValue){
+      dispatch({
+        type : 'app/createUser',
+        payload: {...fieldValue},
+      });
     }
   };
 
@@ -106,7 +123,7 @@ function IndexPage({ children, location, dispatch, app }) {
   return (
     <LocaleProvider locale={enUS}>
       <div>
-        {isLogin?
+        {isLogin  || isRegister?
           <div className={classnames(styles.layout, {[styles.fold]: isNavbar ? false : siderFold}, {[styles.withnavbar]: isNavbar})}>
             {!isNavbar ? <aside className={classnames(styles.sider, {[styles.light]: !darkTheme})}>
               <Sider {...siderProps} />
@@ -122,7 +139,7 @@ function IndexPage({ children, location, dispatch, app }) {
               <Footer />
               <BackTop />
             </div>
-          </div>:<LoginForm {...userLoginProps} /> }
+          </div>:<LoginForm {...userLoginProps} />}
       </div>
     </LocaleProvider>
   )

@@ -12,7 +12,9 @@ public enum ServerCode {
     PARAM_FORMAT(1003,"Unsupported param format."),
     ACCESS_DENIED(1004,"NO authority to do this operation."),
     NOT_FOUND(1005,"Not found."),
-    UNKNOWN_ERROR(1006,"Sorry, server encountered unknown error.");
+    UNKNOWN_ERROR(1006,"Sorry, server encountered unknown error."),
+    USER_EXISTED(1007,"Username has alreadyExist."),
+    USER_SAVE_ERR(1008, "Save user fail.");
 
     private int code;
     private String msg;
