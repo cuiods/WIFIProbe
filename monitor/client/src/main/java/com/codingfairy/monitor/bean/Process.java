@@ -12,13 +12,13 @@ public class Process {
     private final StringProperty status;
     private final DoubleProperty progress;
     private final StringProperty percent;
-    private final ObjectProperty<Date> lastUpdate;
+    private final StringProperty lastUpdate;
 
-    public Process(String status, double progress, String percent, Date lastUpdate) {
+    public Process(String status, double progress, String percent, String lastUpdate) {
         this.status = new SimpleStringProperty(status);
         this.progress = new SimpleDoubleProperty(progress);
         this.percent = new SimpleStringProperty(percent);
-        this.lastUpdate = new SimpleObjectProperty<>(lastUpdate);
+        this.lastUpdate = new SimpleStringProperty(lastUpdate);
     }
 
     public String getStatus() {
@@ -57,15 +57,15 @@ public class Process {
         this.percent.set(percent);
     }
 
-    public Date getLastUpdate() {
+    public String getLastUpdate() {
         return lastUpdate.get();
     }
 
-    public ObjectProperty<Date> lastUpdateProperty() {
+    public StringProperty lastUpdateProperty() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(String lastUpdate) {
         this.lastUpdate.set(lastUpdate);
     }
 }

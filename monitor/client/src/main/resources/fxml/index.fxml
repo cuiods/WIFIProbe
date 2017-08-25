@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:controller="com.codingfairy.monitor.ui.controller.IndexController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codingfairy.monitor.ui.controller.IndexController">
    <left>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </left>
@@ -16,7 +16,7 @@
          <top>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
-                <Button fx:id="searchButton" mnemonicParsing="false" text="查询状态" />
+                <Button fx:id="searchButton" mnemonicParsing="false" onAction="#startSearch" text="查询状态" />
               </buttons>
             </ButtonBar>
          </top>
@@ -26,7 +26,6 @@
                 <TableColumn prefWidth="100.0" text="编号" />
                 <TableColumn prefWidth="100.0" text="状态" />
                 <TableColumn prefWidth="250.0" text="局域网IP" />
-                <TableColumn prefWidth="250.0" text="操作" />
               </columns>
             </TableView>
          </center>

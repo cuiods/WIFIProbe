@@ -11,7 +11,6 @@ import static org.junit.Assert.*;
 public class ProbeFinderTest {
     @Test
     public void getConnectedProbes() throws Exception {
-        System.out.println(ProbeFinder.getConnectedProbes());
     }
 
 }
