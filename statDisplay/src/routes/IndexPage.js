@@ -124,21 +124,24 @@ function IndexPage({ children, location, dispatch, app }) {
     <LocaleProvider locale={enUS}>
       <div>
         {isLogin  || isRegister?
-          <div className={classnames(styles.layout, {[styles.fold]: isNavbar ? false : siderFold}, {[styles.withnavbar]: isNavbar})}>
+          <div>
+            {isRegister? <RegisterForm {...registerProps}/>:
+            <div className={classnames(styles.layout, {[styles.fold]: isNavbar ? false : siderFold}, {[styles.withnavbar]: isNavbar})}>
             {!isNavbar ? <aside className={classnames(styles.sider, {[styles.light]: !darkTheme})}>
               <Sider {...siderProps} />
-            </aside> : ''}
-            <div className={styles.main}>
-              <Header {...headerProps} />
-              <Bread {...breadProps} location={location}/>
-              <div className={styles.container}>
-                <div className={styles.content}>
-                  {children}
+              </aside> : ''}
+              <div className={styles.main}>
+                <Header {...headerProps} />
+                <Bread {...breadProps} location={location}/>
+                <div className={styles.container}>
+                  <div className={styles.content}>
+                    {children}
+                  </div>
                 </div>
+                <Footer />
+                <BackTop />
               </div>
-              <Footer />
-              <BackTop />
-            </div>
+            </div>}
           </div>:<LoginForm {...userLoginProps} />}
       </div>
     </LocaleProvider>

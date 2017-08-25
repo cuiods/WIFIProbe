@@ -5,22 +5,14 @@ import React, {PropTypes} from 'react';
 import { connect } from 'dva';
 import ChangePasswordForm from '../../components/login/ChangePasswordForm';
 
-function ChangePasswordPage({location, dispatch, app}) {
+function ChangePasswordPage({location, dispatch}) {
 
-  const isChange = app.isChange;
   const changePasswordProps = {
-    isChange,
     onChangePassword(fieldValue){
       dispatch({
         type: 'app/changePassword',
         payload: {...fieldValue},
       });
-    },
-    onChangeFinish(){
-      dispatch({
-        type: 'app/changePasswordFinish',
-        payload: {},
-      })
     }
   };
 
@@ -41,4 +33,4 @@ function mapStateToProps({}){
   return {};
 }
 
-export default connect(({app})=>({app}))(ChangePasswordPage);
+export default connect(mapStateToProps)(ChangePasswordPage);

@@ -5,7 +5,7 @@ import cookie from 'react-cookie';
 import {routerRedux} from 'dva/router';
 import {login, logout,register,changePassword} from '../services/VerifyService';
 import BasicAuth from '../utils/BasicAuth';
-import {message,notification} from 'antd';
+import {message,notification,Modal} from 'antd';
 
 
 export default {
@@ -18,7 +18,6 @@ export default {
     userId: cookie.load('userId'),
     isLogin:false,
     isRegister:false,
-    isChange: false,
     alertVisible: false,
     loginMsg:'',
     menuPopoverVisible: false,
@@ -111,18 +110,21 @@ export default {
 
     *register ({payload}, {call,put}){
       yield put({type: "setRegister"});
-      console.log("jump to register");
       yield put(routerRedux.push(`/register`));
-      console.log("end jump to register");
     },
 
     *createUser({payload}, {call,put}) {
       const data = yield call(register, payload);
       if (data && data.code == 1000) {
         yield put({type: 'finishRegister'});
+        message.success("Register success, please login.");
         yield put(routerRedux.push(`/`));
       } else {
-        message.error(data? data.message: "Sign up fail!");
+        console.log(data);
+        Modal.error({
+          title: 'Register occurs error',
+          content: data.data,
+        });
       }
     },
 
@@ -136,7 +138,6 @@ export default {
       })
 
       if(data&&data.code == 1000) {
-        //yield put({type: "setChange"});
         const args = {
           message: 'Password Changed',
           description: 'Your password has been changed, Please login again',
@@ -146,15 +147,13 @@ export default {
         yield put({type:"app/logout"});
         yield put(routerRedux.push(`/`));
       }else{
-        message.error(data? data.message: "change password fail!");
-        console.log(data.message);
+        Modal.error({
+          title: 'Register occurs error',
+          content: data.data,
+        });
       }
     },
 
-    *changePasswordFinish({payload},{call,put}){
-      yield put({type: "finishChange"});
-      yield put(routerRedux.push(`/`));
-    }
 
   },
 
@@ -224,17 +223,6 @@ export default {
       }
     },
 
-    setChange(state){
-      return {
-        ...state, isChange:true
-      }
-    },
-
-    finishChange(state){
-      return {
-        ...state, isChange:false
-      }
-    }
 
   }
 

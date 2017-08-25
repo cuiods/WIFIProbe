@@ -11,8 +11,6 @@ const hint = Modal.info;
 
 const ChangePasswordForm = ({
   onChangePassword,
-  onChangeFinish,
-  isChange,
   form: {
     getFieldDecorator,
     validateFields,
@@ -31,15 +29,6 @@ const ChangePasswordForm = ({
     validateFields((err,values) => {
       if(!err){
         onChangePassword(values);
-        if(isChange){
-          hint({
-            title:'Password Changed',
-            content:(<p>Your password has been changed, Please login again</p>),
-            onOk(){
-              onChangeFinish();
-            }
-          })
-        }
       }
 
 
