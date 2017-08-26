@@ -3,6 +3,7 @@ package com.codingfairy.web.controller;
 import com.codingfairy.bl.service.*;
 import com.codingfairy.bl.vo.*;
 import com.codingfairy.web.json.analysis.element.*;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Receive stat result from receiver
@@ -40,22 +42,34 @@ public class ReceiverController {
     @ApiOperation(value = "Post activeness statistic data", notes = "Add activeness statistic data to server",
             response = ActivenessVo.class, produces = "application/json;charset=UTF-8")
     @PostMapping(value = "/activeness" ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ActivenessVo activeness(@RequestBody CustomerActivenessElement element) {
-        return activenessService.save(element);
+    public List<ActivenessVo> activeness(@RequestBody List<CustomerActivenessElement> elements) {
+        List<ActivenessVo> resultList = Lists.newArrayList();
+        for (CustomerActivenessElement element: elements) {
+            resultList.add(activenessService.save(element));
+        }
+        return resultList;
     }
 
     @ApiOperation(value = "Post flow statistic data", notes = "Add flow statistic data to server",
             response = FlowVo.class, produces = "application/json;charset=UTF-8")
     @PostMapping(value = "/flow" ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public FlowVo flow(@RequestBody CustomerFlowElement element) {
-        return flowService.save(element);
+    public List<FlowVo> flow(@RequestBody List<CustomerFlowElement> elements) {
+        List<FlowVo> resultList = Lists.newArrayList();
+        for (CustomerFlowElement element: elements) {
+            resultList.add(flowService.save(element));
+        }
+        return resultList;
     }
 
     @ApiOperation(value = "Post new old statistic data", notes = "Add new old customer statistic data to server",
             response = NewOldVo.class, produces = "application/json;charset=UTF-8")
     @PostMapping(value = "/newOld" ,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public NewOldVo newOld(@RequestBody NewOldCustomElement element) {
-        return newOldService.save(element);
+    public List<NewOldVo> newOld(@RequestBody List<NewOldCustomElement> elements) {
+        List<NewOldVo> resultList = Lists.newArrayList();
+        for (NewOldCustomElement element: elements) {
+            resultList.add(newOldService.save(element));
+        }
+        return resultList;
     }
 
     @ApiOperation(value = "Post in store hours statistic data", notes = "Add in store hour statistic data to server",
