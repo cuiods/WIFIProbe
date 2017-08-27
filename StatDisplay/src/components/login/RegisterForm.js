@@ -8,6 +8,7 @@ const FormItem = Form.Item;
 const confirm = Modal.confirm;
 
 const RegisterForm = ({
+  onLogin,
   onRegister,
   form : {
     getFieldDecorator,
@@ -35,6 +36,11 @@ const RegisterForm = ({
         }
     })
 
+  }
+
+  function onLoginButton(e){
+    e.preventDefault();
+    onLogin();
   }
 
   function handleConfirmBlur(e) {
@@ -106,6 +112,10 @@ const RegisterForm = ({
           <FormItem>
             <Button type="primary" htmlType="submit" className={styles['login-form-button']}>
               Sign up
+            </Button>
+            <div style={{textAlign: "center"}}>or Has account already?</div>
+            <Button type="primary" onClick={onLoginButton} className={styles["login-form-button"]}>
+              Sign in
             </Button>
           </FormItem>
 

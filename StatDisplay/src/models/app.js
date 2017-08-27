@@ -128,6 +128,14 @@ export default {
       }
     },
 
+    *jumpToLogin({payload},{call,put}){
+      yield put({
+        type: 'finishRegister'
+      });
+
+      yield put(routerRedux.push(`/`));
+    },
+
     *changePassword({payload}, {call,put}){
       let userInfo = cookie.load("info");
       const userName = userInfo.username;

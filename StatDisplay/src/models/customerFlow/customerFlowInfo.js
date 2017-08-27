@@ -82,7 +82,7 @@ export default {
           num2 = data.connectNum;
           console.log("server2 num:"+num2);
         }
-        if(num1 != -1 && num2 !=-1&&num1 != 0 &&num2 != 0){
+        if(num1 != -1 && num2 !=-1){
           console.log("get both server1 and server2");
           break;
         }

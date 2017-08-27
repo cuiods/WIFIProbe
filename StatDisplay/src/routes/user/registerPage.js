@@ -5,14 +5,20 @@ import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import RegisterForm from '../../components/login/RegisterForm';
 
-function RegisterPage({loaction, dispatch}) {
+function RegisterPage({location, dispatch}) {
   const registerProps = {
     onRegister(fieldValue){
       dispatch({
         type : 'app/createUser',
         payload: {...fieldValue},
       });
-    }
+    },
+    onLogin(fieldValue){
+      dispatch({
+        type : 'app/jumpToLogin',
+        payload: {...fieldValue},
+      });
+    },
   };
 
   return (
