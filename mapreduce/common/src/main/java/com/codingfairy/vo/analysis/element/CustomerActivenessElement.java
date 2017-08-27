@@ -10,12 +10,12 @@ import lombok.Data;
  */
 @Data
 public class CustomerActivenessElement {
+
     protected String wifiProb;
-
     private Long hour;
-
     private int numOfHighActive;
     private int numOfMedianActive;
     private int numOfLowActive;
     private int numOfSleepActive;
+
 }

@@ -1,8 +1,6 @@
 package com.codingfairy.to;
 
 import com.codingfairy.tool.Logger;
-import com.codingfairy.vo.analysis.CustomerFlow;
-import com.codingfairy.vo.analysis.NewOldCustom;
 import com.codingfairy.vo.analysis.element.CustomerFlowElement;
 import com.codingfairy.vo.analysis.element.NewOldCustomElement;
 import lombok.Data;

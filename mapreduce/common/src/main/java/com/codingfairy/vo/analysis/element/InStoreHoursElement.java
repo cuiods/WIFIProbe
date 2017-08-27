@@ -4,6 +4,7 @@ import com.codingfairy.vo.Tuple;
 import com.codingfairy.vo.analysis.ChartData;
 import lombok.Data;
 
+
 /**
  * Created by darxan on 2017/5/14.
  *
