@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class StoreTest {
 
-    @Test
+//    @Test
     public void test() {
         try {
 
@@ -32,7 +32,7 @@ public class StoreTest {
             }
 
             // 计算活跃度
-            reader.summary();
+            reader.summary(System.currentTimeMillis(), "test");
             // 将读取出来的结果存入数据库
             new Storer().store(reader);
 

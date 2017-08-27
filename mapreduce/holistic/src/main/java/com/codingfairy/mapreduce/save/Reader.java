@@ -31,6 +31,7 @@ public class Reader {
                 if (temp.length==2) {
                     CustomerFlowElement customerFlowElement = new Gson().fromJson(
                             temp[1], CustomerFlowElement.class);
+                    customerFlowElement.setHour(Long.parseLong(temp[0])/(1000L*60L*60L));
                     customerFlows.add(customerFlowElement);
                 }
             }
@@ -55,8 +56,11 @@ public class Reader {
 
                 String[] temp = splitKeyValue(line);
                 if (temp.length==2) {
+
                     NewOldCustomElement newOldCustomElement = new Gson().fromJson(
                             temp[1], NewOldCustomElement.class);
+
+                    newOldCustomElement.setHour(Long.parseLong(temp[0])/(1000L*60L*60L));
                     newOldCustoms.add(newOldCustomElement);
                 }
             }
@@ -88,11 +92,10 @@ public class Reader {
 
     }
 
-    public void summary(long executeHourTime, String wifiProb) {
+    public void summary(Long executeHourTime, String wifiProb) {
 
-        if (!customerFlows.isEmpty()) {
-            executeHourTime = customerFlows.get(customerFlows.size()-1).getHour();
-        }
+        executeHourTime /= (1000L*60L*60L);
+
         visitingCycles.setHour(executeHourTime);
         visitingCycles.setWifiProb(wifiProb);
 
@@ -116,7 +119,6 @@ public class Reader {
             }
         }
     }
-
 
     private String[] splitKeyValue(String line) {
         return line.split("\t", 2);
