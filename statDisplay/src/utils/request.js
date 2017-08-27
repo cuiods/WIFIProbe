@@ -96,5 +96,40 @@ export function request(url, options) {
       return data;
     })
     .catch((response) => handleError(response) );
+
+}
+
+export function fullRequest(url, options) {
+
+  if(options==null){
+    options = {};
+  }
+
+  if(options['headers']==null){
+    options['headers'] = {};
+  }
+
+  let token = BasicAuth.getAuth();
+  if(token!=null){
+    options['headers']['Authorization'] = token;
+  }
+
+  options['headers']['Content-Type'] = 'application/json';
+
+  return fetch(url, options)
+    .then(checkStatus)
+    .then(parse)
+    .then((data) => {
+
+      if(data==null){
+        data = {};
+      }
+      if(data.ok==null){
+        data.ok = true;
+      }
+      return data;
+    })
+    .catch((response) => handleError(response) );
+
 }
 

@@ -9,11 +9,12 @@ import { connect } from 'dva';
 import HourFlowChart from '../../components/charts/customerFlow/hourFlowChart';
 import HourCompareChart from '../../components/charts/customerFlow/hourCompareChart';
 import DetailBarChart from '../../components/charts/detailBarChart';
+import RealTimeChart from '../../components/charts/customerFlow/realTimeChart';
 import SelectorForm from '../../components/charts/selectorForm';
 import DetailSelectorForm from '../../components/charts/detailSelectorForm';
 
 function CustomerFlowPage({dispatch,customerFlowInfo}) {
-  const {hourData, detailData, probeOptions} = customerFlowInfo;
+  const {hourData, detailData,realTimeData, probeOptions} = customerFlowInfo;
 
   const selectorProps = {
     probeOptions,
@@ -23,7 +24,7 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
         payload: fieldValue,
       });
     }
-  }
+  };
 
   const detailProps = {
     probeOptions,
@@ -33,7 +34,17 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
         payload: fieldValue,
       })
     },
-  }
+  };
+
+  // let time = 0;
+  // function refreshRealTimeData(){
+  //   dispatch({
+  //     type:"customerFlowInfo/getRealTimeFlow",
+  //     payload:{}
+  //   });
+  //   console.log("execute:"+ (++time));
+  // }
+
 
   return (
     <Row gutter={16}>
@@ -53,6 +64,9 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
             <HourCompareChart data={hourData}/>
           </Card>
         </Col>
+      </Card>
+      <Card title="Realtime Customer Flow Data">
+        <RealTimeChart data={realTimeData}/>
       </Card>
 
       <Card>

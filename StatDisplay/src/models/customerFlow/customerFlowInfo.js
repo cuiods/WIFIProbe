@@ -5,7 +5,7 @@
 import {message} from 'antd';
 import pathToRegexp from 'path-to-regexp';
 import {getProbeAll, getProbeDetail} from '../../services/probeService';
-import {getCustomerFlow, getCustomerFlowDetail} from '../../services/customerFlowService';
+import {getCustomerFlow, getCustomerFlowDetail,getRealTimeCustomerFlow} from '../../services/customerFlowService';
 import cookie from 'react-cookie';
 import { routerRedux } from 'dva/router';
 
@@ -15,7 +15,9 @@ export default {
   state: {
     probeOptions:[],
     hourData:[],
-    detailData:[]
+    detailData:[],
+    realTimeData:[],
+    timer:-1000
   },
 
   subscriptions: {
@@ -34,13 +36,44 @@ export default {
           dispatch({
             type: 'getProbeOptions',
             payload: {page:0, size: 10}
-          })
+          });
+          //重新加载本页面时清空interval
+          dispatch({
+            type:"clearTimer",
+          });
+          dispatch({
+            type:"getRealTimeFlow",
+            payload:{}
+          });
+          let time = 0;
+          function refreshRealTimeData(){
+            dispatch({
+              type:"getRealTimeFlow",
+              payload:{}
+            });
+            console.log("execute:"+ (++time));
+          }
+          const tempTimer = setInterval(refreshRealTimeData,30000);
+          dispatch({
+            type:"setTimer",
+            payload:tempTimer
+          });
         }
       })
     }
   },
 
   effects: {
+    *getRealTimeFlow({payload},{call,put}){
+      const data = yield call(getRealTimeCustomerFlow,payload);
+      if(data){
+        const time = data.latestCommit.slice(11,19);
+        yield put({
+          type: 'updateRealTimeData',
+          payload:{num: data.connectNum, time: time}
+        });
+      }
+    },
     *getFlow ({payload}, {call,put}) {
       const data = yield call(getCustomerFlow, payload);
       if(data){
@@ -110,7 +143,36 @@ export default {
         ...state,
         probeOptions:action.payload
       }
+    },
+
+    updateRealTimeData(state,action){
+      let size = state.realTimeData.push(action.payload);
+      if(size > 16){
+        state.realTimeData.shift();
+      }
+      state.realTimeData = [...new Set(state.realTimeData)];
+      return {
+        ...state
+      }
+    },
+
+    setTimer(state,action){
+      return {
+        ...state,
+        timer:action.payload
+      }
+    },
+
+    clearTimer(state,action){
+      if(state.timer != -1000) {
+        console.log("clear timer!");
+        clearInterval(state.timer);
+      }
+      return {
+        ...state,timer:-1000
+      }
     }
+
   }
 
 

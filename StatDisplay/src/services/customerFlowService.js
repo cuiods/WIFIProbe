@@ -1,7 +1,7 @@
 /**
  * Created by yyy on 2017/5/21.
  */
-import {request} from "../utils/request";
+import {request, fullRequest} from "../utils/request";
 
 export async function getCustomerFlow(params) {
   return request(`/flow/stat`,{
@@ -23,4 +23,10 @@ export async function getCustomerFlowDetail(params) {
       probeId: params.probeId
     })
   })
+}
+
+export async function getRealTimeCustomerFlow() {
+  return fullRequest(`http://118.89.208.120/api/v1/latest`,{
+    method: `GET`
+  });
 }
