@@ -7,7 +7,8 @@ public class FileConfig {
     /**
      * 上传的文件进入{@link FileConfig#upload}
      */
-    public static final String upload = "/wifi/upload";
+//    public static final String upload = "/wifi/upload";
+    public static final String upload = "/wifi/input";
     /**
      * merged过的文件进入{@link FileConfig#data}
      */

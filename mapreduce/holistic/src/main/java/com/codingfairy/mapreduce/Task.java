@@ -126,7 +126,7 @@ public class Task implements Runnable {
         Configuration conf = new Configuration();
         conf.setLong(Holistic.START_TIME, startTime);
         conf.setLong(Holistic.EXECUTE_TIME, executeHourTime);
-
+        conf.setBoolean("mapreduce.input.fileinputformat.input.dir.recursive", true);
 
         Job jobClassify = Job.getInstance(conf, "classify");
 
