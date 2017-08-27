@@ -14,13 +14,19 @@ public class Saver implements Runnable {
      * 统计数据的目录
      */
     private final String __directory = FileConfig.statistic;
-
     /**
      * 只更新该时间后的数据
      */
     private long __startTime;
+    private long __executeHourTime;
 
-    private Reader reader = new Reader();
+    private Reader reader ;
+
+    public Saver(long __startTime, long __executeHourTime) {
+        this.__startTime = __startTime;
+        this.__executeHourTime = __executeHourTime;
+        this.reader = new Reader();
+    }
 
     /**
      * 根据目录名字获取对应的时刻
@@ -55,7 +61,7 @@ public class Saver implements Runnable {
             }
 
             // 计算活跃度
-            reader.summary();
+            reader.summary(__executeHourTime, null);
             // 将读取出来的结果存入数据库
             new Storer().store(reader);
 

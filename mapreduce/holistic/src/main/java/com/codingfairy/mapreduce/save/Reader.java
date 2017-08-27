@@ -88,12 +88,21 @@ public class Reader {
 
     }
 
-    public void summary() {
+    public void summary(long executeHourTime, String wifiProb) {
+
+        if (!customerFlows.isEmpty()) {
+            executeHourTime = customerFlows.get(customerFlows.size()-1).getHour();
+        }
+        visitingCycles.setHour(executeHourTime);
+        visitingCycles.setWifiProb(wifiProb);
+
 
         CustomerActivenessElement activeness = new CustomerActivenessElement();
         this.activeness.add(activeness);
-        activeness.setHour(visitingCycles.getHour());
-        activeness.setWifiProb(visitingCycles.getWifiProb());
+
+        activeness.setHour(executeHourTime);
+        activeness.setWifiProb(wifiProb);
+
         for (Tuple<Long, Integer> tuple : visitingCycles.getStatistic()) {
 
             if (ActivenessJudge.isHigh(tuple.getX())) {
