@@ -53,7 +53,7 @@ export default {
             });
             console.log("execute:"+ (++time));
           }
-          const tempTimer = setInterval(refreshRealTimeData,30000);
+          const tempTimer = setInterval(refreshRealTimeData,60000);
           dispatch({
             type:"setTimer",
             payload:tempTimer
@@ -65,14 +65,36 @@ export default {
 
   effects: {
     *getRealTimeFlow({payload},{call,put}){
-      const data = yield call(getRealTimeCustomerFlow,payload);
-      if(data){
-        const time = data.latestCommit.slice(11,19);
+      let num1 = -1;
+      let num2 = -1;
+      let time = '';
+      while (true){
+        const data = yield call(getRealTimeCustomerFlow,payload);
+        if(!data){
+          continue;
+        }
+        if(data.serverName == 'server1'){
+          num1 = data.connectNum;
+          time = data.latestCommit.slice(11,19);
+          console.log("server1 num:"+num1);
+        }
+        if(data.serverName == 'server2'){
+          num2 = data.connectNum;
+          console.log("server2 num:"+num2);
+        }
+        if(num1 != -1 && num2 !=-1&&num1 != 0 &&num2 != 0){
+          console.log("get both server1 and server2");
+          break;
+        }
+      }
+      // const data = yield call(getRealTimeCustomerFlow,payload);
+      // if(data){
+      //   const time = data.latestCommit.slice(11,19);
         yield put({
           type: 'updateRealTimeData',
-          payload:{num: data.connectNum, time: time}
+          payload:{num: num1+num2, time: time}
         });
-      }
+      // }
     },
     *getFlow ({payload}, {call,put}) {
       const data = yield call(getCustomerFlow, payload);
