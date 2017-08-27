@@ -13,4 +13,8 @@ public class GsonTool {
     public static String convertObjectToJson(Object object) {
         return gson.toJson(object);
     }
+
+    public static Gson getGson() {
+        return gson;
+    }
 }

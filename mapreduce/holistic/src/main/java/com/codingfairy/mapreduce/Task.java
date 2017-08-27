@@ -44,6 +44,8 @@ public class Task implements Runnable {
 
     private long time;
 
+    private long executeHourTime;
+
     private boolean result ;
 
     private String classifyPath ;
@@ -51,6 +53,7 @@ public class Task implements Runnable {
 
     public Task(final long time) {
         this.time = time;
+        this.executeHourTime = System.currentTimeMillis()/36000000*3600000;
         this.classifyPath = FileConfig.classify+"/"+time;
         this.statisticPath = FileConfig.statistic+"/"+time;
     }
@@ -122,6 +125,7 @@ public class Task implements Runnable {
 
         Configuration conf = new Configuration();
         conf.setLong(Holistic.START_TIME, startTime);
+        conf.setLong(Holistic.EXECUTE_TIME, executeHourTime);
 
 
         Job jobClassify = Job.getInstance(conf, "classify");
@@ -153,6 +157,7 @@ public class Task implements Runnable {
                                final Long startTime) throws Exception {
         Configuration conf = new Configuration();
         conf.setLong(Holistic.START_TIME, startTime);
+        conf.setLong(Holistic.EXECUTE_TIME, executeHourTime);
 
         Job jobAnalyze = Job.getInstance(conf, "analyze");
 

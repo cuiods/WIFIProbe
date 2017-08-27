@@ -1,5 +1,8 @@
 package com.codingfairy.vo.analysis;
 
+import com.codingfairy.vo.Tuple;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,4 +22,18 @@ public class ChartData<V> {
      * 如果是时间段统计的图表，那么每两个xData表示一个时间段，长度等于yData.length+(1/0)
      */
     protected List<V> statistic;
+
+    public List<V> getStatistic() {
+        return statistic;
+    }
+
+    public void setStatistic(List<V> statistic) {
+        this.statistic = statistic;
+    }
+
+    public void add(V v) {
+        if (statistic==null)
+            statistic = new ArrayList<V>();
+        statistic.add(v);
+    }
 }

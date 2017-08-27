@@ -1,6 +1,5 @@
 package com.codingfairy.vo.analysis.element;
 
-import com.codingfairy.vo.analysis.NewOldCustom;
 import lombok.Data;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
