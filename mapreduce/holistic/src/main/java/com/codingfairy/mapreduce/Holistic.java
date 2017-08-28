@@ -39,7 +39,7 @@ public class Holistic {
             }
 
             Logger.println("[Holistic]: statistic done, start save data in database");
-            saver.run();
+//            saver.run();
             Logger.println("[Holistic]: save done.");
             //just execute one loop when debug
             break;

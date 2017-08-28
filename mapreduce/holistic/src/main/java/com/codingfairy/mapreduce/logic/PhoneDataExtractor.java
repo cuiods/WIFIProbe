@@ -33,7 +33,7 @@ public class PhoneDataExtractor {
 
     public PhoneDataExtractor(final long time) {
         this.current = System.currentTimeMillis();
-        this.start_time = time>=current?-2:time; //如果不符合规范，默认统计前2小时数据
+        this.start_time = time;
         Logger.println("[start time]: "+start_time);
     }
 
@@ -41,6 +41,7 @@ public class PhoneDataExtractor {
     private void _calculateHours(final long earliest) {
 
         Logger.debug(earliest);
+
         if (start_time>=0){
             this.start_hour = (Math.max(start_time, earliest)/3600000)*3600000;
             this.count = (int) ((current-start_hour)/3600000);

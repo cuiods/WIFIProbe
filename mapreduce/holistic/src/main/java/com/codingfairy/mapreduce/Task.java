@@ -72,10 +72,10 @@ public class Task implements Runnable {
     private boolean merge() {
         try {
             Logger.println("[task]: merging upload smaller files");
-            HDFSTool.concat(FileConfig.upload);
+//            HDFSTool.concat(FileConfig.upload);
             Logger.println("[task]: merged upload smaller files");
             return true;
-        }catch (IOException e) {
+        }catch (Exception e) {
             Logger.println(e);
             return false;
         }
