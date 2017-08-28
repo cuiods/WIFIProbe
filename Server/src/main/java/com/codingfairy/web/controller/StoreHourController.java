@@ -1,5 +1,6 @@
 package com.codingfairy.web.controller;
 
+import com.codingfairy.bl.service.PredictService;
 import com.codingfairy.bl.service.StoreHoursService;
 import com.codingfairy.bl.vo.ResultVo;
 import com.codingfairy.bl.vo.StoreHoursVo;
@@ -31,6 +32,9 @@ public class StoreHourController {
     @Resource
     private StoreHoursService service;
 
+    @Resource
+    private PredictService predictService;
+
     @ApiOperation(value = "StoreHours Statistic", notes = "Query storeHour statistic data",
             response = StoreHoursVo.class, responseContainer = "list",produces = "application/json;charset=UTF-8")
     @PostMapping(value = "/stat",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -38,7 +42,8 @@ public class StoreHourController {
             throws ParamException {
         List<StoreHoursVo> storeHoursStat = service.getStoreHoursStat(queryJson.getStartHour(),
                 QueryThreshold.valueOf(queryJson.getThreshold()),queryJson.getStartRange(),queryJson.getProbeId());
-        return new ResultVo<>(ServerCode.SUCCESS, storeHoursStat);
+        return new ResultVo<>(ServerCode.SUCCESS, predictService.predictStoreHours(storeHoursStat,
+                QueryThreshold.valueOf(queryJson.getThreshold())));
     }
 
     @ApiOperation(value = "StoreHours Statistic Detail", notes = "Query detail storeHour statistic data",

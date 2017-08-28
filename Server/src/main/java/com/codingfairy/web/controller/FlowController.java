@@ -1,6 +1,7 @@
 package com.codingfairy.web.controller;
 
 import com.codingfairy.bl.service.FlowService;
+import com.codingfairy.bl.service.PredictService;
 import com.codingfairy.bl.vo.FlowVo;
 import com.codingfairy.bl.vo.ResultVo;
 import com.codingfairy.exception.ParamException;
@@ -31,6 +32,9 @@ public class FlowController {
     @Resource
     private FlowService service;
 
+    @Resource
+    private PredictService predictService;
+
     @ApiOperation(value = "Flow Statistic", notes = "Query flow statistic data",
             response = FlowVo.class, responseContainer = "list",produces = "application/json;charset=UTF-8")
     @PostMapping(value = "/stat",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -38,7 +42,8 @@ public class FlowController {
             throws ParamException {
         List<FlowVo> flowVos = service.getFStat(queryJson.getStartHour(),
                 QueryThreshold.valueOf(queryJson.getThreshold()),queryJson.getStartRange(),queryJson.getProbeId());
-        return new ResultVo<>(ServerCode.SUCCESS, flowVos);
+        return new ResultVo<>(ServerCode.SUCCESS, predictService.predictFlow(flowVos,
+                QueryThreshold.valueOf(queryJson.getThreshold())));
     }
 
     @ApiOperation(value = "Flow Statistic Detail", notes = "Query detail flow statistic data",

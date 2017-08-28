@@ -1,6 +1,7 @@
 package com.codingfairy.web.controller;
 
 import com.codingfairy.bl.service.NewOldService;
+import com.codingfairy.bl.service.PredictService;
 import com.codingfairy.bl.vo.NewOldVo;
 import com.codingfairy.bl.vo.ResultVo;
 import com.codingfairy.exception.ParamException;
@@ -31,6 +32,9 @@ public class NewOldController {
     @Resource
     private NewOldService service;
 
+    @Resource
+    private PredictService predictService;
+
     @ApiOperation(value = "NewOld Statistic", notes = "Query new old customer statistic data",
             response = NewOldVo.class, responseContainer = "list",produces = "application/json;charset=UTF-8")
     @PostMapping(value = "/stat",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -38,7 +42,8 @@ public class NewOldController {
             throws ParamException {
         List<NewOldVo> newOldVos = service.getNewOldStat(queryJson.getStartHour(),
                 QueryThreshold.valueOf(queryJson.getThreshold()),queryJson.getStartRange(),queryJson.getProbeId());
-        return new ResultVo<>(ServerCode.SUCCESS, newOldVos);
+        return new ResultVo<>(ServerCode.SUCCESS, predictService.predictNewOldVos(newOldVos,
+                QueryThreshold.valueOf(queryJson.getThreshold())));
     }
 
     @ApiOperation(value = "NewOld Statistic Detail", notes = "Query detail newOld statistic data",

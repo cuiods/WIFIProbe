@@ -1,5 +1,6 @@
 package com.codingfairy.web.controller;
 
+import com.codingfairy.bl.service.PredictService;
 import com.codingfairy.bl.service.VisitCircleService;
 import com.codingfairy.bl.vo.ResultVo;
 import com.codingfairy.bl.vo.VisitCircleVo;
@@ -31,6 +32,9 @@ public class VisitCircleController {
     @Resource
     private VisitCircleService service;
 
+    @Resource
+    private PredictService predictService;
+
     @ApiOperation(value = "VisitCircle Statistic", notes = "Query visitCircle statistic data",
             response = VisitCircleVo.class, responseContainer = "list",produces = "application/json;charset=UTF-8")
     @PostMapping(value = "/stat",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -38,7 +42,8 @@ public class VisitCircleController {
             throws ParamException {
         List<VisitCircleVo> visitCircleStat = service.getVisitCircleStat(queryJson.getStartHour(),
                 QueryThreshold.valueOf(queryJson.getThreshold()),queryJson.getStartRange(),queryJson.getProbeId());
-        return new ResultVo<>(ServerCode.SUCCESS, visitCircleStat);
+        return new ResultVo<>(ServerCode.SUCCESS, predictService.predictVisitCircles(visitCircleStat,
+                QueryThreshold.valueOf(queryJson.getThreshold())));
     }
 
     @ApiOperation(value = "VisitCircle Statistic Detail", notes = "Query detail visitCircle statistic data",

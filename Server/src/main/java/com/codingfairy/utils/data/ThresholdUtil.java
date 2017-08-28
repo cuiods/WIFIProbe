@@ -19,4 +19,17 @@ public class ThresholdUtil {
         }
         return thresholdStr.toString();
     }
+
+    public static String convertToPattern(QueryThreshold queryThreshold) {
+        StringBuilder thresholdStr = new StringBuilder();
+        switch (queryThreshold) {
+            case HOUR: thresholdStr.append(" HH");
+            case DAY: thresholdStr.insert(0,"-dd");
+            case MONTH: thresholdStr.insert(0,"-MM");
+            case YEAR: thresholdStr.insert(0,"yyyy");break;
+            case WEEK: thresholdStr.append("yyyy-ww"); break;
+            default: thresholdStr.append("yyyy-MM-dd");break;
+        }
+        return thresholdStr.toString();
+    }
 }

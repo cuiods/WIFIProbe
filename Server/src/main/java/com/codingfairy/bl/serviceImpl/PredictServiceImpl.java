@@ -5,7 +5,6 @@ import com.codingfairy.bl.vo.*;
 import com.codingfairy.utils.data.ThresholdUtil;
 import com.codingfairy.utils.enums.QueryThreshold;
 import com.codingfairy.utils.predict.ExpSmooth;
-import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -26,28 +25,31 @@ public class PredictServiceImpl implements PredictService {
 
     @Override
     public List<ActivenessVo> predictActiveness(List<ActivenessVo> activenessVos, QueryThreshold threshold) {
-        return predict(activenessVos, threshold, 3, "numOfHighActive",
+        return predict(activenessVos, threshold, 4, "numOfHighActive",
                 "numOfMedianActive", "numOfLowActive","numOfSleepActive");
     }
 
     @Override
     public List<FlowVo> predictFlow(List<FlowVo> flowVos, QueryThreshold threshold) {
-        return null;
+        return predict(flowVos, threshold, 3, "inNoOutWifi","inNoOutStore","outNoInWifi","outNoInStore",
+                "inAndOutWifi","intAndOutStore","stayInWifi","stayInStore","jumpRate","deepVisit","inStoreRate");
     }
 
     @Override
     public List<NewOldVo> predictNewOldVos(List<NewOldVo> newOldVos, QueryThreshold threshold) {
-        return null;
+        return predict(newOldVos, threshold, 3, "newCustomer","oldCustomer");
     }
 
     @Override
     public List<StoreHoursVo> predictStoreHours(List<StoreHoursVo> storeHoursVos, QueryThreshold threshold) {
-        return null;
+        return predict(storeHoursVos, threshold, 3, "data0","data1","data2","data3","data4",
+                "data5","data6","data7","data8","data9");
     }
 
     @Override
     public List<VisitCircleVo> predictVisitCircles(List<VisitCircleVo> visitCircleVos, QueryThreshold threshold) {
-        return null;
+        return predict(visitCircleVos,threshold,3,"data0","data1","data2","data3","data4",
+                "data5","data6","data7","data8","data9");
     }
 
     @SuppressWarnings("unchecked")
@@ -77,7 +79,7 @@ public class PredictServiceImpl implements PredictService {
         }
 
         T lastData = data.get(data.size() - 1);
-        DateFormat format = new SimpleDateFormat(ThresholdUtil.convertToString(threshold));
+        DateFormat format = new SimpleDateFormat(ThresholdUtil.convertToPattern(threshold));
         for (int i = 0; i < num; i++) {
             try {
                 Object object = clazz.newInstance();
@@ -100,6 +102,7 @@ public class PredictServiceImpl implements PredictService {
                     }
                     date = calendar.getTime();
                     setField("hour", format.format(date) ,t);
+                    data.add(t);
                 }
             } catch (InstantiationException | IllegalAccessException | ParseException e) {
                 e.printStackTrace();
@@ -135,7 +138,7 @@ public class PredictServiceImpl implements PredictService {
     private void convertToObject(double value, Object object, Field field) {
         boolean access = field.isAccessible();
         field.setAccessible(true);
-        Class clazz = field.getDeclaringClass();
+        Class clazz = field.getType();
         try {
             if (clazz.equals(Integer.class) || clazz.equals(int.class)) {
                 field.set(object, (int)value);

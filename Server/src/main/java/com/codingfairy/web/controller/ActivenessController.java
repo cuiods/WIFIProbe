@@ -1,6 +1,7 @@
 package com.codingfairy.web.controller;
 
 import com.codingfairy.bl.service.ActivenessService;
+import com.codingfairy.bl.service.PredictService;
 import com.codingfairy.bl.vo.ActivenessVo;
 import com.codingfairy.bl.vo.ResultVo;
 import com.codingfairy.exception.ParamException;
@@ -31,6 +32,9 @@ public class ActivenessController {
     @Resource
     private ActivenessService service;
 
+    @Resource
+    private PredictService predictService;
+
     @ApiOperation(value = "Activeness Statistic", notes = "Query activeness statistic data",
             response = ActivenessVo.class, responseContainer = "list",produces = "application/json;charset=UTF-8")
     @PostMapping(value = "/stat",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -38,7 +42,8 @@ public class ActivenessController {
             throws ParamException {
         List<ActivenessVo> activenessVos = service.getActivenessStat(queryJson.getStartHour(),
                 QueryThreshold.valueOf(queryJson.getThreshold()),queryJson.getStartRange(),queryJson.getProbeId());
-        return new ResultVo<>(ServerCode.SUCCESS, activenessVos);
+        return new ResultVo<>(ServerCode.SUCCESS, predictService.predictActiveness(activenessVos,
+                QueryThreshold.valueOf(queryJson.getThreshold())));
     }
 
     @ApiOperation(value = "Activeness Statistic Detail", notes = "Query detail activeness statistic data",
