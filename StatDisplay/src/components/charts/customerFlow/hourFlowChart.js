@@ -7,7 +7,10 @@ import React, { PropTypes } from 'react';
 import Container from '../container';
 import {
   AreaChart,
+  ComposedChart,
+  LineChart,
   Area,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -18,7 +21,7 @@ import {
 
 const HourFlowChart = ({data}) => (
   <Container>
-    <AreaChart data = {data} margin={{
+    <LineChart data = {data} margin={{
       top: 10,
       right: 30,
       left: 0,
@@ -29,10 +32,13 @@ const HourFlowChart = ({data}) => (
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip />
       <Legend />
-      <Area type="monotone" dataKey="jumpRate" stackId="1" stroke="#8884d8" fill="#8884d8" />
-      <Area type="monotone" dataKey="deepVisit" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-      <Area type="monotone" dataKey="inStoreRate" stackId="1" stroke="#ffc658" fill="#ffc658" />
-    </AreaChart>
+      <Line type="monotone" dataKey="jumpRate" stroke="#8884d8" strokeWidth={2}/>
+      <Line type="monotone" dataKey="jumpRatePre" stroke="#8884d8" strokeDasharray="5 5" strokeWidth={2}/>
+      <Line type="monotone" dataKey="deepVisit" stroke="#82ca9d"  strokeWidth={2}/>
+      <Line type="monotone" dataKey="deepVisitPre" stroke="#82ca9d" strokeDasharray="5 5" strokeWidth={2}/>
+      <Line type="monotone" dataKey="inStoreRate" stroke="#ffc658" strokeWidth={2}/>
+      <Line type="monotone" dataKey="inStoreRatePre" stroke="#ffc658" strokeDasharray="5 5" strokeWidth={2}/>
+    </LineChart>
   </Container>
 );
 
