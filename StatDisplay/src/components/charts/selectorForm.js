@@ -58,7 +58,7 @@ const SelectorForm = ({
           startRange:range,
           threshold: form.threshold,
         };
-        console.log("param data is : "+ data);
+        console.log("param data is : "+ JSON.stringify(data));
         getHourData(data);
       }
     });

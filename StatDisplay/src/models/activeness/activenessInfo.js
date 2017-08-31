@@ -6,6 +6,7 @@
 import pathToRegexp from 'path-to-regexp';
 import {getProbeAll, getProbeDetail} from '../../services/probeService';
 import {getActiveness, getActivenessDetail} from '../../services/activenessService';
+import {Modal} from 'antd';
 
 
 export default {
@@ -43,11 +44,19 @@ export default {
     *getHourData ({payload}, {call,put}) {
       const data = yield call(getActiveness, payload);
       if(data.code==1000){
+        console.log("get hour data:"+JSON.stringify(data));
         const hourVo = data.data;
         yield put({
           type: 'setHourData',
           payload:hourVo
         });
+      }else{
+        console.log("data is "+JSON.stringify(data));
+        Modal.error({
+          title: 'get data occurs error',
+          content: data.msg,
+        });
+
       }
     },
 
@@ -59,6 +68,13 @@ export default {
           type: 'setDetailData',
           payload:dataVo
         })
+      }else{
+        console.log("data is "+JSON.stringify(data));
+        Modal.error({
+          title: 'get data occurs error',
+          content: data.msg,
+        });
+
       }
     },
 

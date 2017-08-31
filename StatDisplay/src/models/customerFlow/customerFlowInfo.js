@@ -2,7 +2,7 @@
  * Created by yyy on 2017/5/17.
  * to get the data for customerFlow's charts
  */
-import {message} from 'antd';
+import {message,Modal} from 'antd';
 import pathToRegexp from 'path-to-regexp';
 import {getProbeAll, getProbeDetail} from '../../services/probeService';
 import {getCustomerFlow, getCustomerFlowDetail,getRealTimeCustomerFlow} from '../../services/customerFlowService';
@@ -99,11 +99,19 @@ export default {
     *getFlow ({payload}, {call,put}) {
       const data = yield call(getCustomerFlow, payload);
       if(data){
+        console.log(JSON.stringify("data is: "+data))
         const hourVo = data.data;
         yield put({
           type: 'setHourData',
           payload:hourVo
         });
+      }else{
+        console.log("data is "+JSON.stringify(data));
+        Modal.error({
+          title: 'get data occurs error',
+          content: data.msg,
+        });
+
       }
     },
 
@@ -116,6 +124,13 @@ export default {
           type: 'setDetailData',
           payload:dataVo
         })
+      }else{
+        console.log("data is "+JSON.stringify(data));
+        Modal.error({
+          title: 'get data occurs error',
+          content: data.msg,
+        });
+
       }
     },
 
