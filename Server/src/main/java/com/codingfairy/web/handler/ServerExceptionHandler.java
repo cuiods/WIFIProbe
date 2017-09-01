@@ -54,6 +54,7 @@ public class ServerExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResultVo<String> unknownExceptionHandler(Exception exception)
             throws Exception {
+        exception.printStackTrace();
         return new ResultVo<>(ServerCode.UNKNOWN_ERROR,exception.getMessage());
     }
 }

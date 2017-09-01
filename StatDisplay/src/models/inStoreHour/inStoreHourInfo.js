@@ -4,6 +4,7 @@
 import pathToRegexp from 'path-to-regexp';
 import {getProbeAll, getProbeDetail} from '../../services/probeService';
 import {getInStoreHour, getInStoreHourDetail} from '../../services/inStoreHourService';
+import {Modal} from 'antd';
 
 
 export default {
@@ -46,6 +47,13 @@ export default {
           type: 'setHourData',
           payload:hourVo
         });
+      }else{
+        console.log("data is "+JSON.stringify(data));
+        Modal.error({
+          title: 'get data occurs error',
+          content: data.msg,
+        });
+
       }
     },
 
@@ -57,6 +65,13 @@ export default {
           type: 'setDetailData',
           payload:dataVo
         })
+      }else{
+        console.log("data is "+JSON.stringify(data));
+        Modal.error({
+          title: 'get data occurs error',
+          content: data.msg,
+        });
+
       }
     },
 

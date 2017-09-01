@@ -2,7 +2,7 @@
  * Created by yyy on 2017/5/17.
  * to get the data for customerFlow's charts
  */
-import {message} from 'antd';
+import {message,Modal} from 'antd';
 import pathToRegexp from 'path-to-regexp';
 import {getProbeAll, getProbeDetail} from '../../services/probeService';
 import {getCustomerFlow, getCustomerFlowDetail,getRealTimeCustomerFlow} from '../../services/customerFlowService';
@@ -99,11 +99,62 @@ export default {
     *getFlow ({payload}, {call,put}) {
       const data = yield call(getCustomerFlow, payload);
       if(data){
+        console.log(JSON.stringify("data is: "+JSON.stringify(data)));
         const hourVo = data.data;
+        const len = hourVo.length;
+        let realData = hourVo.slice(0,len-3);
+        let commonItem = hourVo[len-3];
+        commonItem["inNoOutWifiPre"] = commonItem.inNoOutWifi;
+        commonItem["inNoOutStorePre"] = commonItem.inNoOutStore;
+        commonItem["outNoInWifiPre"] = commonItem.outNoInWifi;
+        commonItem["outNoInStorePre"] = commonItem.outNoInStore;
+        commonItem["inAndOutWifiPre"] = commonItem.inAndOutWifi;
+        commonItem["intAndOutStorePre"] = commonItem.intAndOutStore;
+        commonItem["stayInWifiPre"] = commonItem.stayInWifi;
+        commonItem["stayInStorePre"] = commonItem.stayInStore;
+        commonItem["jumpRatePre"] = commonItem.jumpRate;
+        commonItem["deepVisitPre"] = commonItem.deepVisit;
+        commonItem["inStoreRatePre"] = commonItem.inStoreRate;
+        realData.push(commonItem);
+
+        const predictHourData = hourVo.slice(len-2);
+        predictHourData.forEach(function(item) {
+            console.log("item is :" + JSON.stringify(item));
+            let predictItem = {
+              id: item.id,
+              wifiProb: item.wifiProb,
+              hour: item.hour,
+              inNoOutWifiPre: item.inNoOutWifi,
+              inNoOutStorePre: item.inNoOutStore,
+              outNoInWifiPre: item.outNoInWifi,
+              outNoInStorePre: item.outNoInStore,
+              inAndOutWifiPre: item.inAndOutWifi,
+              intAndOutStorePre: item.intAndOutStore,
+              stayInWifiPre: item.stayInWifi,
+              stayInStorePre: item.stayInStore,
+              jumpRatePre: item.jumpRate,
+              deepVisitPre: item.deepVisit,
+              inStoreRatePre: item.inStoreRate
+            };
+            console.log("predict item is: "+ JSON.stringify(predictItem));
+            realData.push(predictItem);
+          }
+        );
+
+
+        console.log("final data is :"+JSON.stringify(realData));
+
         yield put({
           type: 'setHourData',
-          payload:hourVo
+          payload:realData
         });
+      }else{
+        console.log("data is "+JSON.stringify(data));
+        Modal.error({
+          title: 'get data occurs error',
+          content: data.msg,
+        });
+
       }
     },
 
@@ -116,6 +167,13 @@ export default {
           type: 'setDetailData',
           payload:dataVo
         })
+      }else{
+        console.log("data is "+JSON.stringify(data));
+        Modal.error({
+          title: 'get data occurs error',
+          content: data.msg,
+        });
+
       }
     },
 

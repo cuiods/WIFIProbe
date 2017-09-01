@@ -75,7 +75,11 @@ public class PredictServiceImpl implements PredictService {
             for (int j = 0; j < data.size(); j++) {
                 predictData[i][j] = convertToDouble(data.get(j), fields[i]);
             }
-            resultData[i] = ExpSmooth.forecase(predictData[i],num);
+            if (data.size() == 1) {
+                resultData[i] = mockForecase(predictData[i],num);
+            } else {
+                resultData[i] = ExpSmooth.forecase(predictData[i],num);
+            }
         }
 
         T lastData = data.get(data.size() - 1);
@@ -173,6 +177,14 @@ public class PredictServiceImpl implements PredictService {
             field.setAccessible(access);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
+        }
+        return result;
+    }
+
+    private double[] mockForecase(double[] data, int numForecasts) {
+        double[] result = new double[numForecasts];
+        for (int i = 0; i < numForecasts; i++) {
+            result[i] = data[0];
         }
         return result;
     }
