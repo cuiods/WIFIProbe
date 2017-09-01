@@ -6,10 +6,7 @@
 import React, { PropTypes } from 'react';
 import Container from '../container';
 import {
-  AreaChart,
-  ComposedChart,
   LineChart,
-  Area,
   Line,
   XAxis,
   YAxis,
@@ -32,12 +29,12 @@ const HourFlowChart = ({data}) => (
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="jumpRate" stroke="#8884d8" strokeWidth={2}/>
-      <Line type="monotone" dataKey="jumpRatePre" stroke="#8884d8" strokeDasharray="5 5" strokeWidth={2}/>
-      <Line type="monotone" dataKey="deepVisit" stroke="#82ca9d"  strokeWidth={2}/>
-      <Line type="monotone" dataKey="deepVisitPre" stroke="#82ca9d" strokeDasharray="5 5" strokeWidth={2}/>
-      <Line type="monotone" dataKey="inStoreRate" stroke="#ffc658" strokeWidth={2}/>
-      <Line type="monotone" dataKey="inStoreRatePre" stroke="#ffc658" strokeDasharray="5 5" strokeWidth={2}/>
+      <Line type="monotone" dataKey="jumpRate" name="跳出率" stroke="#8884d8" strokeWidth={2}/>
+      <Line type="monotone" dataKey="jumpRatePre" name="跳出率预测" stroke="#8884d8" strokeDasharray="5 5" strokeWidth={2}/>
+      <Line type="monotone" dataKey="deepVisit" name="深访率" stroke="#82ca9d"  strokeWidth={2}/>
+      <Line type="monotone" dataKey="deepVisitPre" name="深访率预测" stroke="#82ca9d" strokeDasharray="5 5" strokeWidth={2}/>
+      <Line type="monotone" dataKey="inStoreRate" name="驻店率" stroke="#ffc658" strokeWidth={2}/>
+      <Line type="monotone" dataKey="inStoreRatePre" name="驻店率预测" stroke="#ffc658" strokeDasharray="5 5" strokeWidth={2}/>
     </LineChart>
   </Container>
 );

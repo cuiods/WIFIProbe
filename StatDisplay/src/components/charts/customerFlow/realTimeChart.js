@@ -27,7 +27,7 @@ const RealTimeChart = ({data}) => (
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip />
       <Legend />
-      <Area type="monotone" dataKey="num" stackId="1" stroke="#8884d8" fill="#8884d8" />
+      <Area type="monotone" dataKey="num" name="客流量" stackId="1" stroke="#8884d8" fill="#8884d8" />
     </AreaChart>
   </Container>
 );

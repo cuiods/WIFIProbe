@@ -115,6 +115,16 @@ export default {
         commonItem["jumpRatePre"] = commonItem.jumpRate;
         commonItem["deepVisitPre"] = commonItem.deepVisit;
         commonItem["inStoreRatePre"] = commonItem.inStoreRate;
+
+        delete commonItem.inNoOutWifi;
+        delete commonItem.inNoOutStore;
+        delete commonItem.outNoInWifi;
+        delete commonItem.outNoInStore;
+        delete commonItem.inAndOutWifi;
+        delete commonItem.intAndOutStore;
+        delete commonItem.stayInWifi;
+        delete commonItem.stayInStore;
+
         realData.push(commonItem);
 
         const predictHourData = hourVo.slice(len-2);

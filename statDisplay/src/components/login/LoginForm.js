@@ -37,7 +37,7 @@ const LoginForm = ({
     if(alertVisible){
       return (
         <Alert
-          message="Fail! Please ensure your username and password is right."
+          message="登陆失败，请检查你的用户名和密码~"
           description={loginMsg}
           type="error"
           closable
@@ -57,19 +57,19 @@ const LoginForm = ({
         {loginFail(alertVisible)}
       </div>
       <Card className={styles['card']} >
-        <h1 className={styles['title']}>Log In</h1>
+        <h1 className={styles['title']}>登陆</h1>
         <Form className={styles['login-inline-form']} onSubmit={handleSubmit}>
           <FormItem>
             {getFieldDecorator('username', {
               initialValue: userId,
-              rules: [{ required: true, message: 'Please enter username' }],
+              rules: [{ required: true, message: '请输入用户名' }],
             })(
               <Input addonBefore={<Icon type="user" />} placeholder="username" />,
             )}
           </FormItem>
           <FormItem>
             {getFieldDecorator('password', {
-              rules: [{ required: true, message: 'Please enter password' }],
+              rules: [{ required: true, message: '请输入密码' }],
             })(
               <Input addonBefore={<Icon type="lock" />} type="password" placeholder="password" />,
             )}
@@ -79,15 +79,15 @@ const LoginForm = ({
               valuePropName: 'checked',
               initialValue: true,
             })(
-              <Checkbox>Remember me</Checkbox>,
+              <Checkbox>记住我</Checkbox>,
             )}
-            <a className={styles['login-form-forget']} href="/#/customerFlow">Forgot password</a>
+            <a className={styles['login-form-forget']} href="/#/customerFlow">忘记密码</a>
             <Button type="primary" htmlType="submit" className={styles['login-form-button']}>
-              Log in
+              登 陆
             </Button>
-            <div style={{textAlign: "center"}}>or</div>
+            <div style={{textAlign: "center"}}>或</div>
             <Button type="primary" onClick={onButtonRegister} className={styles["login-form-button"]}>
-              register
+              注 册
             </Button>
           </FormItem>
         </Form>

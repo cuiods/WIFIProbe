@@ -43,9 +43,51 @@ export default {
       const data = yield call(getVisitCircle, payload);
       if(data.code==1000){
         const hourVo = data.data;
+
+        const len = hourVo.length;
+        let realData = hourVo.slice(0,len-3);
+        let commonItem = hourVo[len-3];
+        commonItem["data0Pre"] = commonItem.data0;
+        commonItem["data1Pre"] = commonItem.data1;
+        commonItem["data2Pre"] = commonItem.data2;
+        commonItem["data3Pre"] = commonItem.data3;
+        commonItem["data4Pre"] = commonItem.data4;
+        commonItem["data5Pre"] = commonItem.data5;
+        commonItem["data6Pre"] = commonItem.data6;
+        commonItem["data7Pre"] = commonItem.data7;
+        commonItem["data8Pre"] = commonItem.data8;
+        commonItem["data9Pre"] = commonItem.data9;
+        realData.push(commonItem);
+
+        const predictHourData = hourVo.slice(len-2);
+        predictHourData.forEach(function(item) {
+            console.log("item is :" + JSON.stringify(item));
+            let predictItem = {
+              id: item.id,
+              wifiProb: item.wifiProb,
+              hour: item.hour,
+              data0Pre: item.data0,
+              data1Pre: item.data1,
+              data2Pre: item.data2,
+              data3Pre: item.data3,
+              data4Pre: item.data4,
+              data5Pre: item.data5,
+              data6Pre: item.data6,
+              data7Pre: item.data7,
+              data8Pre: item.data8,
+              data9Pre: item.data9
+            };
+            console.log("predict item is: "+ JSON.stringify(predictItem));
+            realData.push(predictItem);
+          }
+        );
+
+
+        console.log("final data is :"+JSON.stringify(realData));
+
         yield put({
           type: 'setHourData',
-          payload:hourVo
+          payload:realData
         });
       }else{
         console.log("data is "+JSON.stringify(data));
@@ -61,6 +103,7 @@ export default {
       const data = yield call(getVisitCircleDetail, payload);
       if(data.code==1000){
         const dataVo = data.data;
+
         yield put({
           type: 'setDetailData',
           payload:dataVo

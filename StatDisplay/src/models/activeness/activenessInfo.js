@@ -46,9 +46,36 @@ export default {
       if(data.code==1000){
         console.log("get hour data:"+JSON.stringify(data));
         const hourVo = data.data;
+        const len = hourVo.length;
+        let realData = hourVo.slice(0,len-3);
+        let commonItem = hourVo[len-3];
+        commonItem["numOfHighActivePre"] = commonItem.numOfHighActive;
+        commonItem["numOfMedianActivePre"] = commonItem.numOfMedianActive;
+        commonItem["numOfLowActivePre"] = commonItem.numOfLowActive;
+        commonItem["numOfSleepActivePre"] = commonItem.numOfSleepActive;
+        realData.push(commonItem);
+
+        const predictHourData = hourVo.slice(len-2);
+        predictHourData.forEach(function(item) {
+            console.log("item is :" + JSON.stringify(item));
+            let predictItem = {
+              id: item.id,
+              wifiProb: item.wifiProb,
+              hour: item.hour,
+              numOfHighActivePre: item.numOfHighActive,
+              numOfMedianActivePre: item.numOfMedianActive,
+              numOfLowActivePre: item.numOfLowActive,
+              numOfSleepActivePre: item.numOfSleepActive
+            };
+            console.log("predict item is: "+ JSON.stringify(predictItem));
+            realData.push(predictItem);
+          }
+        );
+
+
         yield put({
           type: 'setHourData',
-          payload:hourVo
+          payload:realData
         });
       }else{
         console.log("data is "+JSON.stringify(data));

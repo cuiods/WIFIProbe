@@ -85,25 +85,25 @@ const RegisterForm = ({
   return (
     <div className={styles['login-form']}>
       <Card className={styles['card']}>
-        <h1 className={styles['title']}>Register</h1>
+        <h1 className={styles['title']}>注册</h1>
         <Form className={styles['login-inline-form']} onSubmit={handleSubmit} >
           <FormItem hasFeedback>
             {getFieldDecorator('username',{
-              rules: [{required: true, message: 'Please enter the username'}],
+              rules: [{required: true, message: '请输入用户名'}],
             })(
               <Input addonBefore={<Icon type="user"/>} placeholder="username"/>
             )}
           </FormItem>
           <FormItem hasFeedback>
             {getFieldDecorator('password',{
-              rules: [{required: true, message: 'Please enter the password'},{validator: checkConfirm}],
+              rules: [{required: true, message: '请输入密码'},{validator: checkConfirm}],
             })(
               <Input addonBefore={<Icon type="lock"/>} type="password" placeholder="password"/>
             )}
           </FormItem>
           <FormItem hasFeedback>
             {getFieldDecorator('confirm',{
-              rules: [{required: true, message: 'Please enter password again'},{validator:checkPassword}],
+              rules: [{required: true, message: '请再次输入密码'},{validator:checkPassword}],
             })(
               <Input addonBefore={<Icon type="lock"/>} onBlur={handleConfirmBlur} type="password" placeholder="confirm password"/>
             )}
@@ -111,11 +111,11 @@ const RegisterForm = ({
 
           <FormItem>
             <Button type="primary" htmlType="submit" className={styles['login-form-button']}>
-              Sign up
+              注 册
             </Button>
-            <div style={{textAlign: "center"}}>or Has account already?</div>
+            <div style={{textAlign: "center"}}>已有账户？</div>
             <Button type="primary" onClick={onLoginButton} className={styles["login-form-button"]}>
-              Sign in
+              登 陆
             </Button>
           </FormItem>
 
