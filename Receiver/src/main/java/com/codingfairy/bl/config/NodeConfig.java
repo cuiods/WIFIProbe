@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class NodeConfig {
 
 
-    public static final String HDFS_PATH = "webhdfs://115.29.138.254:50070/input/";
+    public static final String HDFS_PATH = "webhdfs://118.190.141.234:50070/input/";
 //    public static final String HDFS_PATH = "hdfs://118.89.169.238:9000";
 //    public static final String HADOOP_SERVER = "http://118.89.169.238:9000";
 //    public static final String ANALYSIS_SERVER = "118.89.169.238";
