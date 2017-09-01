@@ -1,5 +1,6 @@
 package com.codingfairy.mapreduce.save;
 
+import com.codingfairy.config.NodeConfig;
 import com.codingfairy.mock.GsonTool;
 import com.codingfairy.tool.HttpRequestUtil;
 
@@ -10,7 +11,7 @@ public class Storer {
 
 
 
-    private String __ip ="http://127.0.0.1:8080/api/v1/result";
+    private String __ip ="http://"+ NodeConfig.RECEIVER+"/api/v1/result";
 
     private String __ipPutInStore = __ip+"/storeHours";
     private String __ipPutVisitCycle = __ip+"/visitCircle";

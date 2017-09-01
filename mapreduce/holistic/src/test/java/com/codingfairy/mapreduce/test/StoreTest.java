@@ -1,6 +1,7 @@
 package com.codingfairy.mapreduce.test;
 
 import com.codingfairy.mapreduce.save.Reader;
+import com.codingfairy.mapreduce.save.Saver;
 import com.codingfairy.mapreduce.save.Storer;
 import com.codingfairy.tool.HDFSTool;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import java.util.List;
 public class StoreTest {
 
 //    @Test
-    public void test() {
+    public void testLocalFile() {
         try {
 
             Reader reader = new Reader();
@@ -39,5 +40,10 @@ public class StoreTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+//    @Test
+    public void testHDFS() {
+        new Saver(0, System.currentTimeMillis()).run();
     }
 }

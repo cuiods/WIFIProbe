@@ -2,6 +2,8 @@ package com.codingfairy.mapreduce.save;
 
 import com.codingfairy.config.FileConfig;
 import com.codingfairy.tool.HDFSTool;
+import com.codingfairy.tool.Logger;
+
 import java.io.DataInputStream;
 import java.util.List;
 
@@ -47,12 +49,16 @@ public class Saver implements Runnable {
 
         try {
             List<String> directories = HDFSTool.getDirectoryFromHdfs(__directory);
+            Logger.println("directory: "+directories.toString());
             for (String dir : directories) {
 
+                String subDirectory = __directory+"/"+dir;
+                Logger.println("sub direct: "+subDirectory);
                 long time = _getDirTime(dir);
 
                 if (time>=0 && time>=__startTime) {
-                    List<String> statisticFiles = HDFSTool.getDirectoryFromHdfs(__directory+"/"+dir);
+                    List<String> statisticFiles = HDFSTool.getDirectoryFromHdfs(subDirectory);
+                    Logger.println("    files: "+statisticFiles);
                     for (String file : statisticFiles) {
                         DataInputStream inputStream = HDFSTool.readFromHdfs(__directory+"/"+dir+"/"+file);
                         reader.readStream(file, inputStream);

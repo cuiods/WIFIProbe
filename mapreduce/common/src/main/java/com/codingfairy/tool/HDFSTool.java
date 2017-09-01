@@ -78,7 +78,7 @@ public class HDFSTool {
             fs.delete(aFileList.getPath(), true);
         }
         fs.close();
-        
+
     }
 
 

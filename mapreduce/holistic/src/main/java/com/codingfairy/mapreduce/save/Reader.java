@@ -99,6 +99,8 @@ public class Reader {
         visitingCycles.setHour(executeHourTime);
         visitingCycles.setWifiProb(wifiProb);
 
+        inStoreHours.setHour(executeHourTime);
+        inStoreHours.setWifiProb(wifiProb);
 
         CustomerActivenessElement activeness = new CustomerActivenessElement();
         this.activeness.add(activeness);

@@ -24,6 +24,8 @@ public class ChartData<V> {
     protected List<V> statistic;
 
     public List<V> getStatistic() {
+        if (statistic==null)
+            statistic = new ArrayList<V>();
         return statistic;
     }
 
