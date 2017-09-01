@@ -31,16 +31,20 @@ const HourCompareChart = ({data}) => (
       <Bar dataKey="inNoOutStore" name="入店未离开人数" stackId="a" fill="#8884d8" />
       <Bar dataKey="outNoInStore" name="离开店铺人数" stackId="a" fill="#82ca9d" />
       <Bar dataKey="stayInStore" name="店铺停留人数" stackId="a" fill="#ffc658" />
+      <Bar dataKey="intAndOutStore" name="店铺来往人数" stackId="a" fill="#BA55D3" />
       <Bar dataKey="inNoOutWifi" name="进入检测范围人数" stackId="b" fill="#8884d8" />
       <Bar dataKey="outNoInWifi" name="离开检测范围人数" stackId="b" fill="#82ca9d" />
       <Bar dataKey="stayInWifi" name="检测范围停留人数" stackId="b" fill="#ffc658" />
+      <Bar dataKey="inAndOutWifi" name="检测范围来往人数" stackId="a" fill="#BA55D3" />
 
-      <Bar dataKey="inNoOutStorePre" name="入店未离开人数预测" stackId="a" fill="#8884d8" fillOpacity={0.6}/>
-      <Bar dataKey="outNoInStorePre" name="离开店铺人数预测" stackId="a" fill="#82ca9d" fillOpacity={0.6}/>
-      <Bar dataKey="stayInStorePre" name="店铺停留人数预测" stackId="a" fill="#ffc658" fillOpacity={0.6}/>
-      <Bar dataKey="inNoOutWifiPre" name="进入检测范围人数预测" stackId="b" fill="#8884d8" fillOpacity={0.6}/>
-      <Bar dataKey="outNoInWifiPre" name="离开检测范围人数预测" stackId="b" fill="#82ca9d" fillOpacity={0.6}/>
-      <Bar dataKey="stayInWifiPre" name="检测范围停留人数预测" stackId="b" fill="#ffc658" fillOpacity={0.6}/>
+      <Bar dataKey="inNoOutStorePre" name="入店未离开人数预测" stackId="a" fill="#8884d8" fillOpacity={0.4}/>
+      <Bar dataKey="outNoInStorePre" name="离开店铺人数预测" stackId="a" fill="#82ca9d" fillOpacity={0.4}/>
+      <Bar dataKey="stayInStorePre" name="店铺停留人数预测" stackId="a" fill="#ffc658" fillOpacity={0.4}/>
+      <Bar dataKey="intAndOutStorePre" name="店铺来往人数预测" stackId="a" fill="#BA55D3" fillOpacity={0.4}/>
+      <Bar dataKey="inNoOutWifiPre" name="进入检测范围人数预测" stackId="b" fill="#8884d8" fillOpacity={0.4}/>
+      <Bar dataKey="outNoInWifiPre" name="离开检测范围人数预测" stackId="b" fill="#82ca9d" fillOpacity={0.4}/>
+      <Bar dataKey="stayInWifiPre" name="检测范围停留人数预测" stackId="b" fill="#ffc658" fillOpacity={0.4}/>
+      <Bar dataKey="inAndOutWifiPre" name="检测范围来往人数预测" stackId="a" fill="#BA55D3" fillOpacity={0.4}/>
     </BarChart>
   </Container>
 )
