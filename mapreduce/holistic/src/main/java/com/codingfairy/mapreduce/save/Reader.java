@@ -108,6 +108,9 @@ public class Reader {
         activeness.setHour(executeHourTime);
         activeness.setWifiProb(wifiProb);
 
+        newOldCustoms.forEach(e->e.setWifiProb(wifiProb));
+        customerFlows.forEach(e->e.setWifiProb(wifiProb));
+
         for (Tuple<Long, Integer> tuple : visitingCycles.getStatistic()) {
 
             if (ActivenessJudge.isHigh(tuple.getX())) {
@@ -139,3 +142,4 @@ public class Reader {
     }
 
 }
+

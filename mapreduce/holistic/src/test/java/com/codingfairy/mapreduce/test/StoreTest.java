@@ -44,6 +44,6 @@ public class StoreTest {
 
 //    @Test
     public void testHDFS() {
-        new Saver(0, System.currentTimeMillis()).run();
+        new Saver(0, System.currentTimeMillis(), "testWifiProb").run();
     }
 }

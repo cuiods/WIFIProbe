@@ -21,13 +21,23 @@ public class Saver implements Runnable {
      */
     private long __startTime;
     private long __executeHourTime;
+    private String __wifiProb;
 
     private Reader reader ;
 
-    public Saver(long __startTime, long __executeHourTime) {
+    /**
+     *
+     * @param __startTime 开始的的时间
+     * @param __executeHourTime 统计开始的小时
+     * @param wifiProb
+     */
+    public Saver(long __startTime, long __executeHourTime, String wifiProb) {
+        if (__startTime<0)
+            __startTime = __executeHourTime - __startTime*60L*60L*1000L;
         this.__startTime = __startTime;
         this.__executeHourTime = __executeHourTime;
         this.reader = new Reader();
+        this.__wifiProb = wifiProb;
     }
 
     /**
@@ -67,7 +77,7 @@ public class Saver implements Runnable {
             }
 
             // 计算活跃度
-            reader.summary(__executeHourTime, null);
+            reader.summary(__executeHourTime, __wifiProb);
             // 将读取出来的结果存入数据库
             new Storer().store(reader);
 

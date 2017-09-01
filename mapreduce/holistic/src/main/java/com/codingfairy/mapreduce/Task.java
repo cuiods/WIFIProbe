@@ -54,8 +54,8 @@ public class Task implements Runnable {
     public Task(final long time) {
         this.time = time;
         this.executeHourTime = System.currentTimeMillis()/36000000*3600000;
-        this.classifyPath = FileConfig.classify+"/"+time;
-        this.statisticPath = FileConfig.statistic+"/"+time;
+        this.classifyPath = FileConfig.classify+"/"+System.currentTimeMillis();
+        this.statisticPath = FileConfig.statistic+"/"+System.currentTimeMillis();
     }
 
     public boolean isResult() {
