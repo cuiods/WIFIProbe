@@ -62,7 +62,7 @@ public class Holistic {
             }
 
             //just execute one loop when debug
-            break;
+//            break;
         }
     }
 
