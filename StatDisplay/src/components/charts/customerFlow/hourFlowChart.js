@@ -6,10 +6,7 @@
 import React, { PropTypes } from 'react';
 import Container from '../container';
 import {
-  AreaChart,
-  ComposedChart,
   LineChart,
-  Area,
   Line,
   XAxis,
   YAxis,

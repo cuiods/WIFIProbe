@@ -43,9 +43,35 @@ export default {
       const data = yield call(getNewOld, payload);
       if(data.code==1000){
         const hourVo = data.data;
+
+        const len = hourVo.length;
+        let realData = hourVo.slice(0,len-3);
+        let commonItem = hourVo[len-3];
+        commonItem["newCustomerPre"] = commonItem.newCustomer;
+        commonItem["oldCustomerPre"] = commonItem.oldCustomer;
+        realData.push(commonItem);
+
+        const predictHourData = hourVo.slice(len-2);
+        predictHourData.forEach(function(item) {
+            console.log("item is :" + JSON.stringify(item));
+            let predictItem = {
+              id: item.id,
+              wifiProb: item.wifiProb,
+              hour: item.hour,
+              newCustomerPre: item.newCustomer,
+              oldCustomerPre: item.oldCustomer,
+            };
+            console.log("predict item is: "+ JSON.stringify(predictItem));
+            realData.push(predictItem);
+          }
+        );
+
+
+        console.log("final data is :"+JSON.stringify(realData));
+
         yield put({
           type: 'setHourData',
-          payload:hourVo
+          payload:realData
         });
       }else{
         console.log("data is "+JSON.stringify(data));

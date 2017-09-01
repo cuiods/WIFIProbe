@@ -5,8 +5,8 @@
 import React, { PropTypes } from 'react';
 import Container from '../container';
 import {
-  AreaChart,
-  Area,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -17,7 +17,7 @@ import {
 
 const HourNewOldChart = ({data}) => (
   <Container>
-    <AreaChart data = {data} margin={{
+    <LineChart data = {data} margin={{
       top: 10,
       right: 30,
       left: 0,
@@ -28,9 +28,11 @@ const HourNewOldChart = ({data}) => (
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip />
       <Legend />
-      <Area type="monotone" dataKey="newCustomer" stackId="1" stroke="#8884d8" fill="#8884d8" />
-      <Area type="monotone" dataKey="oldCustomer" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-    </AreaChart>
+      <Line type="monotone" dataKey="newCustomer"  stroke="#8884d8"  strokeWidth={2}/>
+      <Line type="monotone" dataKey="newCustomerPre"  stroke="#8884d8" strokeDasharray="5 5" strokeWidth={2} />
+      <Line type="monotone" dataKey="oldCustomer"  stroke="#82ca9d"  strokeWidth={2}/>
+      <Line type="monotone" dataKey="oldCustomerPre"  stroke="#82ca9d" strokeDasharray="5 5" strokeWidth={2} />
+    </LineChart>
   </Container>
 );
 
