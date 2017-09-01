@@ -2,6 +2,7 @@ package com.codingfairy.mapreduce.logic;
 
 import com.codingfairy.mapreduce.config.InStoreJudge;
 import com.codingfairy.mapreduce.config.IsContinuous;
+import com.codingfairy.mapreduce.config.IsDeepVisit;
 import com.codingfairy.tool.Logger;
 import com.codingfairy.vo.PhoneJson;
 import com.codingfairy.vo.analysis.element.CustomerFlowElement;
@@ -55,6 +56,10 @@ public class FlowState {
     protected int lastInNoOutStore;
     protected int firstOutNoInStore;
 
+    private double jumpRate;//
+    private double deepVisit;//深访率：进⼊店铺深度访问的顾客及占⽐(占总体客流)
+    private double inStoreRate;//进入店铺或区域的客流占全部客流的比例及趋势
+
     protected int inAndOutWifi;
     protected int lastInNoOutWifi;
     protected int firstOutNoInWifi;
@@ -76,6 +81,10 @@ public class FlowState {
         this.lastInWifiStartTime = -1;
         this.lastInStore = -1;
         this.lastInWifi = -1;
+
+        this.deepVisit = .0;
+        this.inStoreRate = .0;
+        this.jumpRate = .0;
 
         _initForHour();
     }
@@ -165,6 +174,9 @@ public class FlowState {
 
                 cycles.add(data.getTime()-lastInStoreStartTime);
                 inStoreHours.add(lastInStore-lastInStoreStartTime);
+                if (IsDeepVisit.isDeepVisit(lastInStore-lastInStoreStartTime)) {
+                    deepVisit++;
+                }
                 lastInStoreStartTime = data.getTime();
 
                 if (data.getTime()<endTime && data.getTime()>startTime) {
@@ -241,6 +253,13 @@ public class FlowState {
             customerFlowElement.setInAndOutStore(inAndOutStore);
             customerFlowElement.setInNoOutStore(lastInNoOutStore);
             customerFlowElement.setOutNoInStore(firstOutNoInStore);
+
+            int sum = inAndOutStore+lastInNoOutStore+firstOutNoInStore;
+            int sumWifi = inAndOutWifi+lastInNoOutWifi+firstOutNoInWifi;
+
+            customerFlowElement.setDeepVisit(sum==0?0:deepVisit/sum);
+            customerFlowElement.setJumpRate(sum==0?0:(inAndOutStore+firstOutNoInStore)/sum);
+            customerFlowElement.setInStoreRate(sumWifi==0?0:sum/sumWifi);
         }
 
         if (inAndOutWifi==0 && firstOutNoInWifi==0) {
