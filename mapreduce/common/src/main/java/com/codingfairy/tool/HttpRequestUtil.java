@@ -138,10 +138,10 @@ public class HttpRequestUtil {
      * @return 所代表远程资源的响应结果
      */
     public static String sendJsonPost(String url, String param) {
-        if (true) {
-            System.out.println(param);
-            return "";
-        }
+//        if (true) {
+//            System.out.println(param);
+//            return "";
+//        }
         return sendJsonPost(url, param, System.getProperty("file.encoding"));
     }
 
