@@ -2,36 +2,36 @@ module.exports = [
   {
     id: 1,
     icon: 'laptop',
-    name: 'Customer Flow',
+    name: '客流分析',
     router: '/customerFlow'
   },
   {
     id: 2,
-    name: 'Activeness',
+    name: '活跃度分析',
     icon: 'user',
     router: '/activeness',
   },
   {
     id: 3,
-    name: 'New and Old',
+    name: '新老顾客统计',
     icon: 'api',
     router: '/newAndOld',
   },
   {
     id: 4,
-    name: 'InStore Hours',
+    name: '驻店时长统计',
     icon: 'camera-o',
     router: '/inStoreHour'
   },
   {
     id: 5,
-    name: 'Visit Cycle',
+    name: '来访周期统计',
     icon: 'code-o',
     router: '/visitCircle'
   },
   {
     id: 6,
-    name: 'Modify Password',
+    name: '修改密码',
     icon: 'lock',
     router: '/changePassword'
   },

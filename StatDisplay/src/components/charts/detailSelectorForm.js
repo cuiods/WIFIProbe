@@ -47,7 +47,7 @@ const DetailSelectorForm = ({
     <div className={styles['selector-form']}>
       <Form onSubmit={handleSubmit} layout="inline">
         <FormItem
-          label="ProbeId"
+          label="探针"
           className={styles['form-item']}
         >
           {getFieldDecorator('probeId',{
@@ -59,7 +59,7 @@ const DetailSelectorForm = ({
           )}
         </FormItem>
         <FormItem
-          label="Time"
+          label="时间"
           className={styles['form-item']}
         >
           {getFieldDecorator('time',{
@@ -73,7 +73,7 @@ const DetailSelectorForm = ({
           )}
         </FormItem>
         <FormItem className={styles['form-item']}>
-          <Button type="primary" htmlType="submit" className={styles["selector-form-button"]}>submit</Button>
+          <Button type="primary" htmlType="submit" className={styles["selector-form-button"]}>提交</Button>
         </FormItem>
 
       </Form>

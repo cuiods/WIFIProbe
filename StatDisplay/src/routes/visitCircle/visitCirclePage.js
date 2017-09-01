@@ -36,12 +36,12 @@ function VisitCirclePage({dispatch,visitCircleInfo}) {
     <Row>
       <Card>
         <Col lg={24} md={24}>
-          <Card title="select to get expected data">
+          <Card title="请选择需要分析的时间范围">
             <SelectorForm {...selectorProps}/>
           </Card>
         </Col>
         <Col lg={24} md={24}>
-          <Card title="Hour Visit Circle chart">
+          <Card title="来访周期统计图">
             <HourVisitCircleChart data={hourData}/>
           </Card>
         </Col>
@@ -49,12 +49,12 @@ function VisitCirclePage({dispatch,visitCircleInfo}) {
 
       <Card>
         <Col lg={24} md={24}>
-          <Card title="select time to get detail">
+          <Card title="请选择需要查看的具体时间">
             <DetailSelectorForm {...detailProps}/>
           </Card>
         </Col>
         <Col lg={24} md={24}>
-          <Card title="detail Visit Circle chart">
+          <Card title="具体时间来访周期统计图">
             <DetailBarChart data={detailData}/>
           </Card>
         </Col>

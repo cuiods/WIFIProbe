@@ -60,7 +60,7 @@ const ChangePasswordForm = ({
       <Card className={styles['card']}>
         <Form className={styles['login-inline-form']} onSubmit={handleSubmit} >
           <FormItem
-            label="old password"
+            label="请输入旧密码"
             hasFeedback>
             {getFieldDecorator('oldPassword',{
               rules: [{required: true, message: 'Please enter the old password'}],
@@ -69,7 +69,7 @@ const ChangePasswordForm = ({
             )}
           </FormItem>
           <FormItem
-            label="new password"
+            label="请输入新密码"
             hasFeedback>
             {getFieldDecorator('newPassword',{
               rules: [{required: true, message: 'Please enter new password'},{validator: checkConfirm}],
@@ -78,7 +78,7 @@ const ChangePasswordForm = ({
             )}
           </FormItem>
           <FormItem
-            label="confirm new password"
+            label="再次确认新密码"
             hasFeedback>
             {getFieldDecorator('confirm',{
               rules: [{required: true, message: 'Please enter new password again'},{validator:checkPassword}],
@@ -89,7 +89,7 @@ const ChangePasswordForm = ({
 
           <FormItem>
             <Button type="primary" htmlType="submit" className={styles['login-form-button']}>
-              Submit
+              确认修改
             </Button>
           </FormItem>
 

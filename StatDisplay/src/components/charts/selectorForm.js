@@ -106,7 +106,7 @@ const SelectorForm = ({
       <Form onSubmit={handleSubmit} layout="inline">
         <FormItem
           {...formItemLayout}
-          label="ProbeId"
+          label="探针"
           className={styles['form-item']}
         >
           {getFieldDecorator('probeId',{
@@ -119,24 +119,24 @@ const SelectorForm = ({
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Threshold"
+          label="阈值"
           className={styles['form-item']}
         >
           {getFieldDecorator('threshold',{
             initialValue: 'YEAR'
           })(
             <Select>
-              <Option value = "HOUR">HOUR</Option>
-              <Option value = "DAY">DAY</Option>
-              <Option value = "WEEK">WEEK</Option>
-              <Option value = "MONTH">MONTH</Option>
-              <Option value = "YEAR">YEAR</Option>
+              <Option value = "HOUR">小时</Option>
+              <Option value = "DAY">天数</Option>
+              <Option value = "WEEK">周数</Option>
+              <Option value = "MONTH">月份</Option>
+              <Option value = "YEAR">年份</Option>
             </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="StartTime"
+          label="开始时间"
           className={styles['form-item']}
         >
           {getFieldDecorator('startTime',{
@@ -151,7 +151,7 @@ const SelectorForm = ({
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="EndTime"
+          label="结束时间"
           className={styles['form-item']}
         >
           {getFieldDecorator('endTime',{
@@ -165,7 +165,7 @@ const SelectorForm = ({
           )}
         </FormItem>
         <FormItem className={styles['form-item']}>
-          <Button type="primary" htmlType="submit" className={styles["selector-form-button"]}>submit</Button>
+          <Button type="primary" htmlType="submit" className={styles["selector-form-button"]}>提交</Button>
         </FormItem>
 
       </Form>

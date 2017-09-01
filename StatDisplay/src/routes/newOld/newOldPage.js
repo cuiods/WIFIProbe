@@ -38,12 +38,12 @@ function NewOldPage({dispatch,newOldInfo}) {
     <Row>
       <Card>
         <Col lg={24} md={24}>
-          <Card title="select to get expected data">
+          <Card title="请选择需要分析的时间范围：">
             <SelectorForm {...selectorProps}/>
           </Card>
         </Col>
         <Col lg={24} md={24}>
-          <Card title="Hour NewAndOld chart">
+          <Card title="新老顾客统计图">
             <HourNewOldChart data={hourData} />
           </Card>
         </Col>
@@ -51,12 +51,12 @@ function NewOldPage({dispatch,newOldInfo}) {
 
       <Card>
         <Col lg={24} md={24}>
-          <Card title="select time to get detail">
+          <Card title="请选择需要分析的具体时间">
             <DetailSelectorForm {...detailProps}/>
           </Card>
         </Col>
         <Col lg={24} md={24}>
-          <Card title="detail NewAndHour chart">
+          <Card title="具体时间新老顾客统计图">
             <DetailBarChart data={detailData}/>
           </Card>
         </Col>

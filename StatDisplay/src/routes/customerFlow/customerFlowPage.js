@@ -50,33 +50,33 @@ function CustomerFlowPage({dispatch,customerFlowInfo}) {
     <Row gutter={16}>
       <Card>
         <Col lg={24} md={24}>
-          <Card title="select to get expected data">
+          <Card title="请选择需要分析的时间范围：">
           <SelectorForm {...selectorProps}/>
           </Card>
         </Col>
         <Col lg={12} md={24} >
-          <Card title="Customer Hour Flow">
+          <Card title="客流分析（跳出率、深访率和入店率）">
             <HourFlowChart data={hourData}/>
           </Card>
         </Col>
         <Col lg={12} md={24} >
-          <Card title="Compare Hour Flow">
+          <Card title="客流数量分析">
             <HourCompareChart data={hourData}/>
           </Card>
         </Col>
       </Card>
-      <Card title="Realtime Customer Flow Data">
+      <Card title="实时客流量跟踪">
         <RealTimeChart data={realTimeData}/>
       </Card>
 
       <Card>
         <Col lg={24} md={24}>
-          <Card title="select time to get detail">
+          <Card title="请选择需要分析的具体时间">
             <DetailSelectorForm {...detailProps}/>
           </Card>
         </Col>
         <Col lg={24} md={24} >
-          <Card title="Detail Hour Flow">
+          <Card title="详细客流分析图">
             <DetailBarChart data={detailData}/>
           </Card>
         </Col>
