@@ -134,7 +134,7 @@ export default {
               stayInStorePre: item.stayInStore,
               jumpRatePre: item.jumpRate,
               deepVisitPre: item.deepVisit,
-              inStoreRatePre: item.inStoreRate
+              inStoreRatePre: item.inStoreRate,
             };
             console.log("predict item is: "+ JSON.stringify(predictItem));
             realData.push(predictItem);
