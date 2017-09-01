@@ -28,12 +28,12 @@ const HourCompareChart = ({data}) => (
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip />
       <Legend/>
-      <Bar dataKey="inNoOutStore" stackId="a" fill="#8884d8" />
-      <Bar dataKey="outNoInStore" stackId="a" fill="#82ca9d" />
-      <Bar dataKey="stayInStore" stackId="a" fill="#ffc658" />
-      <Bar dataKey="inNoOutWifi" stackId="b" fill="#8884d8" />
-      <Bar dataKey="outNoInWifi" stackId="b" fill="#82ca9d" />
-      <Bar dataKey="stayInWifi" stackId="b" fill="#ffc658" />
+      <Bar dataKey="inNoOutStore" name="入店未离开人数" stackId="a" fill="#8884d8" />
+      <Bar dataKey="outNoInStore" name="离开店铺人数" stackId="a" fill="#82ca9d" />
+      <Bar dataKey="stayInStore" name="店铺停留人数" stackId="a" fill="#ffc658" />
+      <Bar dataKey="inNoOutWifi" name="进入检测范围人数" stackId="b" fill="#8884d8" />
+      <Bar dataKey="outNoInWifi" name="离开检测范围人数" stackId="b" fill="#82ca9d" />
+      <Bar dataKey="stayInWifi" name="检测范围停留人数" stackId="b" fill="#ffc658" />
     </BarChart>
   </Container>
 )

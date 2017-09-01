@@ -28,14 +28,14 @@ const HourActiveChart = ({data}) => (
       <CartesianGrid strokeDasharray="3 3"/>
       <Tooltip />
       <Legend />
-      <Line type="monotone" dataKey="numOfHighActive" stroke="#8884d8"  strokeWidth={2}/>
-      <Line type="monotone" dataKey="numOfHighActivePre" stroke="#8884d8"  strokeWidth={2} strokeDasharray="5 5"/>
-      <Line type="monotone" dataKey="numOfMedianActive" stroke="#82ca9d" strokeWidth={2}/>
-      <Line type="monotone" dataKey="numOfMedianActivePre" stroke="#82ca9d" strokeWidth={2} strokeDasharray="5 5"/>
-      <Line type="monotone" dataKey="numOfLowActive" stroke="#ffc658"  strokeWidth={2}/>
-      <Line type="monotone" dataKey="numOfLowActivePre" stroke="#ffc658"  strokeWidth={2} strokeDasharray="5 5"/>
-      <Line type="monotone" dataKey="numOfSleepActive" stroke="#BA55D3" strokeWidth={2} />
-      <Line type="monotone" dataKey="numOfSleepActivePre" stroke="#BA55D3" strokeWidth={2} strokeDasharray="5 5"/>
+      <Line type="monotone" dataKey="numOfHighActive" name="高活跃度" stroke="#8884d8"  strokeWidth={2}/>
+      <Line type="monotone" dataKey="numOfHighActivePre" name="高活跃度预测" stroke="#8884d8"  strokeWidth={2} strokeDasharray="5 5"/>
+      <Line type="monotone" dataKey="numOfMedianActive" name="中活跃度" stroke="#82ca9d" strokeWidth={2}/>
+      <Line type="monotone" dataKey="numOfMedianActivePre" name="中活跃度预测" stroke="#82ca9d" strokeWidth={2} strokeDasharray="5 5"/>
+      <Line type="monotone" dataKey="numOfLowActive" name="低活跃度" stroke="#ffc658"  strokeWidth={2}/>
+      <Line type="monotone" dataKey="numOfLowActivePre" name="低活跃度预测" stroke="#ffc658"  strokeWidth={2} strokeDasharray="5 5"/>
+      <Line type="monotone" dataKey="numOfSleepActive" name="睡眠活跃度" stroke="#BA55D3" strokeWidth={2} />
+      <Line type="monotone" dataKey="numOfSleepActivePre" name="睡眠活跃度预测" stroke="#BA55D3" strokeWidth={2} strokeDasharray="5 5"/>
     </LineChart>
   </Container>
 );
