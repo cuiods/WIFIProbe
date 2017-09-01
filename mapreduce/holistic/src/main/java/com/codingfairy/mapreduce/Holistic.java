@@ -15,6 +15,8 @@ public class Holistic {
     public static String EXECUTE_TIME = "EXECUTE_TIME";
 
 
+    private static final long HOUR = 1000L*60L*60L;
+
     private static void start(String[] args){
 
         long time;
@@ -28,8 +30,7 @@ public class Holistic {
          * 负数表示前多少个小时的
          */
         if (time<0) {
-            time = System.currentTimeMillis()/NodeConfig.MAX_WIFI_DATA_INTERVAL*NodeConfig.MAX_WIFI_DATA_INTERVAL
-                    + time*NodeConfig.MAX_WIFI_DATA_INTERVAL;
+            time = System.currentTimeMillis()/HOUR*HOUR + time*HOUR;
         }
 
         while (true) {
@@ -38,7 +39,7 @@ public class Holistic {
             try {
                 long lastTime = time;
                 long currentTimeMillis = System.currentTimeMillis();
-                time = currentTimeMillis/NodeConfig.MAX_WIFI_DATA_INTERVAL*NodeConfig.MAX_WIFI_DATA_INTERVAL;
+                time = currentTimeMillis/HOUR*HOUR;
 
                 if (time>lastTime) {
                     new Task(lastTime).execute();
@@ -59,7 +60,6 @@ public class Holistic {
             }catch (Exception e) {
                 e.printStackTrace();
             }
-
 
             //just execute one loop when debug
             break;
