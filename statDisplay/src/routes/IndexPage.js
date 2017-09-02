@@ -52,6 +52,12 @@ function IndexPage({ children, location, dispatch, app }) {
         type : 'app/createUser',
         payload: {...fieldValue},
       });
+    },
+    onLoginClick(fieldValue){
+      dispatch({
+        type: 'app/jumpToLogin',
+        payload: {}
+      })
     }
   };
 

@@ -8,7 +8,7 @@ const FormItem = Form.Item;
 const confirm = Modal.confirm;
 
 const RegisterForm = ({
-  onLogin,
+  onLoginClick,
   onRegister,
   form : {
     getFieldDecorator,
@@ -40,7 +40,7 @@ const RegisterForm = ({
 
   function onLoginButton(e){
     e.preventDefault();
-    onLogin();
+    onLoginClick();
   }
 
   function handleConfirmBlur(e) {
