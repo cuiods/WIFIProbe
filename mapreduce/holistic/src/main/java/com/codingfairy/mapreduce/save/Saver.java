@@ -57,6 +57,8 @@ public class Saver implements Runnable {
 
     public void run()  {
 
+        int count = 0;
+
         try {
             List<String> directories = HDFSTool.getDirectoryFromHdfs(__directory);
             Logger.println("directory: "+directories.toString());
@@ -76,10 +78,12 @@ public class Saver implements Runnable {
                 }
             }
 
-            // 计算活跃度
-            reader.summary(__executeHourTime, __wifiProb);
-            // 将读取出来的结果存入数据库
-            new Storer().store(reader);
+            if (count>0) {
+                // 计算活跃度
+                reader.summary(__executeHourTime, __wifiProb);
+                // 将读取出来的结果存入数据库
+                new Storer().store(reader);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
