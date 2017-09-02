@@ -250,16 +250,12 @@ public class FlowState {
             } else {
                 inAndOutStore ++;
             }
+
+            customerFlowElement.setDeepVisit(deepVisit);
             customerFlowElement.setInAndOutStore(inAndOutStore);
             customerFlowElement.setInNoOutStore(lastInNoOutStore);
             customerFlowElement.setOutNoInStore(firstOutNoInStore);
 
-            int sum = inAndOutStore+lastInNoOutStore+firstOutNoInStore;
-            int sumWifi = inAndOutWifi+lastInNoOutWifi+firstOutNoInWifi;
-
-            customerFlowElement.setDeepVisit(sum==0?0:deepVisit/sum);
-            customerFlowElement.setJumpRate(sum==0?0:(inAndOutStore+firstOutNoInStore)/sum);
-            customerFlowElement.setInStoreRate(sumWifi==0?0:sum/sumWifi);
         }
 
         if (inAndOutWifi==0 && firstOutNoInWifi==0) {

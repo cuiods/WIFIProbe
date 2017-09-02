@@ -110,6 +110,16 @@ public class Reader {
 
         newOldCustoms.forEach(e->e.setWifiProb(wifiProb));
         customerFlows.forEach(e->e.setWifiProb(wifiProb));
+        customerFlows.forEach(e->{
+
+            int sum = e.getInAndOutStore()+e.getInNoOutStore()+e.getOutNoInStore();
+            int sumWifi = e.getInAndOutWifi()+e.getInNoOutWifi()+e.getOutNoInWifi();
+
+            e.setDeepVisit(sum==0?0:e.getDeepVisit()/sum);
+            e.setJumpRate(sum==0?0:(e.getInAndOutStore())/(sum+0.1));
+            e.setInStoreRate(sumWifi==0?0:e.getInAndOutWifi()/sumWifi);
+
+        });
 
         for (Tuple<Long, Integer> tuple : visitingCycles.getStatistic()) {
 
