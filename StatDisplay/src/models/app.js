@@ -129,6 +129,7 @@ export default {
     },
 
     *jumpToLogin({payload},{call,put}){
+      console.log("jump to login!");
       yield put({
         type: 'finishRegister'
       });
@@ -230,6 +231,7 @@ export default {
         ...state,isRegister:false
       }
     },
+
 
 
   }

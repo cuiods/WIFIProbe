@@ -64,16 +64,18 @@ const SelectorForm = ({
     });
   }
 
-  const formItemLayout = {
-    labelCol: {
-      xs: {span:12},
-      sm: {span:12},
-    },
-    wrapperCol: {
-      xs: {span:12},
-      sm: {span:12},
-    },
-  };
+  // const formItemLayout = {
+  //   labelCol: {
+  //     xs: {span:9},
+  //     sm: {span:9},
+  //   },
+  //   wrapperCol: {
+  //     xs: {span:15},
+  //     sm: {span:15},
+  //   },
+  // };
+
+  const formItemLayout = null;
 
 
 
