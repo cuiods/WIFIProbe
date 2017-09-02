@@ -41,13 +41,15 @@ public class Holistic {
                 long currentTimeMillis = System.currentTimeMillis();
                 time = currentTimeMillis/HOUR*HOUR;
 
-                if (time>lastTime) {
+                if (time>lastTime+HOUR) {
                     new Task(lastTime).execute();
                     Saver saver = new Saver(lastTime, time, "1s12sz");
                     Logger.println("[Holistic]: statistic done, start save data in database");
                     saver.run();
                     Logger.println("[Holistic]: save done.");
                 } else {
+                    Logger.println("wait, \n    lastTime:"+lastTime
+                            +"\n    currentTime"+time);
                     try {
                         Thread.sleep(1000*60);
                     }catch (Exception e) {
