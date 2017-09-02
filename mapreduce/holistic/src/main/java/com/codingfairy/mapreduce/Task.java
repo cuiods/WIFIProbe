@@ -51,11 +51,11 @@ public class Task implements Runnable {
     private String classifyPath ;
     private String statisticPath ;
 
-    public Task(final long time) {
-        this.time = time;
-        this.executeHourTime = System.currentTimeMillis()/36000000*3600000;
-        this.classifyPath = FileConfig.classify+"/"+System.currentTimeMillis();
-        this.statisticPath = FileConfig.statistic+"/"+System.currentTimeMillis();
+    public Task(final long startTime, final long executeHourTime) {
+        this.time = startTime;
+        this.executeHourTime = executeHourTime;
+        this.classifyPath = FileConfig.classify+"/"+executeHourTime;
+        this.statisticPath = FileConfig.statistic+"/"+executeHourTime;
     }
 
     public boolean isResult() {
