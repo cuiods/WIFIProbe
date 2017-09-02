@@ -19,33 +19,34 @@ public class Holistic {
 
     private static void start(String[] args){
 
-        long time;
+        long executeTime;
         long loop;
         try {
-            time = Long.parseLong(args[0]);
+            executeTime = Long.parseLong(args[0]);
             loop = Long.parseLong(args[1]);
+            executeTime++;
         } catch (Exception e) {
-            time = 0;
+            executeTime = 0;
             loop = -1;
         }
 
         /**
          * 负数表示前多少个小时的
          */
-        if (time<0) {
-            time = System.currentTimeMillis()/HOUR*HOUR + time*HOUR;
+        if (executeTime<0) {
+            executeTime = System.currentTimeMillis()/HOUR*HOUR + executeTime*HOUR;
         }
 
         while (true) {
 
 
-            Logger.println("[Holistic]: start time: "+time);
+            Logger.println("[Holistic]: start time: "+executeTime);
             try {
-                long lastTime = time;
+                long startTime = executeTime;
                 long currentTimeMillis = System.currentTimeMillis();
-                time = currentTimeMillis/HOUR*HOUR;
+                executeTime = currentTimeMillis/HOUR*HOUR;
 
-                if (time>lastTime+HOUR) {
+                if (executeTime>=startTime+HOUR) {
 
                     if (loop==0) {
                         break;
@@ -56,22 +57,22 @@ public class Holistic {
                         //loop forever
                     }
 
-                    new Task(lastTime).execute();
-                    Saver saver = new Saver(lastTime, time, "1s12sz");
+                    new Task(startTime, executeTime).execute();
+                    Saver saver = new Saver(startTime, executeTime, "1s12sz");
                     Logger.println("[Holistic]: statistic done, start save data in database");
                     saver.run();
                     Logger.println("[Holistic]: save done.");
 
                 } else {
-                    Logger.println("wait, \n    lastTime:"+lastTime
-                            +"\n    currentTime"+time);
+                    Logger.println("wait, \n    lastTime:"+startTime
+                            +"\n    currentTime"+executeTime);
                     try {
                         Thread.sleep(1000*60);
                     }catch (Exception e) {
                         e.printStackTrace();
                     }
                     //避免lastTime的值变化
-                    time = lastTime;
+                    executeTime = startTime;
                 }
 
             }catch (Exception e) {
