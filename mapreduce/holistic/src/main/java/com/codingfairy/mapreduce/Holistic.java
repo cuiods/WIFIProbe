@@ -20,10 +20,13 @@ public class Holistic {
     private static void start(String[] args){
 
         long time;
+        long loop;
         try {
             time = Long.parseLong(args[0]);
+            loop = Long.parseLong(args[1]);
         } catch (Exception e) {
             time = 0;
+            loop = -1;
         }
 
         /**
@@ -35,6 +38,14 @@ public class Holistic {
 
         while (true) {
 
+            if (loop==0) {
+                break;
+            } else if (loop>0) {
+                loop--;
+                //loop util loop==0
+            } else if (loop<0) {
+                //loop forever
+            }
             Logger.println("[Holistic]: start time: "+time);
             try {
                 long lastTime = time;
