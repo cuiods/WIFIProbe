@@ -7,6 +7,7 @@ import com.codingfairy.tool.HDFSTool;
 import org.junit.Test;
 
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +15,8 @@ import java.util.List;
  */
 public class StoreTest {
 
+
+    private static final long HOUR = 1000L*60L*60L;
 //    @Test
     public void testLocalFile() {
         try {
@@ -44,6 +47,14 @@ public class StoreTest {
 
 //    @Test
     public void testHDFS() {
-        new Saver(0, System.currentTimeMillis(), "testWifiProb").run();
+        long currentTimeMillis = System.currentTimeMillis();
+        long time = currentTimeMillis/HOUR*HOUR;
+        long startTime = 1504322260519L;
+        new Saver(startTime, currentTimeMillis, "testWifiProb").run();
+    }
+
+//    @Test
+    public void testTime() {
+        System.out.println(new Date(1504324800000L));
     }
 }

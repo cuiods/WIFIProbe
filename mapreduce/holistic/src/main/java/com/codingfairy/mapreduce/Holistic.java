@@ -48,6 +48,7 @@ public class Holistic {
 
                 if (executeTime>=startTime+HOUR) {
 
+                    Logger.println("[Holistic]: loop: "+loop);
                     if (loop==0) {
                         break;
                     } else if (loop>0) {
