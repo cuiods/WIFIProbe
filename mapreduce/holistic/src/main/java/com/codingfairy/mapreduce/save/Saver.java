@@ -66,7 +66,7 @@ public class Saver implements Runnable {
                 Logger.println("sub direct: "+subDirectory);
                 long time = _getDirTime(dir);
 
-                if (time>=0 && time>=__startTime) {
+                if (time>=0 && time>__startTime) {
                     List<String> statisticFiles = HDFSTool.getDirectoryFromHdfs(subDirectory);
                     Logger.println("    files: "+statisticFiles);
                     for (String file : statisticFiles) {
