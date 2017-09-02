@@ -116,8 +116,8 @@ public class Reader {
             int sumWifi = e.getInAndOutWifi()+e.getInNoOutWifi()+e.getOutNoInWifi();
 
             e.setDeepVisit(sum==0?0:e.getDeepVisit()/sum);
-            e.setJumpRate(sum==0?0:(e.getInAndOutStore())/(sum+0.1));
-            e.setInStoreRate(sumWifi==0?0:e.getInAndOutWifi()/sumWifi);
+            e.setJumpRate(sum==0?0:(e.getInAndOutStore()+e.getOutNoInStore())/(sum+0.1));
+            e.setInStoreRate(sumWifi==0?0:(e.getInAndOutStore()+e.getInNoOutStore())/(sumWifi+0.1));
 
         });
 

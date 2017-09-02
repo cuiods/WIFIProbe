@@ -8,7 +8,7 @@ import com.codingfairy.vo.PhoneJson;
  */
 public class InStoreJudge {
 
-    public static double STORE_RANGE = 100;
+    public static double STORE_RANGE = 10;
 
     public static boolean isInStore(PhoneJson phoneJson) {
         try {

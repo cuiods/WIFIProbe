@@ -38,14 +38,7 @@ public class Holistic {
 
         while (true) {
 
-            if (loop==0) {
-                break;
-            } else if (loop>0) {
-                loop--;
-                //loop util loop==0
-            } else if (loop<0) {
-                //loop forever
-            }
+
             Logger.println("[Holistic]: start time: "+time);
             try {
                 long lastTime = time;
@@ -53,11 +46,22 @@ public class Holistic {
                 time = currentTimeMillis/HOUR*HOUR;
 
                 if (time>lastTime+HOUR) {
+
+                    if (loop==0) {
+                        break;
+                    } else if (loop>0) {
+                        loop--;
+                        //loop util loop==0
+                    } else if (loop<0) {
+                        //loop forever
+                    }
+
                     new Task(lastTime).execute();
                     Saver saver = new Saver(lastTime, time, "1s12sz");
                     Logger.println("[Holistic]: statistic done, start save data in database");
                     saver.run();
                     Logger.println("[Holistic]: save done.");
+
                 } else {
                     Logger.println("wait, \n    lastTime:"+lastTime
                             +"\n    currentTime"+time);
