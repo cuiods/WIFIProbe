@@ -1,20 +1,20 @@
 # WIFIProbe
+[查看演示文档](./present.md)<br/>
 项目文档位于./doc文件夹下，项目展示参考4.Get Started
-[查看演示文档](./present.md)
 
 ## 1. Introduction
 利用智能设备商WIFI模块所发出的无线广播信号进行设备感知，我们可以记录用户的线下行为轨迹。通过采集用户的MAC地址等数据，我们分析了商业环境中门店的门前人流量、进店客流量、进入跳出量、新老顾客数量及新增量、在店平均时长，客流情况等内容。
 
 ## 2. Architecture
+![framework2](./pics/framework2.png)
+
+### 2.1 Abstract View
 ![framework](./pics/framework.png)
 
  * Receiver: 探针将数据发给负载均衡器的虚拟IP，负载均衡器将请求转发给接收服务器，接收服务器发起新线程将数据加入同步缓存，每隔20分钟清空缓存，将合并的大文件传输给HDFS文件系统接口
  * HDFS & Hadoop计算集群:Hadoop计算集群从HDFS文件系统读取数据，循环进行MapReduce操作，将所有的统计结果还保存到文件系统
  * Web：Web服务器定时从HDFS文件系统读取统计结果，将统计结果分类保存到MySQL数据库，提供Restful接口响应HTTP请求，返回要求查看的统计结果以及预测数据
  * MySQL：数据库保存整点信息
-
-### 2.1 Abstract View
-![framework2](./pics/framework2.png)
 
 ## 3. Features
 
