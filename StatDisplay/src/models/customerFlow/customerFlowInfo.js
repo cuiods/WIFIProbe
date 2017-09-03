@@ -29,7 +29,7 @@ export default {
         if(matchFlow) {
           dispatch({
             type: 'getFlow',
-            payload: {probeId:"1s12sz",startHour:60000,startRange:5,threshold:"YEAR"}
+            payload: {probeId:"1s12sz",startHour:414897,startRange:5,threshold:"HOUR"}
           });
           dispatch({
             type: 'getDetail',

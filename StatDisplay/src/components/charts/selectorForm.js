@@ -125,7 +125,7 @@ const SelectorForm = ({
           className={styles['form-item']}
         >
           {getFieldDecorator('threshold',{
-            initialValue: 'YEAR'
+            initialValue: 'HOUR'
           })(
             <Select>
               <Option value = "HOUR">小时</Option>
