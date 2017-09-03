@@ -17,7 +17,9 @@ export default {
     hourData:[],
     detailData:[],
     realTimeData:[],
-    timer:-1000
+    timer:-1000,
+    last_num1: 0,
+    last_num2: 0,
   },
 
   subscriptions: {
@@ -73,28 +75,58 @@ export default {
         if(!data){
           continue;
         }
+
+        console.log("data is:"+JSON.stringify(data));
+        console.log(data.latestCommit != null);
+
+
         if(data.serverName == 'server1'){
-          num1 = data.connectNum;
-          time = data.latestCommit.slice(11,19);
+
+          if(data.latestCommit != null) {
+            time = data.latestCommit.slice(11, 19);
+            num1 = data.connectNum;
+          }else{//服务器刚刚提交数据
+            let currentDate = new Date();
+            time = currentDate.toLocaleTimeString().slice(0,8);
+            num1 = -2; //-2表示服务器刚刚提交数据，需要上一次数据
+          }
+
           console.log("server1 num:"+num1);
+
         }
         if(data.serverName == 'server2'){
-          num2 = data.connectNum;
+          if(data.latestCommit != null){
+            num2 = data.connectNum;
+          }else{//服务器刚刚提交数据
+            num2 = -2;
+          }
+
           console.log("server2 num:"+num2);
+
         }
         if(num1 != -1 && num2 !=-1){
           console.log("get both server1 and server2");
+          if(num1 !=-2){ //更新存储的前一次数据
+            yield put({
+              type: 'setLastNum1',
+              payload:{last_num1:num1}
+            });
+          }
+
+          if(num2 !=-2){ //更新存储的前一次数据
+            yield put({
+              type: 'setLastNum2',
+              payload:{last_num2:num2}
+            });
+          }
           break;
         }
       }
-      // const data = yield call(getRealTimeCustomerFlow,payload);
-      // if(data){
-      //   const time = data.latestCommit.slice(11,19);
-        yield put({
-          type: 'updateRealTimeData',
-          payload:{num: num1+num2, time: time}
-        });
-      // }
+      yield put({
+        type: 'updateRealTimeData',
+        payload:{num1: num1,num2:num2, time: time}
+      });
+
     },
     *getFlow ({payload}, {call,put}) {
       const data = yield call(getCustomerFlow, payload);
@@ -236,7 +268,22 @@ export default {
     },
 
     updateRealTimeData(state,action){
-      let size = state.realTimeData.push(action.payload);
+      let num1 = action.payload.num1;
+      let num2 = action.payload.num2;
+      if(num1 == -2){
+        num1 = state.last_num1;
+        console.log("last num1 :"+num1);
+      }
+      if(num2 == -2){
+        num2 = state.last_num2;
+        console.log("last num2:"+num2);
+      }
+      let newItem = {
+        num: num1+num2,
+        time: action.payload.time
+      };
+      console.log("new item is:"+JSON.stringify(newItem));
+      let size = state.realTimeData.push(newItem);
       if(size > 16){
         state.realTimeData.shift();
       }
@@ -260,6 +307,26 @@ export default {
       }
       return {
         ...state,timer:-1000
+      }
+    },
+
+    setLastNum1(state,action){
+      console.log("redux setLastNum1: "+action.payload.last_num1);
+      return {
+        ...state,last_num1:action.payload.last_num1
+      }
+    },
+
+    setLastNum2(state, action){
+      console.log("redux setLastNum2:"+action.payload.last_num2);
+      return {
+        ...state,last_num2:action.payload.last_num2
+      }
+    },
+
+    getState(state,action){
+      return {
+        ...state
       }
     }
 
