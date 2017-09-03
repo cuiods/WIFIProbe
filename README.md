@@ -1,5 +1,6 @@
 # WIFIProbe
 项目文档位于./doc文件夹下，项目展示参考4.Get Started
+[查看演示文档](./present.md)
 
 ## 1. Introduction
 利用智能设备商WIFI模块所发出的无线广播信号进行设备感知，我们可以记录用户的线下行为轨迹。通过采集用户的MAC地址等数据，我们分析了商业环境中门店的门前人流量、进店客流量、进入跳出量、新老顾客数量及新增量、在店平均时长，客流情况等内容。
@@ -24,15 +25,20 @@
  * [Hadoop](http://hadoop.apache.org/)2.7.1: 充分利用集群的威力进行高速运算和存储
  * [Dva](https://github.com/dvajs/dva): React + Redux 最佳实践
  * [Spring](https://spring.io/)1.5.2.RELEASE: Spring Security 权限控制 + Spring Data JPA持久层框架
+ * [JavaFX](http://www.oracle.com/technetwork/java/javase/overview/javafx-overview-2158620.html): Java客户端探针管理工具
 
 ### 3.2 Algorithm
 
+#### 3.2.1 Hadoop MapReduce过程说明
 ![algorithm pic](./pics/algorithm.png)
 
  * 第一次 map-reduce  
 所有探针数据按照用户MAC地址分类，并按照时间排序，存入HDFS临时文件夹中。
  * 第二次 map-reduce  
 我们会对每个用户(mac地址)已排序好的探针数据，统计探针数据在时间轴上的出现密度，由此得出用用户在店内的时间段，继而得出根据单个用户数据统计出来的客户流量，新老客户，回访周期，入店时长这几个统计数据。
+
+#### 3.2.2 预测算法：指数平滑法
+![algorithm pic](./pics/algorithm2.png)
 
 ### 3.3 Test
  * [Junit](http://junit.org/junit4/) 单元测试套件
@@ -62,3 +68,4 @@
 ![require_u1](./pics/require_u1.png)
 ![require_u2](./pics/require_u2.png)
 ![require_u3](./pics/require_u3.png)
+![require_u4](./pics/require_u4.png)
