@@ -21,13 +21,17 @@ export default {
       history.listen(location => {
         const matchFlow = pathToRegexp('/inStoreHour').exec(location.pathname);
         if(matchFlow) {
+          const currentDate = new Date();
+          const currentHour = parseInt(currentDate.valueOf()/(1000*60*60));//距离现在最近的整点对应的小时数
+          const beforeHour = currentHour-5*24;//获取距离最近整点前5天的数据
+          console.log("currentHour :"+currentHour);
           dispatch({
             type: 'getHourData',
-            payload: {probeId:"1s12sz",startHour:40000,startRange:5,threshold:"HOUR"}
+            payload: {probeId:"1s12sz",startHour:beforeHour,startRange:5,threshold:"DAY"}
           });
           dispatch({
             type: 'getDetail',
-            payload: {hour:415300,probeId:"1s12sz"}
+            payload: {hour:currentHour,probeId:"1s12sz"}
           });
           dispatch({
             type: 'getProbeOptions',
