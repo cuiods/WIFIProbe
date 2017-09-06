@@ -31,7 +31,7 @@ export default {
           });
           dispatch({
             type: 'getDetail',
-            payload: {hour:currentHour,probeId:"1s12sz"}
+            payload: {hour:currentHour-1,probeId:"1s12sz"}
           });
           dispatch({
             type: 'getProbeOptions',

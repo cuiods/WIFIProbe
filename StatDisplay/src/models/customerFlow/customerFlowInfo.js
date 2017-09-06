@@ -37,7 +37,7 @@ export default {
           });
           dispatch({
             type: 'getDetail',
-            payload: {hour:currentHour,probeId:"1s12sz"}
+            payload: {hour:currentHour-1,probeId:"1s12sz"}
           });
           dispatch({
             type: 'getProbeOptions',
@@ -59,7 +59,7 @@ export default {
             });
             console.log("execute:"+ (++time));
           }
-          const tempTimer = setInterval(refreshRealTimeData,60000);
+          const tempTimer = setInterval(refreshRealTimeData,30000);
           dispatch({
             type:"setTimer",
             payload:tempTimer
@@ -123,6 +123,10 @@ export default {
               payload:{last_num2:num2}
             });
           }
+
+          let newCurrentDate = new Date();
+          time = newCurrentDate.toTimeString().slice(0,8);
+          console.log("localeTimeString:"+time);
           break;
         }
       }
